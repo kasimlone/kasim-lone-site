@@ -49,6 +49,13 @@ export const projects: Project[] = [
     preview: "/examtotal-preview.png",
   },
   {
+    title: "Sixth Form Taster",
+    description: "A taster A Level Computer Science lesson — from data to decisions. Walks through linear vs binary search, scaling, complexity and the big idea behind algorithmic thinking.",
+    tags: ["next", "education", "algorithms"],
+    href: "https://searching-algos.vercel.app/",
+    preview: "/sixth-form-taster-preview.png",
+  },
+  {
     title: "IO Quiz",
     description: "Input & Output Devices — can you spot the difference? A quick interactive quiz covering computers, consoles and phones.",
     tags: ["quiz", "education", "tech"],
