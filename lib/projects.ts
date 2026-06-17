@@ -49,6 +49,13 @@ export const projects: Project[] = [
     preview: "/examtotal-preview.png",
   },
   {
+    title: "Bitmap Images",
+    description: "A GCSE Computer Science lesson on data representation — explore how computers store pictures using pixels, resolution, colour depth and file size with hands-on demos.",
+    tags: ["next", "education", "gcse"],
+    href: "https://bitmap-images.vercel.app",
+    preview: "/bitmap-images-preview.png",
+  },
+  {
     title: "Sixth Form Taster",
     description: "A taster A Level Computer Science lesson — from data to decisions. Walks through linear vs binary search, scaling, complexity and the big idea behind algorithmic thinking.",
     tags: ["next", "education", "algorithms"],
