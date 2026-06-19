@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Name the Culprit — Springfield P.D.</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    font-family: "Special Elite", "Courier New", monospace;
+    color: #1a1a1a;
+    background-color: #c9954a;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(90,55,20,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 32%, rgba(60,35,10,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 33% 67%, rgba(110,70,30,0.35) 0 2px, transparent 3px),
+      radial-gradient(circle at 88% 82%, rgba(70,40,15,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 55% 45%, rgba(140,90,40,0.30) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 22% 88%, rgba(80,45,15,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 67% 12%, rgba(120,75,30,0.35) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 5%  55%, rgba(95,55,20,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 95% 60%, rgba(105,65,25,0.40) 0 2px, transparent 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+    background-size: 90px 90px, 110px 110px, 130px 130px, 100px 100px,
+                     70px 70px, 120px 120px, 85px 85px, 95px 95px, 105px 105px, 100% 100%;
+    padding-bottom: 80px;
+  }
+
+  /* Nav */
+  nav.menu {
+    position: sticky; top: 0; z-index: 100;
+    background: #1a3a5c; border-bottom: 4px solid #f0c419;
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    margin-bottom: 40px;
+  }
+  nav.menu .badge { font-family: "Bebas Neue", sans-serif; color: #f0c419; font-size: 1.4rem; letter-spacing: 2px; text-shadow: 2px 2px 0 #0a1a30; }
+  nav.menu .badge::before { content: "★ "; color: #fff; }
+  nav.menu a {
+    font-family: "Bebas Neue", sans-serif; color: #fff; text-decoration: none;
+    font-size: 0.95rem; letter-spacing: 1px;
+    padding: 6px 14px; border-radius: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  nav.menu a:hover, nav.menu a.active { background: #f0c419; color: #1a3a5c; }
+  nav.menu .spacer { flex: 1; }
+  nav.menu .case-id { color: #f0c419; font-family: "Bebas Neue"; letter-spacing: 1.5px; }
+
+  h1 {
+    font-family: "Permanent Marker", cursive;
+    text-align: center; margin: 0 0 6px; font-size: 2.8rem;
+    color: #fff; text-shadow: 3px 3px 0 #8b0000, 6px 6px 12px rgba(0,0,0,0.6);
+    letter-spacing: 2px; transform: rotate(-1.2deg);
+  }
+  p.sub {
+    font-family: "Permanent Marker", cursive; text-align: center;
+    margin: 0 auto 24px; font-size: 1.2rem;
+    color: #fffbe6; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+
+  /* Scene */
+  .scene {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+    align-items: start;
+  }
+
+  /* Wiggum */
+  .wiggum-side { display: flex; flex-direction: column; align-items: center; }
+  .wiggum {
+    max-width: 320px; width: 100%; height: auto;
+    filter: drop-shadow(6px 8px 12px rgba(0,0,0,0.4));
+  }
+
+  /* Speech bubble */
+  .bubble {
+    position: relative;
+    background: #fffdf3;
+    border: 3px solid #1a1a1a;
+    border-radius: 18px;
+    padding: 26px 28px;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
+    font-size: 1.1rem;
+    line-height: 1.55;
+  }
+  .bubble::before {
+    content: "";
+    position: absolute;
+    left: -28px; top: 60px;
+    width: 0; height: 0;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-right: 28px solid #1a1a1a;
+  }
+  .bubble::after {
+    content: "";
+    position: absolute;
+    left: -23px; top: 63px;
+    width: 0; height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 23px solid #fffdf3;
+  }
+  .bubble .shout {
+    font-family: "Permanent Marker", cursive;
+    color: #b71c1c;
+    font-size: 1.3rem;
+    margin: 0 0 12px;
+  }
+  .bubble.win .shout { color: #2e7d32; }
+  .bubble p { margin: 0 0 12px; }
+  .bubble p:last-child { margin-bottom: 0; }
+
+  /* Input */
+  .accuse {
+    margin-top: 20px;
+    background: #fffdf3;
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+  }
+  .accuse label {
+    display: block;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 2px;
+    font-size: 1.05rem;
+    color: #1a3a5c;
+    margin-bottom: 10px;
+  }
+  .accuse input {
+    width: 100%;
+    font-family: "Permanent Marker", cursive;
+    font-size: 1.5rem;
+    color: #b71c1c;
+    background: #fff;
+    border: 2px dashed #1a1a1a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    outline: none;
+    text-transform: uppercase;
+  }
+  .accuse input:focus {
+    background: rgba(240, 196, 25, 0.18);
+    border-style: solid;
+  }
+  .accuse-btn {
+    margin-top: 14px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.3rem; letter-spacing: 2px;
+    padding: 12px 26px;
+    border: 3px solid #1a1a1a; border-radius: 6px;
+    background: #b71c1c; color: #fff; cursor: pointer;
+    box-shadow: 5px 5px 0 #1a1a1a;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .accuse-btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #1a1a1a; background: #d12424; }
+  .accuse-btn:active { transform: translate(0,0); box-shadow: 3px 3px 0 #1a1a1a; }
+
+  /* Prison cell (hidden until correct) */
+  .prison {
+    display: none;
+    max-width: 380px;
+    margin: 28px auto 0;
+    position: relative;
+    background: #1a1a1a;
+    padding: 18px;
+    border: 4px solid #1a1a1a;
+    border-radius: 6px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.5), inset 0 0 30px rgba(0,0,0,0.7);
+  }
+  .prison.show { display: block; }
+  .prison .mugshot-frame {
+    position: relative;
+    background: #2c2c2c;
+    background-image:
+      repeating-linear-gradient(0deg,  rgba(255,255,255,0.04) 0 2px, transparent 2px 5px),
+      linear-gradient(180deg, #3a3a3a 0%, #1f1f1f 100%);
+    padding: 16px;
+    border: 2px solid #555;
+    border-radius: 4px;
+  }
+  .prison img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    background: #555;
+    filter: grayscale(0.4) contrast(1.05) brightness(0.85);
+  }
+  /* Vertical prison bars across the photo */
+  .bars {
+    position: absolute;
+    inset: 16px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+  .bar {
+    width: 10px;
+    background: linear-gradient(90deg, #2a2a2a 0%, #777 30%, #aaa 50%, #777 70%, #2a2a2a 100%);
+    box-shadow: 2px 0 4px rgba(0,0,0,0.6);
+    border-radius: 2px;
+  }
+  .placard {
+    margin-top: 12px;
+    background: #fffdf3;
+    color: #1a1a1a;
+    text-align: center;
+    padding: 8px 12px;
+    border: 2px solid #1a1a1a;
+    border-radius: 4px;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+  }
+  .placard small {
+    display: block;
+    font-family: "Special Elite", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #b71c1c;
+    margin-top: 4px;
+  }
+
+  /* CTA back to home if wrong */
+  .back-cta {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 1.5px;
+    color: #1a3a5c;
+    text-decoration: none;
+    border-bottom: 2px dashed #1a3a5c;
+    padding-bottom: 2px;
+  }
+  .back-cta:hover { color: #b71c1c; border-color: #b71c1c; }
+
+  /* Case file folder */
+  .case-file-wrap {
+    width: 100%;
+    margin: 0;
+  }
+  .case-file-title {
+    font-family: "Bebas Neue", sans-serif;
+    color: #fff;
+    letter-spacing: 3px;
+    font-size: 1.2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .case-file {
+    position: relative;
+    background:
+      linear-gradient(180deg, #d9a85f 0%, #b88440 60%, #a67431 100%);
+    border: 3px solid #6e4a1a;
+    border-radius: 6px 6px 14px 14px;
+    padding: 32px 30px 90px;
+    box-shadow:
+      0 4px 8px rgba(0,0,0,0.3),
+      0 14px 30px rgba(0,0,0,0.5),
+      inset 0 0 30px rgba(80,50,15,0.25);
+    min-height: 320px;
+  }
+  .case-file::before {
+    /* folder top tab */
+    content: "";
+    position: absolute;
+    top: -22px; left: 30px;
+    width: 280px; height: 26px;
+    background: linear-gradient(180deg, #c9994f 0%, #b88440 100%);
+    border: 3px solid #6e4a1a;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+  }
+  .case-file::after {
+    /* paper edge sticking out */
+    content: "";
+    position: absolute;
+    inset: 14px 14px 30px 14px;
+    background: #fffdf3;
+    border: 1px solid #c4b890;
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+    z-index: 0;
+  }
+  .case-label {
+    position: absolute;
+    top: -18px; left: 40px;
+    z-index: 3;
+    font-family: "Bebas Neue", sans-serif;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    font-size: 0.95rem;
+  }
+  .case-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 16px 8px 0;
+  }
+  .case-photo {
+    background: #fdfaf0;
+    background-image: linear-gradient(180deg, #fefcf3 0%, #f6f0dc 100%);
+    padding: 10px 10px 16px;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.25),
+      0 10px 20px rgba(0,0,0,0.35);
+    width: 150px;
+    position: relative;
+  }
+  .case-photo img { height: 120px; }
+  .case-photo:nth-child(1) { transform: rotate(-3deg); }
+  .case-photo:nth-child(2) { transform: rotate(2.5deg); }
+  .case-photo img {
+    display: block;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    object-position: center center;
+    background: #fff;
+  }
+  .case-photo .tape {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 70px; height: 22px;
+    background: rgba(240, 220, 160, 0.7);
+    border: 1px solid rgba(160,130,80,0.3);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+  }
+  .case-photo .caption {
+    font-family: "Permanent Marker", cursive;
+    text-align: center;
+    margin-top: 8px;
+    color: #b71c1c;
+    font-size: 0.95rem;
+  }
+  .case-photo .caption small {
+    display: block;
+    font-family: "Special Elite", monospace;
+    color: #4a3a2a;
+    font-size: 0.7rem;
+    margin-top: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Closed state */
+  .case-file.closed::after {
+    /* paper now mostly hidden under the closed flap */
+    inset: 14px 14px 14px 14px;
+  }
+  .case-file.closed .case-content {
+    padding-top: 0;
+  }
+  .case-file.closed .case-photo {
+    /* photos peek out from inside the closed folder */
+    margin-top: -80px;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.3),
+      0 12px 24px rgba(0,0,0,0.45);
+  }
+  .case-file.closed .case-photo:nth-child(1) { transform: rotate(-9deg) translateY(-20px); }
+  .case-file.closed .case-photo:nth-child(2) { transform: rotate(7deg) translateY(-10px); }
+  /* The "closed flap" overlay */
+  .case-flap {
+    display: none;
+    position: absolute;
+    inset: 14px 14px 14px 14px;
+    background:
+      linear-gradient(180deg, #c9994f 0%, #a67431 100%);
+    border: 2px solid #6e4a1a;
+    border-radius: 4px;
+    z-index: 2;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.25);
+  }
+  .case-file.closed .case-flap { display: block; }
+
+  /* CASE CLOSED stamp */
+  .stamp {
+    display: none;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    z-index: 4;
+    font-family: "Bebas Neue", sans-serif;
+    color: #b71c1c;
+    font-size: 3rem;
+    letter-spacing: 5px;
+    padding: 10px 26px;
+    border: 6px double #b71c1c;
+    background: rgba(255, 245, 230, 0.05);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+    opacity: 0.92;
+    pointer-events: none;
+    filter: blur(0.3px);
+  }
+  .case-file.closed .stamp { display: block; animation: stamp-in 0.45s cubic-bezier(.5,1.8,.5,1); }
+  @keyframes stamp-in {
+    0%   { transform: translate(-50%, -50%) rotate(-12deg) scale(2.5); opacity: 0; }
+    60%  { transform: translate(-50%, -50%) rotate(-12deg) scale(0.9); opacity: 1; }
+    100% { transform: translate(-50%, -50%) rotate(-12deg) scale(1); opacity: 0.92; }
+  }
+
+  @media (max-width: 800px) {
+    .scene { grid-template-columns: 1fr; }
+    .bubble::before, .bubble::after { display: none; }
+    .case-content { flex-direction: column; align-items: center; }
+  }
+
+  /* ─── Mobile responsive ─── */
+  @media (max-width: 700px) {
+    body { padding-bottom: 40px; }
+    nav.menu { flex-wrap: wrap; gap: 6px 12px; padding: 10px 14px; margin-bottom: 24px; }
+    nav.menu .badge { font-size: 1.05rem; letter-spacing: 1.5px; flex-basis: 100%; }
+    nav.menu a { font-size: 0.78rem; padding: 4px 8px; letter-spacing: 0.5px; }
+    nav.menu .spacer, nav.menu .case-id { display: none; }
+
+    h1 { font-size: 1.9rem !important; letter-spacing: 1px; }
+    p.sub { font-size: 1rem !important; }
+
+    .scene, .layout { grid-template-columns: 1fr !important; padding: 0 14px !important; gap: 20px !important; }
+    .hint-card { margin: 0 14px 20px !important; padding: 12px 14px !important; font-size: 0.9rem !important; }
+
+    /* Cipher panels */
+    .cipher-panel { padding: 28px 12px 32px !important; gap: 14px !important; }
+    .cell-cipher, .cell-input { width: 42px !important; height: 46px !important; font-size: 1.2rem !important; }
+    .cell-input input { font-size: 1.3rem !important; }
+    .cell-cipher { font-size: 1.1rem !important; }
+    .puzzle-row { gap: 14px 16px !important; justify-content: center !important; }
+
+    /* Clue 3 single-input rows */
+    .ciph-row { grid-template-columns: 1fr !important; gap: 6px !important; }
+    .ciph-cell { font-size: 1.15rem !important; padding: 10px 12px !important; }
+    .ans-cell input { font-size: 1.25rem !important; min-height: 44px !important; }
+
+    /* Reference panels */
+    .keypad-panel, .morse-panel { position: static !important; }
+    .morse-grid { grid-template-columns: repeat(2, 1fr) !important; font-size: 0.85rem !important; }
+
+    /* Speech bubble */
+    .bubble { padding: 18px 18px !important; font-size: 0.98rem !important; }
+    .bubble::before, .bubble::after { display: none !important; }
+
+    /* Suspects board */
+    .board { padding: 14px !important; gap: 30px 14px !important; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; }
+    .polaroid { padding: 10px 10px 36px !important; }
+    .photo { height: 160px !important; }
+
+    /* Index ID card */
+    .id-card { width: 100% !important; max-width: 320px; transform: rotate(-1deg) !important; }
+    .id-body { grid-template-columns: 110px 1fr !important; }
+    .burns-set { gap: 12px !important; }
+    .burns-card { width: 150px !important; }
+    .burns-card img { height: 130px !important; }
+
+    /* Solve case file */
+    .case-file { padding: 28px 14px 60px !important; }
+    .case-content { flex-wrap: wrap !important; gap: 16px !important; padding: 8px 0 0 !important; }
+    .case-photo { width: 130px !important; padding: 8px 8px 14px !important; }
+    .case-photo img { height: 100px !important; }
+    .stamp { font-size: 1.8rem !important; letter-spacing: 3px !important; padding: 8px 18px !important; }
+    .prison img { height: 220px !important; }
+
+    .toolbar { padding: 0 14px; }
+    .btn { font-size: 1rem; padding: 8px 18px; }
+  }
+
+</style>
+  <!-- Vercel Web Analytics -->
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <nav class="menu">
+    <span class="badge">SPRINGFIELD P.D.</span>
+    <a href="index.html">Home</a>
+    <a href="suspects.html">Suspects</a>
+    <a href="clue1.html">Clue 1</a>
+    <a href="clue2.html">Clue 2</a>
+    <a href="clue3.html">Clue 3</a>
+    <a href="clue4.html">Clue 4</a>
+    <a href="clue5.html">Clue 5</a>
+    <a href="solve.html" class="active">Solve It</a>
+    <a href="more.html">More Sites</a>
+    <span class="spacer"></span>
+    <span class="case-id">CASE #1995-WSMB</span>
+  </nav>
+
+  <h1>NAME THE CULPRIT</h1>
+  <p class="sub">— Final Accusation —</p>
+
+  <div class="scene">
+
+    <div class="wiggum-side">
+      <div class="case-file-wrap">
+        <div class="case-file-title">★ CASE FILE #1995-WSMB ★</div>
+        <div class="case-file" id="caseFile">
+          <span class="case-label">CASE #1995-WSMB · M. BURNS</span>
+          <div class="case-flap"></div>
+          <div class="stamp">CASE CLOSED</div>
+          <div class="case-content">
+            <div class="case-photo">
+              <span class="tape"></span>
+              <img src="faces/mrburns.avif" alt="Mr. Burns CCTV">
+              <div class="caption">
+                CCTV Footage
+                <small>Subject: M. Burns</small>
+              </div>
+            </div>
+            <div class="case-photo">
+              <span class="tape"></span>
+              <img src="faces/mrburns2.jpg" alt="Crime scene">
+              <div class="caption">
+                Crime Scene Photo
+                <small>Sundial — Town Hall</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="bubble" id="bubble">
+        <p class="shout" id="shout">So, detective — think ya cracked it?</p>
+        <p id="body">
+          Alright, hotshot. You've worked the clues, X'd out the innocents, and now there's only one name left scribbled on your notepad. Who shot Mr. Burns?
+        </p>
+        <p id="extra"><em>Type the suspect's full name below and slap the cuffs on 'em.</em></p>
+      </div>
+
+      <div class="accuse" id="accuseBox">
+        <label for="guess">★ I ACCUSE…</label>
+        <input id="guess" type="text" placeholder="Full name of the suspect" autocomplete="off">
+        <button class="accuse-btn" id="accuse">Make the Arrest</button>
+      </div>
+
+      <div class="prison" id="prison">
+        <div class="mugshot-frame">
+          <img src="faces/edna.png" alt="Edna Krabappel">
+          <div class="bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+        </div>
+        <div class="placard">
+          EDNA KRABAPPEL
+          <small>SPRINGFIELD COUNTY JAIL · #1995-WSMB</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const ANSWER = "EDNA KRABAPPEL";
+    const ACCEPT = [
+      "EDNA KRABAPPEL",
+      "EDNA",
+      "MS KRABAPPEL",
+      "MISS KRABAPPEL",
+      "MRS KRABAPPEL",
+      "KRABAPPEL",
+    ];
+
+    const guess  = document.getElementById("guess");
+    const btn    = document.getElementById("accuse");
+    const bubble = document.getElementById("bubble");
+    const shout  = document.getElementById("shout");
+    const body   = document.getElementById("body");
+    const extra  = document.getElementById("extra");
+    const prison = document.getElementById("prison");
+    const accuseBox = document.getElementById("accuseBox");
+
+    function normalize(s) {
+      return s.toUpperCase()
+              .replace(/[^A-Z ]/g, "")
+              .replace(/\s+/g, " ")
+              .trim();
+    }
+
+    function unsolvedClues() {
+      const missing = [];
+      for (let n = 1; n <= 5; n++) {
+        if (localStorage.getItem("wsmb.clue" + n + ".solved") !== "true") missing.push(n);
+      }
+      return missing;
+    }
+
+    function makeArrest() {
+      const g = normalize(guess.value);
+      if (!g) return;
+
+      const missing = unsolvedClues();
+      if (missing.length) {
+        bubble.classList.remove("win");
+        shout.textContent = "Whoa whoa whoa — slow down, detective!";
+        body.innerHTML = "You can't go slappin' cuffs on someone without doin' the legwork. You still haven't cracked <strong>Clue " +
+          missing.join(", ") + "</strong>. We gotta keep this investigation fair — solve every clue first, otherwise we'll arrest the wrong perp and the whole case gets thrown out!";
+        extra.innerHTML = '<a class="back-cta" href="clue' + missing[0] + '.html">→ Back to Clue ' + missing[0] + '</a>';
+        return;
+      }
+
+      if (ACCEPT.includes(g)) {
+        bubble.classList.add("win");
+        shout.textContent = "★ WELL DONE, DETECTIVE! ★";
+        body.innerHTML = "You did it! All five clues pointed straight to <strong>Edna Krabappel</strong> — a fully grown adult, odd-numbered age, doesn't work for Mr. Burns, female, and over fifty but not the Crazy Cat Lady. Open and shut case!";
+        extra.innerHTML = "Springfield can sleep soundly tonight. Now — about that donut…";
+        prison.classList.add("show");
+        accuseBox.style.display = "none";
+        document.getElementById("caseFile").classList.add("closed");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        bubble.classList.remove("win");
+        shout.textContent = "Whoa whoa whoa — that don't add up!";
+        body.innerHTML = "I dunno, detective, that name just doesn't fit the clues we got. Go back over your notes — check those ciphers again, cross out the ones who don't match, and only <strong>one</strong> name should be left standing.";
+        extra.innerHTML = `<a class="back-cta" href="suspects.html">→ Back to the Suspect Board</a>`;
+      }
+    }
+
+    btn.addEventListener("click", makeArrest);
+    guess.addEventListener("keydown", e => {
+      if (e.key === "Enter") makeArrest();
+    });
+  </script>
+
+
+  <footer style="max-width:900px;margin:40px auto 0;padding:18px 24px;text-align:center;font-family:'Special Elite', monospace;font-size:0.78rem;color:#fffbe6;text-shadow:1px 1px 2px rgba(0,0,0,0.6);line-height:1.6;opacity:0.9;">
+    All character images and likenesses are property of <strong>The Simpsons</strong> &copy; 20th Television / Disney.<br>
+    This site is a fan-made educational project and is <strong>not for sale</strong>.
+  </footer>
+</body>
+</html>

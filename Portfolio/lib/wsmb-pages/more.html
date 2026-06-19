@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More Sites — Springfield P.D.</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    font-family: "Special Elite", "Courier New", monospace;
+    color: #1a1a1a;
+    background-color: #c9954a;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(90,55,20,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 32%, rgba(60,35,10,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 33% 67%, rgba(110,70,30,0.35) 0 2px, transparent 3px),
+      radial-gradient(circle at 88% 82%, rgba(70,40,15,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 55% 45%, rgba(140,90,40,0.30) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 22% 88%, rgba(80,45,15,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 67% 12%, rgba(120,75,30,0.35) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 5%  55%, rgba(95,55,20,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 95% 60%, rgba(105,65,25,0.40) 0 2px, transparent 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+    background-size: 90px 90px, 110px 110px, 130px 130px, 100px 100px,
+                     70px 70px, 120px 120px, 85px 85px, 95px 95px, 105px 105px, 100% 100%;
+    padding-bottom: 60px;
+  }
+
+  /* Nav */
+  nav.menu {
+    position: sticky; top: 0; z-index: 100;
+    background: #1a3a5c; border-bottom: 4px solid #f0c419;
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    margin-bottom: 40px;
+  }
+  nav.menu .badge { font-family: "Bebas Neue", sans-serif; color: #f0c419; font-size: 1.4rem; letter-spacing: 2px; text-shadow: 2px 2px 0 #0a1a30; }
+  nav.menu .badge::before { content: "★ "; color: #fff; }
+  nav.menu a {
+    font-family: "Bebas Neue", sans-serif; color: #fff; text-decoration: none;
+    font-size: 0.95rem; letter-spacing: 1px;
+    padding: 6px 14px; border-radius: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  nav.menu a:hover, nav.menu a.active { background: #f0c419; color: #1a3a5c; }
+  nav.menu .spacer { flex: 1; }
+  nav.menu .case-id { color: #f0c419; font-family: "Bebas Neue"; letter-spacing: 1.5px; }
+
+  h1 {
+    font-family: "Permanent Marker", cursive;
+    text-align: center; margin: 0 0 6px; font-size: 2.8rem;
+    color: #fff; text-shadow: 3px 3px 0 #8b0000, 6px 6px 12px rgba(0,0,0,0.6);
+    letter-spacing: 2px; transform: rotate(-1.2deg);
+  }
+  p.sub {
+    font-family: "Permanent Marker", cursive; text-align: center;
+    margin: 0 auto 32px; font-size: 1.2rem;
+    color: #fffbe6; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+
+  .grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+  }
+
+  .site-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fffdf3;
+    background-image: linear-gradient(180deg, #fefcf3 0%, #f1ead0 100%);
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 26px 22px 22px;
+    box-shadow: 6px 8px 0 rgba(0,0,0,0.35);
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    min-height: 220px;
+  }
+  .site-card:hover {
+    transform: translate(-3px, -3px) rotate(-0.5deg);
+    box-shadow: 9px 11px 0 rgba(0,0,0,0.4);
+  }
+  .site-card .tag {
+    position: absolute;
+    top: -10px; right: 16px;
+    background: #f0c419;
+    color: #1a3a5c;
+    border: 2px solid #1a1a1a;
+    padding: 2px 10px;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 1.5px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    transform: rotate(3deg);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  }
+  .site-card .icon {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: #b71c1c;
+    margin-bottom: 14px;
+    letter-spacing: 2px;
+  }
+  .site-card h2 {
+    font-family: "Permanent Marker", cursive;
+    margin: 0 0 10px;
+    font-size: 1.7rem;
+    color: #1a3a5c;
+    letter-spacing: 1px;
+  }
+  .site-card p {
+    font-family: "Special Elite", monospace;
+    margin: 0 0 14px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: #3a2e1a;
+  }
+  .site-card .visit {
+    margin-top: auto;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    color: #b71c1c;
+    border-bottom: 2px dashed #b71c1c;
+    align-self: flex-start;
+    padding-bottom: 2px;
+  }
+
+  /* "Coming soon" — disabled visual */
+  .site-card.soon {
+    cursor: not-allowed;
+    opacity: 0.92;
+    background-image: linear-gradient(180deg, #ede4c8 0%, #d8caa0 100%);
+    border-style: dashed;
+  }
+  .site-card.soon .icon { color: #6e520a; }
+  .site-card.soon h2 { color: #6e520a; }
+  .site-card.soon:hover { transform: none; box-shadow: 6px 8px 0 rgba(0,0,0,0.35); }
+  .site-card.soon .visit { color: #6e520a; border-color: #6e520a; }
+  .site-card.soon .tag { background: #6e520a; color: #fffdf3; }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    nav.menu { flex-wrap: wrap; gap: 6px 12px; padding: 10px 14px; margin-bottom: 24px; }
+    nav.menu .badge { font-size: 1.05rem; letter-spacing: 1.5px; flex-basis: 100%; }
+    nav.menu a { font-size: 0.78rem; padding: 4px 8px; letter-spacing: 0.5px; }
+    nav.menu .spacer, nav.menu .case-id { display: none; }
+    h1 { font-size: 1.9rem; letter-spacing: 1px; }
+    p.sub { font-size: 1rem; }
+    .grid { padding: 0 14px; gap: 20px; }
+    .site-card { padding: 22px 18px 18px; min-height: 180px; }
+  }
+</style>
+  <!-- Vercel Web Analytics -->
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <nav class="menu">
+    <span class="badge">SPRINGFIELD P.D.</span>
+    <a href="index.html">Home</a>
+    <a href="suspects.html">Suspects</a>
+    <a href="clue1.html">Clue 1</a>
+    <a href="clue2.html">Clue 2</a>
+    <a href="clue3.html">Clue 3</a>
+    <a href="clue4.html">Clue 4</a>
+    <a href="clue5.html">Clue 5</a>
+    <a href="solve.html">Solve It</a>
+    <a href="more.html" class="active">More Sites</a>
+    <span class="spacer"></span>
+    <span class="case-id">CASE #1995-WSMB</span>
+  </nav>
+
+  <h1>MORE SITES</h1>
+  <p class="sub">— Other projects to explore —</p>
+
+  <div class="grid">
+
+    <a class="site-card" href="https://runpy.co.uk" target="_blank" rel="noopener">
+      <span class="tag">LIVE</span>
+      <div class="icon">{ }</div>
+      <h2>RunPy</h2>
+      <p>A user-friendly space for students to code and manage files. Teachers can view, run, share and provide feedback all from one place.</p>
+      <span class="visit">runpy.co.uk →</span>
+    </a>
+
+    <a class="site-card" href="https://revision11.vercel.app" target="_blank" rel="noopener">
+      <span class="tag">LIVE</span>
+      <div class="icon">11</div>
+      <h2>Revision11</h2>
+      <p>Answer GCSE Computer Science questions to earn coins. Open packs, sign managers, play matches and build your Ultimate Team from 410 players across the OCR J277 spec.</p>
+      <span class="visit">revision11.vercel.app →</span>
+    </a>
+
+    <div class="site-card soon" aria-disabled="true">
+      <span class="tag">SOON</span>
+      <div class="icon">…</div>
+      <h2>More Coming Soon</h2>
+      <p>Another project is brewing in the lab. Check back later for the next site to drop.</p>
+      <span class="visit">Stay tuned</span>
+    </div>
+
+  </div>
+
+
+  <footer style="max-width:900px;margin:40px auto 0;padding:18px 24px;text-align:center;font-family:'Special Elite', monospace;font-size:0.78rem;color:#fffbe6;text-shadow:1px 1px 2px rgba(0,0,0,0.6);line-height:1.6;opacity:0.9;">
+    All character images and likenesses are property of <strong>The Simpsons</strong> &copy; 20th Television / Disney.<br>
+    This site is a fan-made educational project and is <strong>not for sale</strong>.
+  </footer>
+</body>
+</html>

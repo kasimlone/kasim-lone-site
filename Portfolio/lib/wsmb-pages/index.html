@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Shot Mr. Burns? — Springfield Police Department</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    font-family: "Special Elite", "Courier New", monospace;
+    color: #1a1a1a;
+    background-color: #c9954a;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(90,55,20,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 32%, rgba(60,35,10,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 33% 67%, rgba(110,70,30,0.35) 0 2px, transparent 3px),
+      radial-gradient(circle at 88% 82%, rgba(70,40,15,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 55% 45%, rgba(140,90,40,0.30) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 22% 88%, rgba(80,45,15,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 67% 12%, rgba(120,75,30,0.35) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 5%  55%, rgba(95,55,20,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 95% 60%, rgba(105,65,25,0.40) 0 2px, transparent 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+    background-size: 90px 90px, 110px 110px, 130px 130px, 100px 100px,
+                     70px 70px, 120px 120px, 85px 85px, 95px 95px, 105px 105px, 100% 100%;
+  }
+
+  /* ─── Navigation ─── */
+  nav.menu {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #1a3a5c;
+    border-bottom: 4px solid #f0c419;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  nav.menu .badge {
+    font-family: "Bebas Neue", sans-serif;
+    color: #f0c419;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #0a1a30;
+  }
+  nav.menu .badge::before {
+    content: "★ ";
+    color: #fff;
+  }
+  nav.menu a {
+    font-family: "Bebas Neue", sans-serif;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  nav.menu a:hover { background: #f0c419; color: #1a3a5c; }
+  nav.menu a.active { background: #f0c419; color: #1a3a5c; }
+  nav.menu .spacer { flex: 1; }
+
+  /* ─── Page header ─── */
+  h1 {
+    font-family: "Permanent Marker", cursive;
+    text-align: center;
+    margin: 30px 0 6px;
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 3px 3px 0 #8b0000, 6px 6px 12px rgba(0,0,0,0.6);
+    letter-spacing: 2px;
+    transform: rotate(-1.5deg);
+  }
+  h1::before, h1::after {
+    content: "🚨";
+    display: inline-block;
+    margin: 0 14px;
+    filter: grayscale(0%);
+    -webkit-text-fill-color: initial;
+  }
+  p.sub {
+    font-family: "Permanent Marker", cursive;
+    text-align: center;
+    margin: 0 auto 30px;
+    font-size: 1.3rem;
+    color: #fffbe6;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+
+  /* ─── Scene layout ─── */
+  .scene {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+  }
+
+  /* Chief Wiggum side */
+  .wiggum-side {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ID Card */
+  .id-card {
+    width: 340px;
+    background: #fffdf3;
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 6px 8px 16px rgba(0,0,0,0.45);
+    overflow: hidden;
+    font-family: "Special Elite", monospace;
+    transform: rotate(-2deg);
+    position: relative;
+  }
+  .id-card::before {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 24px;
+    background: #1a1a1a;
+    border-radius: 4px 4px 0 0;
+  }
+  .id-card::after {
+    /* lanyard clip */
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 14px;
+    background: #888;
+    border: 2px solid #1a1a1a;
+    border-radius: 4px;
+  }
+  .id-header {
+    background: #1a3a5c;
+    color: #f0c419;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 3px solid #f0c419;
+  }
+  .id-header .star {
+    font-size: 1.4rem;
+    color: #fff;
+  }
+  .id-header .dept {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 1.5px;
+    line-height: 1;
+  }
+  .id-header .dept small {
+    display: block;
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    margin-top: 3px;
+  }
+  .id-body {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 14px;
+    padding: 16px 14px;
+  }
+  .id-photo {
+    background: #e6e6e6;
+    border: 2px solid #1a1a1a;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    position: relative;
+  }
+  .id-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .id-photo::after {
+    content: "OFFICIAL";
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: rgba(183, 28, 28, 0.85);
+    color: #fff;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+  .id-info { font-size: 0.85rem; line-height: 1.45; }
+  .id-info .field { margin-bottom: 8px; }
+  .id-info .label {
+    display: block;
+    font-family: "Bebas Neue", sans-serif;
+    color: #1a3a5c;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
+  }
+  .id-info .value {
+    font-weight: 700;
+    color: #1a1a1a;
+    font-size: 0.95rem;
+  }
+  .id-info .signature {
+    margin-top: 8px;
+    font-family: "Permanent Marker", cursive;
+    color: #b71c1c;
+    font-size: 1.05rem;
+    border-top: 1px dashed #888;
+    padding-top: 6px;
+    transform: rotate(-2deg);
+  }
+  .id-footer {
+    background: repeating-linear-gradient(90deg, #1a1a1a 0 6px, #fff 6px 12px);
+    height: 28px;
+    border-top: 2px solid #1a1a1a;
+  }
+
+  /* Speech bubble */
+  .bubble {
+    position: relative;
+    background: #fffdf3;
+    border: 3px solid #1a1a1a;
+    border-radius: 18px;
+    padding: 26px 28px;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
+    font-size: 1.1rem;
+    line-height: 1.55;
+  }
+  .bubble::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 50px;
+    width: 0;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-right: 28px solid #1a1a1a;
+  }
+  .bubble::after {
+    content: "";
+    position: absolute;
+    left: -23px;
+    top: 53px;
+    width: 0;
+    height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-right: 23px solid #fffdf3;
+  }
+  .bubble p { margin: 0 0 14px; }
+  .bubble p:last-of-type { margin-bottom: 0; }
+  .bubble .shout {
+    font-family: "Permanent Marker", cursive;
+    color: #b71c1c;
+    font-size: 1.35rem;
+    letter-spacing: 1px;
+  }
+
+  /* Mr. Burns polaroid set */
+  .burns-set {
+    margin-top: 26px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .burns-card {
+    position: relative;
+    background: #fdfaf0;
+    background-image: linear-gradient(180deg, #fefcf3 0%, #f6f0dc 100%);
+    padding: 14px 14px 22px;
+    box-shadow:
+      0 2px 4px rgba(0,0,0,0.25),
+      0 10px 20px rgba(0,0,0,0.35);
+    width: 220px;
+  }
+  .burns-card:nth-child(1) { transform: rotate(-4deg); }
+  .burns-card:nth-child(2) { transform: rotate(3deg); }
+  .burns-card .tape {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 70px;
+    height: 22px;
+    background: rgba(240, 220, 160, 0.7);
+    border: 1px solid rgba(160,130,80,0.3);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+  }
+  .burns-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center center;
+    background: #fff;
+    display: block;
+  }
+  .burns-caption {
+    font-family: "Permanent Marker", cursive;
+    text-align: center;
+    margin-top: 10px;
+    color: #b71c1c;
+    font-size: 1.05rem;
+  }
+  .burns-caption small {
+    display: block;
+    font-family: "Special Elite", monospace;
+    color: #4a3a2a;
+    font-size: 0.78rem;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Call-to-action */
+  .cta-wrap {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .cta {
+    display: inline-block;
+    font-family: "Bebas Neue", sans-serif;
+    background: #b71c1c;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    padding: 14px 36px;
+    border: 3px solid #1a1a1a;
+    border-radius: 6px;
+    box-shadow: 6px 6px 0 #1a1a1a;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cta:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 #1a1a1a;
+    background: #d32424;
+  }
+
+  /* ─── First-visit overlay ─── */
+  .fv-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 9999;
+    display: none;
+    animation: fv-fade 0.3s ease;
+  }
+  .fv-overlay.show { display: block; }
+  @keyframes fv-fade { from { opacity: 0; } to { opacity: 1; } }
+  .fv-card {
+    position: absolute;
+    background: #fffdf3;
+    border: 3px solid #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.45);
+    padding: 22px 26px 22px;
+    width: 320px;
+    font-family: "Special Elite", monospace;
+    transform: rotate(-1.5deg);
+  }
+  .fv-card::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-bottom: 22px solid #1a1a1a;
+  }
+  .fv-card::after {
+    content: "";
+    position: absolute;
+    top: -13px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 17px solid #fffdf3;
+  }
+  .fv-title {
+    font-family: "Permanent Marker", cursive;
+    color: #b71c1c;
+    font-size: 1.35rem;
+    margin: 0 0 8px;
+    letter-spacing: 1px;
+  }
+  .fv-body { font-size: 0.98rem; line-height: 1.5; margin: 0 0 14px; color: #1a1a1a; }
+  .fv-body strong { color: #1a3a5c; }
+  .fv-actions { display: flex; gap: 10px; align-items: center; }
+  .fv-btn {
+    font-family: "Bebas Neue", sans-serif;
+    background: #b71c1c;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    padding: 8px 18px;
+    border: 2px solid #1a1a1a;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0 #1a1a1a;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .fv-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #1a1a1a; background: #d32424; }
+  .fv-close {
+    background: transparent;
+    border: none;
+    font-family: "Special Elite", monospace;
+    color: #4a3a2a;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.88rem;
+    padding: 4px 6px;
+  }
+  /* highlight the targeted nav link */
+  nav.menu a.fv-highlight {
+    background: #f0c419;
+    color: #1a3a5c;
+    box-shadow: 0 0 0 3px #b71c1c, 0 0 14px 4px rgba(240,196,25,0.8);
+    animation: fv-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes fv-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px #b71c1c, 0 0 14px 4px rgba(240,196,25,0.7); }
+    50%      { box-shadow: 0 0 0 3px #b71c1c, 0 0 22px 8px rgba(240,196,25,1); }
+  }
+
+  @media (max-width: 800px) {
+    .scene { grid-template-columns: 1fr; }
+    h1 { font-size: 2.2rem; }
+    .bubble::before, .bubble::after { display: none; }
+  }
+
+  /* ─── Mobile responsive ─── */
+  @media (max-width: 700px) {
+    body { padding-bottom: 40px; }
+    nav.menu { flex-wrap: wrap; gap: 6px 12px; padding: 10px 14px; margin-bottom: 24px; }
+    nav.menu .badge { font-size: 1.05rem; letter-spacing: 1.5px; flex-basis: 100%; }
+    nav.menu a { font-size: 0.78rem; padding: 4px 8px; letter-spacing: 0.5px; }
+    nav.menu .spacer, nav.menu .case-id { display: none; }
+
+    h1 { font-size: 1.9rem !important; letter-spacing: 1px; }
+    p.sub { font-size: 1rem !important; }
+
+    .scene, .layout { grid-template-columns: 1fr !important; padding: 0 14px !important; gap: 20px !important; }
+    .hint-card { margin: 0 14px 20px !important; padding: 12px 14px !important; font-size: 0.9rem !important; }
+
+    /* Cipher panels */
+    .cipher-panel { padding: 28px 12px 32px !important; gap: 14px !important; }
+    .cell-cipher, .cell-input { width: 42px !important; height: 46px !important; font-size: 1.2rem !important; }
+    .cell-input input { font-size: 1.3rem !important; }
+    .cell-cipher { font-size: 1.1rem !important; }
+    .puzzle-row { gap: 14px 16px !important; justify-content: center !important; }
+
+    /* Clue 3 single-input rows */
+    .ciph-row { grid-template-columns: 1fr !important; gap: 6px !important; }
+    .ciph-cell { font-size: 1.15rem !important; padding: 10px 12px !important; }
+    .ans-cell input { font-size: 1.25rem !important; min-height: 44px !important; }
+
+    /* Reference panels */
+    .keypad-panel, .morse-panel { position: static !important; }
+    .morse-grid { grid-template-columns: repeat(2, 1fr) !important; font-size: 0.85rem !important; }
+
+    /* Speech bubble */
+    .bubble { padding: 18px 18px !important; font-size: 0.98rem !important; }
+    .bubble::before, .bubble::after { display: none !important; }
+
+    /* Suspects board */
+    .board { padding: 14px !important; gap: 30px 14px !important; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; }
+    .polaroid { padding: 10px 10px 36px !important; }
+    .photo { height: 160px !important; }
+
+    /* Index ID card */
+    .id-card { width: 100% !important; max-width: 320px; transform: rotate(-1deg) !important; }
+    .id-body { grid-template-columns: 110px 1fr !important; }
+    .burns-set { gap: 12px !important; }
+    .burns-card { width: 150px !important; }
+    .burns-card img { height: 130px !important; }
+
+    /* Solve case file */
+    .case-file { padding: 28px 14px 60px !important; }
+    .case-content { flex-wrap: wrap !important; gap: 16px !important; padding: 8px 0 0 !important; }
+    .case-photo { width: 130px !important; padding: 8px 8px 14px !important; }
+    .case-photo img { height: 100px !important; }
+    .stamp { font-size: 1.8rem !important; letter-spacing: 3px !important; padding: 8px 18px !important; }
+    .prison img { height: 220px !important; }
+
+    .toolbar { padding: 0 14px; }
+    .btn { font-size: 1rem; padding: 8px 18px; }
+  }
+
+</style>
+  <!-- Vercel Web Analytics -->
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <nav class="menu">
+    <span class="badge">SPRINGFIELD P.D.</span>
+    <a href="index.html" class="active">Home</a>
+    <a href="suspects.html">Suspects</a>
+    <a href="clue1.html">Clue 1</a>
+    <a href="clue2.html">Clue 2</a>
+    <a href="clue3.html">Clue 3</a>
+    <a href="clue4.html">Clue 4</a>
+    <a href="clue5.html">Clue 5</a>
+    <a href="solve.html">Solve It</a>
+    <a href="more.html">More Sites</a>
+    <span class="spacer"></span>
+    <span style="color:#f0c419; font-family:'Bebas Neue'; letter-spacing:1.5px;">CASE #1995-WSMB</span>
+  </nav>
+
+  <h1>WHO SHOT MR. BURNS?</h1>
+  <p class="sub">— A Springfield Mystery —</p>
+
+  <div class="scene">
+
+    <div class="wiggum-side">
+      <div class="id-card">
+        <div class="id-header">
+          <span class="star">★</span>
+          <div class="dept">
+            SPRINGFIELD POLICE DEPT
+            <small>OFFICER IDENTIFICATION</small>
+          </div>
+        </div>
+        <div class="id-body">
+          <div class="id-photo">
+            <img src="faces/chief-clancy-wiggum-free-vector.jpg" alt="Chief Wiggum">
+          </div>
+          <div class="id-info">
+            <div class="field">
+              <span class="label">Name</span>
+              <span class="value">Clancy Wiggum</span>
+            </div>
+            <div class="field">
+              <span class="label">Rank</span>
+              <span class="value">Chief of Police</span>
+            </div>
+            <div class="field">
+              <span class="label">Badge #</span>
+              <span class="value">908</span>
+            </div>
+            <div class="field">
+              <span class="label">Precinct</span>
+              <span class="value">Springfield</span>
+            </div>
+            <div class="signature">C. Wiggum</div>
+          </div>
+        </div>
+        <div class="id-footer"></div>
+      </div>
+
+      <div class="burns-set">
+        <div class="burns-card">
+          <span class="tape"></span>
+          <img src="faces/mrburns.avif" alt="Mr. Burns CCTV">
+          <div class="burns-caption">
+            CCTV Footage
+            <small>Subject: M. Burns</small>
+          </div>
+        </div>
+        <div class="burns-card">
+          <span class="tape"></span>
+          <img src="faces/mrburns2.jpg" alt="Crime scene">
+          <div class="burns-caption">
+            Crime Scene Photo
+            <small>Sundial — Town Hall</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="bubble">
+        <p class="shout">Ah, welcome to the Springfield Police Department!</p>
+        <p>Listen up, rookie — we got ourselves a real doozy here. Last night, somebody up and <strong>SHOT Mr. Montgomery Burns</strong>, the wealthiest, meanest, and most powerful man in all of Springfield.</p>
+        <p>He was found slumped on the sundial outside Town Hall, and lemme tell ya — half the town's got a motive. We rounded up <strong>twelve suspects</strong>, but figuring out who pulled the trigger? That's where I need your help.</p>
+        <p>We've collected a buncha clues — fingerprints, eyewitness statements, the whole shebang. Sift through 'em, eliminate the innocent ones, and let's catch this culprit before the donuts get cold!</p>
+        <p class="shout">You in, detective?</p>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <a class="cta" href="suspects.html">→ View the Suspect Board</a>
+    </div>
+
+  </div>
+
+
+  <footer style="max-width:900px;margin:40px auto 0;padding:18px 24px;text-align:center;font-family:'Special Elite', monospace;font-size:0.78rem;color:#fffbe6;text-shadow:1px 1px 2px rgba(0,0,0,0.6);line-height:1.6;opacity:0.9;">
+    All character images and likenesses are property of <strong>The Simpsons</strong> &copy; 20th Television / Disney.<br>
+    This site is a fan-made educational project and is <strong>not for sale</strong>.
+  </footer>
+
+  <div class="fv-overlay" id="fvOverlay" role="dialog" aria-modal="true" aria-labelledby="fvTitle">
+    <div class="fv-card">
+      <h2 class="fv-title" id="fvTitle">Psst — first time here?</h2>
+      <p class="fv-body">Check out <strong>More Sites</strong> up top to see other projects I've built. Welcome to Springfield, detective!</p>
+      <div class="fv-actions">
+        <a class="fv-btn" href="more.html">Take me there</a>
+        <button class="fv-close" id="fvClose" type="button">Maybe later</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      try {
+        if (localStorage.getItem('wsmb_seen_more_hint')) return;
+      } catch (e) {}
+      var overlay = document.getElementById('fvOverlay');
+      var closeBtn = document.getElementById('fvClose');
+      var moreLink = document.querySelector('nav.menu a[href="more.html"]');
+      var card = overlay.querySelector('.fv-card');
+      function positionCard() {
+        if (!moreLink) return;
+        var r = moreLink.getBoundingClientRect();
+        var linkCenter = r.left + r.width / 2;
+        var cardWidth = card.offsetWidth || 320;
+        var vw = window.innerWidth;
+        var margin = 12;
+        var left = linkCenter - cardWidth / 2;
+        if (left < margin) left = margin;
+        if (left + cardWidth > vw - margin) left = vw - margin - cardWidth;
+        var top = r.bottom + 18;
+        card.style.left = left + 'px';
+        card.style.top = top + 'px';
+        var arrow = linkCenter - left;
+        card.style.setProperty('--arrow-left', arrow + 'px');
+      }
+      function dismiss() {
+        overlay.classList.remove('show');
+        if (moreLink) moreLink.classList.remove('fv-highlight');
+        try { localStorage.setItem('wsmb_seen_more_hint', '1'); } catch (e) {}
+      }
+      setTimeout(function() {
+        overlay.classList.add('show');
+        if (moreLink) moreLink.classList.add('fv-highlight');
+        positionCard();
+      }, 600);
+      window.addEventListener('resize', positionCard);
+      window.addEventListener('scroll', positionCard);
+      closeBtn.addEventListener('click', dismiss);
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) dismiss(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') dismiss(); });
+    })();
+  </script>
+</body>
+</html>

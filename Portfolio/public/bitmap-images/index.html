@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bitmap Images — Interactive Lesson</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <p class="eyebrow">GCSE Computer Science · Data Representation</p>
+    <h1>Bitmap Images</h1>
+    <p class="lede">Explore how computers store pictures using pixels, resolution, colour depth, and file size — with hands-on demos you can play with.</p>
+    <nav class="toc" aria-label="Lesson sections">
+      <a href="#what">1. What is a bitmap?</a>
+      <a href="#pixels">2. Pixels</a>
+      <a href="#resolution">3. Resolution</a>
+      <a href="#colour-depth">4. Colour depth</a>
+      <a href="#file-size">5. File size</a>
+      <a href="#quiz">6. Quiz</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ============== SECTION 1 ============== -->
+<section id="what" class="card">
+  <h2><span class="num">1</span> What is a bitmap image?</h2>
+  <div class="two-col">
+    <div>
+      <p>A <strong>bitmap image</strong> (also called a <em>raster image</em>) is made up of a grid of tiny coloured squares called <strong>pixels</strong> (short for <em>picture elements</em>).</p>
+      <p>Every pixel stores a colour as a binary number. When you put thousands of pixels next to each other, your eye blends them into a smooth picture — like a mosaic.</p>
+      <p>Common bitmap file types include <code>.bmp</code>, <code>.png</code>, <code>.jpg</code> and <code>.gif</code>.</p>
+      <div class="callout">
+        <strong>Key idea:</strong> A bitmap is just a long list of binary numbers. The computer needs to know the <em>width</em>, <em>height</em> and <em>colour depth</em> (metadata) to turn those numbers back into a picture.
+      </div>
+    </div>
+    <figure class="mosaic-demo">
+      <canvas id="mosaicCanvas" width="320" height="240" aria-label="Smiley face built from pixels"></canvas>
+      <figcaption>A simple smiley face — every square is one pixel.</figcaption>
+    </figure>
+  </div>
+
+  <h3>Each colour is stored as a binary number</h3>
+  <p>The computer doesn't really "see" colour — it just stores a binary number for each pixel. With only <strong>3 bits</strong> per pixel we can store <strong>2³ = 8</strong> different colours. Here is one possible mapping:</p>
+  <table class="colour-binary-table">
+    <thead>
+      <tr><th>Colour</th><th>Name</th><th>Binary code</th><th>Denary</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="swatch-box" style="background:#000"></span></td><td>Black</td><td><code>000</code></td><td>0</td></tr>
+      <tr><td><span class="swatch-box" style="background:#0000ff"></span></td><td>Blue</td><td><code>001</code></td><td>1</td></tr>
+      <tr><td><span class="swatch-box" style="background:#00ff00"></span></td><td>Green</td><td><code>010</code></td><td>2</td></tr>
+      <tr><td><span class="swatch-box" style="background:#00ffff"></span></td><td>Cyan</td><td><code>011</code></td><td>3</td></tr>
+      <tr><td><span class="swatch-box" style="background:#ff0000"></span></td><td>Red</td><td><code>100</code></td><td>4</td></tr>
+      <tr><td><span class="swatch-box" style="background:#ff00ff"></span></td><td>Magenta</td><td><code>101</code></td><td>5</td></tr>
+      <tr><td><span class="swatch-box" style="background:#ffff00"></span></td><td>Yellow</td><td><code>110</code></td><td>6</td></tr>
+      <tr><td><span class="swatch-box" style="background:#fff;border:1px solid #999"></span></td><td>White</td><td><code>111</code></td><td>7</td></tr>
+    </tbody>
+  </table>
+  <p class="hint">So if a tiny image's pixel data started <code>100 100 110 000</code>, that would mean: red, red, yellow, black. The whole picture is just a long string of bits!</p>
+</section>
+
+<!-- ============== SECTION 2 ============== -->
+<section id="pixels" class="card">
+  <h2><span class="num">2</span> Pixels — zoom in and see them</h2>
+  <p>Photographs look smooth from far away, but if you zoom in close you can see the individual pixels. Drag the slider to zoom into the image below.</p>
+
+  <div class="zoom-demo">
+    <div class="zoom-stage">
+      <canvas id="zoomCanvas" width="400" height="400"></canvas>
+    </div>
+    <div class="controls">
+      <label for="zoomRange">Zoom: <output id="zoomVal">1×</output></label>
+      <input type="range" id="zoomRange" min="1" max="40" value="1" />
+      <p class="hint">At 1× you see a normal picture. By 20× you can clearly see the grid of coloured squares.</p>
+    </div>
+  </div>
+
+  <h3>Try it: build your own pixel art</h3>
+  <p>Click a colour, then click squares on the grid to paint. This is exactly how a bitmap is stored — a grid of colour values.</p>
+  <div class="pixel-art">
+    <div class="palette" id="palette">
+      <button class="swatch active" style="background:#000" data-color="#000000" aria-label="black"></button>
+      <button class="swatch" style="background:#fff;border:1px solid #999" data-color="#ffffff" aria-label="white"></button>
+      <button class="swatch" style="background:#e74c3c" data-color="#e74c3c" aria-label="red"></button>
+      <button class="swatch" style="background:#f1c40f" data-color="#f1c40f" aria-label="yellow"></button>
+      <button class="swatch" style="background:#2ecc71" data-color="#2ecc71" aria-label="green"></button>
+      <button class="swatch" style="background:#3498db" data-color="#3498db" aria-label="blue"></button>
+      <button class="swatch" style="background:#9b59b6" data-color="#9b59b6" aria-label="purple"></button>
+      <button class="swatch" style="background:#ecf0f1;border:1px solid #999" data-color="erase" aria-label="erase">×</button>
+    </div>
+    <canvas id="pixelArt" width="320" height="320"></canvas>
+    <button class="btn" id="clearArt">Clear grid</button>
+  </div>
+</section>
+
+<!-- ============== SECTION 3 ============== -->
+<section id="resolution" class="card">
+  <h2><span class="num">3</span> Resolution</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Resolution</strong> is the number of pixels in an image, usually written as <code>width × height</code>. For example, <code>1920 × 1080</code> means 1920 pixels across and 1080 down — that's <strong>2,073,600 pixels</strong> in total!</p>
+      <ul>
+        <li><strong>Higher</strong> resolution → more pixels → sharper image, but a bigger file.</li>
+        <li><strong>Lower</strong> resolution → fewer pixels → blocky / pixelated image, smaller file.</li>
+      </ul>
+      <p class="callout"><strong>Try it:</strong> Use the slider to reduce the resolution of the photo on the right. Watch the picture become blocky as the number of pixels drops.</p>
+    </div>
+    <figure>
+      <canvas id="resCanvas" width="320" height="320"></canvas>
+      <figcaption><span id="resLabel">320 × 320 pixels</span></figcaption>
+    </figure>
+  </div>
+  <div class="controls wide">
+    <label for="resRange">Resolution: <output id="resVal">320 × 320</output></label>
+    <input type="range" id="resRange" min="2" max="320" step="1" value="320" />
+    <p class="hint">Slide left to drop the resolution. Notice how detail disappears the fewer pixels you have.</p>
+  </div>
+</section>
+
+<!-- ============== SECTION 4 ============== -->
+<section id="colour-depth" class="card">
+  <h2><span class="num">4</span> Colour depth</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Colour depth</strong> (also called bit depth) is the <em>number of bits used to store the colour of one pixel</em>. More bits = more possible colours.</p>
+      <table class="depth-table">
+        <thead><tr><th>Bits per pixel</th><th>Colours</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>1 bit</td><td>2</td><td>Black & white</td></tr>
+          <tr><td>2 bits</td><td>4</td><td>Tiny palette</td></tr>
+          <tr><td>4 bits</td><td>16</td><td>Old computer icons</td></tr>
+          <tr><td>8 bits</td><td>256</td><td>GIFs</td></tr>
+          <tr><td>24 bits</td><td>16,777,216</td><td>"True colour" photos</td></tr>
+        </tbody>
+      </table>
+      <p>The formula is simple: <code>Number of colours = 2<sup>n</sup></code>, where <em>n</em> is the bit depth.</p>
+    </div>
+    <figure>
+      <canvas id="depthCanvas" width="320" height="320"></canvas>
+      <figcaption><span id="depthLabel">24-bit · 16,777,216 colours</span></figcaption>
+    </figure>
+  </div>
+  <div class="controls wide">
+    <label for="depthRange">Colour depth: <output id="depthVal">24-bit</output></label>
+    <input type="range" id="depthRange" min="1" max="24" step="1" value="24" list="depthTicks" />
+    <datalist id="depthTicks">
+      <option value="1"></option><option value="2"></option><option value="4"></option>
+      <option value="8"></option><option value="16"></option><option value="24"></option>
+    </datalist>
+    <p class="hint">Drop the bit depth and watch the image turn posterised — fewer colours can be used, so similar shades have to share.</p>
+  </div>
+</section>
+
+<!-- ============== SECTION 5 ============== -->
+<section id="file-size" class="card">
+  <h2><span class="num">5</span> File size</h2>
+  <p>The file size of a bitmap (ignoring compression and headers) is:</p>
+  <div class="formula">
+    file size (bits) = width × height × colour depth
+  </div>
+  <p>Then divide by 8 to get <strong>bytes</strong>, by 1024 to get <strong>kilobytes (KiB)</strong>, and by 1024 again for <strong>megabytes (MiB)</strong>.</p>
+
+  <div class="calc">
+    <div class="calc-inputs">
+      <label>Width (pixels)
+        <input type="number" id="fsWidth" value="800" min="1" />
+      </label>
+      <label>Height (pixels)
+        <input type="number" id="fsHeight" value="600" min="1" />
+      </label>
+      <label>Colour depth (bits)
+        <select id="fsDepth">
+          <option value="1">1 bit (2 colours)</option>
+          <option value="2">2 bits (4 colours)</option>
+          <option value="4">4 bits (16 colours)</option>
+          <option value="8">8 bits (256 colours)</option>
+          <option value="16">16 bits (65,536 colours)</option>
+          <option value="24" selected>24 bits (16.7M colours)</option>
+          <option value="32">32 bits (with transparency)</option>
+        </select>
+      </label>
+    </div>
+    <div class="calc-output" id="fsOutput" aria-live="polite"></div>
+  </div>
+  <p class="callout"><strong>Worked example:</strong> An image is 100 × 200 pixels with a colour depth of 8 bits.<br>
+    Size in bits = 100 × 200 × 8 = <strong>160,000 bits</strong><br>
+    Size in bytes = 160,000 ÷ 8 = <strong>20,000 bytes</strong><br>
+    Size in KiB = 20,000 ÷ 1024 ≈ <strong>19.5 KiB</strong></p>
+</section>
+
+<!-- ============== SECTION 6 ============== -->
+<section id="quiz" class="card">
+  <h2><span class="num">6</span> Quick quiz</h2>
+  <p>Answer all five — your score appears at the bottom.</p>
+  <form id="quizForm" class="quiz">
+    <ol>
+      <li>
+        <p><strong>1.</strong> What does the word "pixel" stand for?</p>
+        <label><input type="radio" name="q1" value="a"> Picture exchange link</label>
+        <label><input type="radio" name="q1" value="b"> Picture element</label>
+        <label><input type="radio" name="q1" value="c"> Pixelated image layer</label>
+      </li>
+      <li>
+        <p><strong>2.</strong> An image is 200 × 100 pixels with 8-bit colour. What is its size in bytes (no compression)?</p>
+        <label><input type="radio" name="q2" value="a"> 2,500 bytes</label>
+        <label><input type="radio" name="q2" value="b"> 20,000 bytes</label>
+        <label><input type="radio" name="q2" value="c"> 160,000 bytes</label>
+      </li>
+      <li>
+        <p><strong>3.</strong> How many different colours can a 4-bit image have?</p>
+        <label><input type="radio" name="q3" value="a"> 4</label>
+        <label><input type="radio" name="q3" value="b"> 16</label>
+        <label><input type="radio" name="q3" value="c"> 256</label>
+      </li>
+      <li>
+        <p><strong>4.</strong> Which change would most likely make a photo look <em>blocky</em>?</p>
+        <label><input type="radio" name="q4" value="a"> Reducing the resolution</label>
+        <label><input type="radio" name="q4" value="b"> Increasing the colour depth</label>
+        <label><input type="radio" name="q4" value="c"> Renaming the file</label>
+      </li>
+      <li>
+        <p><strong>5.</strong> Which change would most likely cause <em>posterisation</em> (bands of colour instead of smooth gradients)?</p>
+        <label><input type="radio" name="q5" value="a"> Increasing the resolution</label>
+        <label><input type="radio" name="q5" value="b"> Reducing the colour depth</label>
+        <label><input type="radio" name="q5" value="c"> Saving with a different filename</label>
+      </li>
+    </ol>
+    <button type="button" class="btn" id="markQuiz">Mark my quiz</button>
+    <p id="quizResult" class="quiz-result" aria-live="polite"></p>
+  </form>
+</section>
+
+<section class="card summary" id="summary" hidden>
+  <h2>Summary — what you should remember</h2>
+  <ul>
+    <li>A <strong>bitmap</strong> is a grid of <strong>pixels</strong>.</li>
+    <li><strong>Resolution</strong> = number of pixels (width × height). More = sharper, bigger file.</li>
+    <li><strong>Colour depth</strong> = bits per pixel. Number of colours = 2<sup>n</sup>.</li>
+    <li><strong>File size (bits)</strong> = width × height × colour depth.</li>
+    <li>Reducing resolution makes images <em>blocky</em>. Reducing colour depth makes images <em>posterised</em>. Both shrink the file size.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Interactive bitmap images lesson · Built for ages 13–16</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

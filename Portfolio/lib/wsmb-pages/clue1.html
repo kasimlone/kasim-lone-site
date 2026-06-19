@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clue #1 — Caesar Cipher</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    font-family: "Special Elite", "Courier New", monospace;
+    color: #1a1a1a;
+    background-color: #c9954a;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(90,55,20,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 32%, rgba(60,35,10,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 33% 67%, rgba(110,70,30,0.35) 0 2px, transparent 3px),
+      radial-gradient(circle at 88% 82%, rgba(70,40,15,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 55% 45%, rgba(140,90,40,0.30) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 22% 88%, rgba(80,45,15,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 67% 12%, rgba(120,75,30,0.35) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 5%  55%, rgba(95,55,20,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 95% 60%, rgba(105,65,25,0.40) 0 2px, transparent 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+    background-size: 90px 90px, 110px 110px, 130px 130px, 100px 100px,
+                     70px 70px, 120px 120px, 85px 85px, 95px 95px, 105px 105px, 100% 100%;
+    padding-bottom: 80px;
+  }
+
+  /* Nav */
+  nav.menu {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #1a3a5c;
+    border-bottom: 4px solid #f0c419;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    margin-bottom: 40px;
+  }
+  nav.menu .badge {
+    font-family: "Bebas Neue", sans-serif;
+    color: #f0c419;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #0a1a30;
+  }
+  nav.menu .badge::before { content: "★ "; color: #fff; }
+  nav.menu a {
+    font-family: "Bebas Neue", sans-serif;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  nav.menu a:hover, nav.menu a.active { background: #f0c419; color: #1a3a5c; }
+  nav.menu .spacer { flex: 1; }
+  nav.menu .case-id { color: #f0c419; font-family: "Bebas Neue"; letter-spacing: 1.5px; }
+
+  h1 {
+    font-family: "Permanent Marker", cursive;
+    text-align: center;
+    margin: 0 0 6px;
+    font-size: 2.6rem;
+    color: #fff;
+    text-shadow: 3px 3px 0 #8b0000, 6px 6px 12px rgba(0,0,0,0.6);
+    letter-spacing: 2px;
+    transform: rotate(-1deg);
+  }
+  p.sub {
+    font-family: "Permanent Marker", cursive;
+    text-align: center;
+    margin: 0 auto 14px;
+    font-size: 1.1rem;
+    color: #fffbe6;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+
+  .hint-card {
+    max-width: 760px;
+    margin: 0 auto 30px;
+    background: #fffdf3;
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 14px 20px;
+    box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .hint-card strong { color: #b71c1c; }
+
+  /* ─── Caesar wheel ─── */
+  .wheel-card {
+    max-width: 760px;
+    margin: 0 auto 30px;
+    background: #fffdf3;
+    background-image: linear-gradient(180deg, #fefcf3 0%, #f1ead0 100%);
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 6px 8px 18px rgba(0,0,0,0.4);
+    padding: 20px 24px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .wheel-card h2 {
+    font-family: "Permanent Marker", cursive;
+    color: #b71c1c;
+    margin: 0 0 4px;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  .wheel-card .wheel-sub {
+    font-size: 0.9rem;
+    margin: 0 0 14px;
+    color: #4a3a2a;
+  }
+  .wheel-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .wheel {
+    width: 320px;
+    height: 320px;
+    position: relative;
+    user-select: none;
+    touch-action: none;
+  }
+  .wheel svg { width: 100%; height: 100%; display: block; }
+  .wheel .inner-disc { cursor: grab; }
+  .wheel .inner-disc.dragging { cursor: grabbing; }
+  .wheel .pointer {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 22px solid #b71c1c;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.4));
+    pointer-events: none;
+  }
+  .wheel-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 160px;
+  }
+  .shift-display {
+    font-family: "Bebas Neue", sans-serif;
+    background: #1a3a5c;
+    color: #f0c419;
+    padding: 8px 14px;
+    border: 2px solid #0a1a30;
+    border-radius: 6px;
+    letter-spacing: 1.5px;
+    font-size: 1.1rem;
+    min-width: 140px;
+  }
+  .shift-display .num {
+    color: #fff;
+    font-size: 1.6rem;
+    margin-left: 6px;
+  }
+  .mapping {
+    font-family: "Special Elite", monospace;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    background: #fff;
+    border: 2px dashed #1a1a1a;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  .mapping .from { color: #1a3a5c; font-weight: 700; }
+  .mapping .arrow-tx { color: #b71c1c; margin: 0 6px; }
+  .mapping .to { color: #b71c1c; font-weight: 700; }
+  .wheel-btns { display: flex; gap: 8px; }
+  .wheel-btn {
+    font-family: "Bebas Neue", sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    border: 2px solid #1a1a1a;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    box-shadow: 3px 3px 0 #1a1a1a;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .wheel-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #1a1a1a; }
+  .wheel-btn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #1a1a1a; }
+
+  @media (max-width: 700px) {
+    .wheel { width: 260px; height: 260px; }
+  }
+
+  /* Cipher panel — styled as an evidence sheet */
+  .cipher-panel {
+    max-width: 940px;
+    margin: 0 auto;
+    background: #fffdf3;
+    background-image: linear-gradient(180deg, #fefcf3 0%, #f1ead0 100%);
+    border: 3px solid #1a1a1a;
+    padding: 36px 30px 42px;
+    border-radius: 6px;
+    box-shadow: 8px 10px 24px rgba(0,0,0,0.5);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+    justify-content: center;
+    position: relative;
+  }
+  .cipher-panel::before {
+    content: "EVIDENCE";
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: #b71c1c;
+    border: 2px solid #b71c1c;
+    padding: 2px 8px;
+    transform: rotate(4deg);
+    opacity: 0.7;
+  }
+
+  .word {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+  }
+  .row {
+    display: flex;
+    gap: 4px;
+  }
+  .cipher-row { margin-bottom: 4px; }
+  .cell-cipher, .cell-input {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+  }
+  .cell-cipher {
+    background: #1a3a5c;
+    color: #f0c419;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.9rem;
+    letter-spacing: 1px;
+    border: 2px solid #0a1a30;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.3);
+  }
+  .cell-input {
+    background: #fff;
+    border: 2px dashed #1a1a1a;
+    padding: 0;
+  }
+  .cell-input input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    font-family: "Permanent Marker", cursive;
+    font-size: 1.7rem;
+    color: #b71c1c;
+    text-transform: uppercase;
+    caret-color: #b71c1c;
+  }
+  .cell-input input:focus {
+    background: rgba(240, 196, 25, 0.18);
+    border-radius: 2px;
+  }
+  .cell-input.correct {
+    background: rgba(80, 170, 90, 0.18);
+    border-style: solid;
+    border-color: #2e7d32;
+  }
+  .cell-input.correct input { color: #2e7d32; }
+
+  .arrow {
+    position: absolute;
+    bottom: -34px;
+    color: #b71c1c;
+    font-size: 1.8rem;
+    line-height: 1;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.35);
+  }
+
+  /* Toolbar */
+  .toolbar {
+    max-width: 940px;
+    margin: 26px auto 0;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 1.5px;
+    padding: 10px 22px;
+    border: 3px solid #1a1a1a;
+    border-radius: 6px;
+    background: #fff;
+    color: #1a1a1a;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #1a1a1a;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #1a1a1a; }
+  .btn:active { transform: translate(0,0); box-shadow: 2px 2px 0 #1a1a1a; }
+  .btn.primary { background: #b71c1c; color: #fff; }
+  .btn.primary:hover { background: #d12424; }
+
+  .verdict {
+    max-width: 940px;
+    margin: 24px auto 0;
+    text-align: center;
+    font-family: "Permanent Marker", cursive;
+    font-size: 1.6rem;
+    min-height: 2em;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+  .verdict.win { color: #6dff7c; }
+  .verdict.lose { color: #ffaaaa; }
+
+  /* ─── Mobile responsive ─── */
+  @media (max-width: 700px) {
+    body { padding-bottom: 40px; }
+    nav.menu { flex-wrap: wrap; gap: 6px 12px; padding: 10px 14px; margin-bottom: 24px; }
+    nav.menu .badge { font-size: 1.05rem; letter-spacing: 1.5px; flex-basis: 100%; }
+    nav.menu a { font-size: 0.78rem; padding: 4px 8px; letter-spacing: 0.5px; }
+    nav.menu .spacer, nav.menu .case-id { display: none; }
+
+    h1 { font-size: 1.9rem !important; letter-spacing: 1px; }
+    p.sub { font-size: 1rem !important; }
+
+    .scene, .layout { grid-template-columns: 1fr !important; padding: 0 14px !important; gap: 20px !important; }
+    .hint-card { margin: 0 14px 20px !important; padding: 12px 14px !important; font-size: 0.9rem !important; }
+
+    /* Cipher panels */
+    .cipher-panel { padding: 28px 12px 32px !important; gap: 14px !important; }
+    .cell-cipher, .cell-input { width: 42px !important; height: 46px !important; font-size: 1.2rem !important; }
+    .cell-input input { font-size: 1.3rem !important; }
+    .cell-cipher { font-size: 1.1rem !important; }
+    .puzzle-row { gap: 14px 16px !important; justify-content: center !important; }
+
+    /* Clue 3 single-input rows */
+    .ciph-row { grid-template-columns: 1fr !important; gap: 6px !important; }
+    .ciph-cell { font-size: 1.15rem !important; padding: 10px 12px !important; }
+    .ans-cell input { font-size: 1.25rem !important; min-height: 44px !important; }
+
+    /* Reference panels */
+    .keypad-panel, .morse-panel { position: static !important; }
+    .morse-grid { grid-template-columns: repeat(2, 1fr) !important; font-size: 0.85rem !important; }
+
+    /* Speech bubble */
+    .bubble { padding: 18px 18px !important; font-size: 0.98rem !important; }
+    .bubble::before, .bubble::after { display: none !important; }
+
+    /* Suspects board */
+    .board { padding: 14px !important; gap: 30px 14px !important; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; }
+    .polaroid { padding: 10px 10px 36px !important; }
+    .photo { height: 160px !important; }
+
+    /* Index ID card */
+    .id-card { width: 100% !important; max-width: 320px; transform: rotate(-1deg) !important; }
+    .id-body { grid-template-columns: 110px 1fr !important; }
+    .burns-set { gap: 12px !important; }
+    .burns-card { width: 150px !important; }
+    .burns-card img { height: 130px !important; }
+
+    /* Solve case file */
+    .case-file { padding: 28px 14px 60px !important; }
+    .case-content { flex-wrap: wrap !important; gap: 16px !important; padding: 8px 0 0 !important; }
+    .case-photo { width: 130px !important; padding: 8px 8px 14px !important; }
+    .case-photo img { height: 100px !important; }
+    .stamp { font-size: 1.8rem !important; letter-spacing: 3px !important; padding: 8px 18px !important; }
+    .prison img { height: 220px !important; }
+
+    .toolbar { padding: 0 14px; }
+    .btn { font-size: 1rem; padding: 8px 18px; }
+  }
+
+</style>
+  <!-- Vercel Web Analytics -->
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <nav class="menu">
+    <span class="badge">SPRINGFIELD P.D.</span>
+    <a href="index.html">Home</a>
+    <a href="suspects.html">Suspects</a>
+    <a href="clue1.html" class="active">Clue 1</a>
+    <a href="clue2.html">Clue 2</a>
+    <a href="clue3.html">Clue 3</a>
+    <a href="clue4.html">Clue 4</a>
+    <a href="clue5.html">Clue 5</a>
+    <a href="solve.html">Solve It</a>
+    <a href="more.html">More Sites</a>
+    <span class="spacer"></span>
+    <span class="case-id">CASE #1995-WSMB</span>
+  </nav>
+
+  <h1>CLUE #1</h1>
+  <p class="sub">— Caesar Cipher Found at the Crime Scene —</p>
+
+  <div class="hint-card">
+    <p><strong>Detective's note:</strong> The perp left this scrawled on a napkin. Forensics says it's a <strong>Caesar cipher</strong> — every letter has been shifted by the same amount through the alphabet. Type your guess into the blue boxes below each cipher letter. Hit <em>Check</em> when you're done.</p>
+  </div>
+
+  <div class="wheel-card">
+    <h2>Detective's Decoder Wheel</h2>
+    <p class="wheel-sub">Rotate the inner disc to line up cipher letters (outer, blue) with their plaintext guesses (inner). Drag the wheel, use the buttons, or click any letter.</p>
+    <div class="wheel-stage">
+      <div class="wheel" id="wheel">
+        <div class="pointer"></div>
+        <svg viewBox="0 0 320 320" aria-label="Caesar cipher wheel">
+          <circle cx="160" cy="160" r="155" fill="#1a3a5c" stroke="#0a1a30" stroke-width="3"/>
+          <circle cx="160" cy="160" r="118" fill="#fffdf3" stroke="#0a1a30" stroke-width="2"/>
+          <g id="outerTicks"></g>
+          <g id="outerRing"></g>
+          <g class="inner-disc" id="innerDisc">
+            <circle cx="160" cy="160" r="110" fill="#f0c419" stroke="#8b6914" stroke-width="2"/>
+            <g id="innerTicks"></g>
+            <circle cx="160" cy="160" r="40" fill="#b71c1c" stroke="#5a0d0d" stroke-width="2"/>
+            <text x="160" y="166" text-anchor="middle" fill="#fff" font-family="Bebas Neue, sans-serif" font-size="16" letter-spacing="1">SHIFT</text>
+            <g id="innerRing"></g>
+          </g>
+        </svg>
+      </div>
+      <div class="wheel-controls">
+        <div class="shift-display">SHIFT<span class="num" id="shiftNum">0</span></div>
+        <div class="mapping" id="mapping"><span class="from">A</span><span class="arrow-tx">→</span><span class="to">A</span></div>
+        <div class="wheel-btns">
+          <button class="wheel-btn" id="rotL" title="Shift -1">◀ −1</button>
+          <button class="wheel-btn" id="rotR" title="Shift +1">+1 ▶</button>
+        </div>
+        <button class="wheel-btn" id="rotReset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cipher-panel" id="panel"></div>
+
+  <div class="toolbar">
+    <button class="btn" id="clear">Clear</button>
+    <button class="btn primary" id="check">Check Answer</button>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+
+  <script>
+    // ── Caesar wheel ──
+    (function() {
+      const ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const CX = 160, CY = 160;
+      const OUTER_R = 137;   // outer ring (cipher) letters radius
+      const INNER_R = 96;    // inner disc letters radius
+      const STEP = 360 / 26; // 13.846...
+      const outerRing = document.getElementById("outerRing");
+      const innerRing = document.getElementById("innerRing");
+      const outerTicks = document.getElementById("outerTicks");
+      const innerTicks = document.getElementById("innerTicks");
+      const innerDisc = document.getElementById("innerDisc");
+      const shiftNum = document.getElementById("shiftNum");
+      const mapping = document.getElementById("mapping");
+
+      // Radial dividers between each letter (offset by half a step)
+      // Outer ticks span the cipher ring; inner ticks span the inner disc.
+      for (let i = 0; i < 26; i++) {
+        const a = (-90 + (i + 0.5) * STEP) * Math.PI / 180;
+        const cos = Math.cos(a), sin = Math.sin(a);
+
+        const ot = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        ot.setAttribute("x1", CX + 119 * cos); ot.setAttribute("y1", CY + 119 * sin);
+        ot.setAttribute("x2", CX + 154 * cos); ot.setAttribute("y2", CY + 154 * sin);
+        ot.setAttribute("stroke", "#f0c419");
+        ot.setAttribute("stroke-width", "1.2");
+        ot.setAttribute("opacity", "0.55");
+        outerTicks.appendChild(ot);
+
+        const it = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        it.setAttribute("x1", CX + 41 * cos); it.setAttribute("y1", CY + 41 * sin);
+        it.setAttribute("x2", CX + 109 * cos); it.setAttribute("y2", CY + 109 * sin);
+        it.setAttribute("stroke", "#8b6914");
+        it.setAttribute("stroke-width", "1.2");
+        it.setAttribute("opacity", "0.6");
+        innerTicks.appendChild(it);
+      }
+
+      // letters arranged clockwise, A at top (angle = -90deg in SVG)
+      // Outer letters: UPRIGHT (fixed cipher ring). Inner letters: radial (rotate with disc).
+      for (let i = 0; i < 26; i++) {
+        const ang = (-90 + i * STEP) * Math.PI / 180;
+        const ox = CX + OUTER_R * Math.cos(ang);
+        const oy = CY + OUTER_R * Math.sin(ang);
+        const ix = CX + INNER_R * Math.cos(ang);
+        const iy = CY + INNER_R * Math.sin(ang);
+        const rot = i * STEP;
+
+        const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t1.setAttribute("x", ox); t1.setAttribute("y", oy);
+        t1.setAttribute("text-anchor", "middle");
+        t1.setAttribute("dominant-baseline", "central");
+        t1.setAttribute("fill", "#f0c419");
+        t1.setAttribute("font-family", "Bebas Neue, sans-serif");
+        t1.setAttribute("font-size", "20");
+        t1.textContent = ALPHA[i];
+        outerRing.appendChild(t1);
+
+        const t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t2.setAttribute("x", ix); t2.setAttribute("y", iy);
+        t2.setAttribute("text-anchor", "middle");
+        t2.setAttribute("dominant-baseline", "central");
+        t2.setAttribute("fill", "#1a1a1a");
+        t2.setAttribute("font-family", "Bebas Neue, sans-serif");
+        t2.setAttribute("font-size", "20");
+        t2.setAttribute("transform", `rotate(${rot} ${ix} ${iy})`);
+        t2.textContent = ALPHA[i];
+        innerRing.appendChild(t2);
+      }
+
+      let shift = 0;
+      function setShift(s) {
+        shift = ((s % 26) + 26) % 26;
+        innerDisc.setAttribute("transform", `rotate(${shift * STEP} ${CX} ${CY})`);
+        shiftNum.textContent = shift;
+        const plain = ALPHA[(26 - shift) % 26];
+        mapping.innerHTML = `<span class="from">A</span><span class="arrow-tx">→</span><span class="to">${plain}</span>`;
+      }
+      setShift(0);
+
+      document.getElementById("rotL").onclick = () => setShift(shift - 1);
+      document.getElementById("rotR").onclick = () => setShift(shift + 1);
+      document.getElementById("rotReset").onclick = () => setShift(0);
+
+      // drag to rotate
+      const wheelEl = document.getElementById("wheel");
+      let dragging = false;
+      let startAngle = 0;
+      let startShift = 0;
+
+      function pointerAngle(e) {
+        const r = wheelEl.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const x = (e.touches ? e.touches[0].clientX : e.clientX) - cx;
+        const y = (e.touches ? e.touches[0].clientY : e.clientY) - cy;
+        return Math.atan2(y, x) * 180 / Math.PI;
+      }
+      function onDown(e) {
+        dragging = true;
+        innerDisc.classList.add("dragging");
+        startAngle = pointerAngle(e);
+        startShift = shift;
+        e.preventDefault();
+      }
+      function onMove(e) {
+        if (!dragging) return;
+        const a = pointerAngle(e);
+        let delta = a - startAngle;
+        const steps = Math.round(delta / STEP);
+        setShift(startShift + steps);
+      }
+      function onUp() {
+        dragging = false;
+        innerDisc.classList.remove("dragging");
+      }
+      wheelEl.addEventListener("mousedown", onDown);
+      window.addEventListener("mousemove", onMove);
+      window.addEventListener("mouseup", onUp);
+      wheelEl.addEventListener("touchstart", onDown, { passive: false });
+      window.addEventListener("touchmove", onMove, { passive: false });
+      window.addEventListener("touchend", onUp);
+    })();
+
+    // Encrypted message split into words
+    const words = ["S", "KW", "K", "PEVVI", "QBYGX", "KNEVD"];
+    const answer = "I AM A FULLY GROWN ADULT";          // plaintext
+    const arrowOn = { word: 4, letterIndex: 2 };        // arrow under Y in QBYGX
+
+    const panel = document.getElementById("panel");
+    const allInputs = [];
+
+    words.forEach((w, wi) => {
+      const wd = document.createElement("div");
+      wd.className = "word";
+
+      const cipherRow = document.createElement("div");
+      cipherRow.className = "row cipher-row";
+      const inputRow  = document.createElement("div");
+      inputRow.className = "row";
+
+      [...w].forEach((ch, ci) => {
+        const c = document.createElement("div");
+        c.className = "cell-cipher";
+        c.textContent = ch;
+        cipherRow.appendChild(c);
+
+        const ic = document.createElement("div");
+        ic.className = "cell-input";
+        const inp = document.createElement("input");
+        inp.maxLength = 1;
+        inp.dataset.word = wi;
+        inp.dataset.idx = ci;
+        inp.addEventListener("input", e => {
+          e.target.value = e.target.value.toUpperCase();
+          if (e.target.value) focusNext(e.target);
+        });
+        inp.addEventListener("keydown", e => {
+          if (e.key === "Backspace" && !e.target.value) focusPrev(e.target);
+        });
+        ic.appendChild(inp);
+        inputRow.appendChild(ic);
+        allInputs.push(inp);
+      });
+
+      wd.appendChild(cipherRow);
+      wd.appendChild(inputRow);
+
+      panel.appendChild(wd);
+    });
+
+    function focusNext(el) {
+      const i = allInputs.indexOf(el);
+      if (i >= 0 && i < allInputs.length - 1) allInputs[i+1].focus();
+    }
+    function focusPrev(el) {
+      const i = allInputs.indexOf(el);
+      if (i > 0) allInputs[i-1].focus();
+    }
+
+    document.getElementById("clear").onclick = () => {
+      allInputs.forEach(i => { i.value = ""; i.parentElement.classList.remove("correct"); });
+      document.getElementById("verdict").textContent = "";
+      document.getElementById("verdict").className = "verdict";
+      allInputs[0].focus();
+    };
+
+document.getElementById("check").onclick = () => {
+      const plain = answer.replace(/ /g, "");
+      let allRight = true;
+      allInputs.forEach((i, idx) => {
+        const correct = (i.value.toUpperCase() === plain[idx]);
+        i.parentElement.classList.toggle("correct", correct);
+        if (!correct) allRight = false;
+      });
+      const v = document.getElementById("verdict");
+      if (allRight) {
+        v.textContent = "✓ CRACKED! The message reads: \"" + answer + "\"";
+        v.className = "verdict win";
+      } else {
+        v.textContent = "✗ Not quite. Try a different shift, detective.";
+        v.className = "verdict lose";
+      }
+    };
+
+  
+    // ── persistence ──
+    const CLUE_KEY = "wsmb.clue1";
+    const _all = [...document.querySelectorAll(".cell-input input, .ans-cell input")];
+    const _save = () => localStorage.setItem(CLUE_KEY + ".inputs", JSON.stringify(_all.map(i => i.value)));
+    (JSON.parse(localStorage.getItem(CLUE_KEY + ".inputs") || "[]")).forEach((v, idx) => {
+      if (_all[idx] && v) _all[idx].value = v;
+    });
+    _all.forEach(i => i.addEventListener("input", _save));
+    document.getElementById("check").addEventListener("click", () => {
+      _save();
+      setTimeout(() => {
+        const won = document.getElementById("verdict").classList.contains("win");
+        if (won) localStorage.setItem(CLUE_KEY + ".solved", "true");
+        else      localStorage.removeItem(CLUE_KEY + ".solved");
+      }, 0);
+    });
+    document.getElementById("clear").addEventListener("click", () => {
+      localStorage.removeItem(CLUE_KEY + ".inputs");
+      localStorage.removeItem(CLUE_KEY + ".solved");
+    });
+  </script>
+
+
+  <footer style="max-width:900px;margin:40px auto 0;padding:18px 24px;text-align:center;font-family:'Special Elite', monospace;font-size:0.78rem;color:#fffbe6;text-shadow:1px 1px 2px rgba(0,0,0,0.6);line-height:1.6;opacity:0.9;">
+    All character images and likenesses are property of <strong>The Simpsons</strong> &copy; 20th Television / Disney.<br>
+    This site is a fan-made educational project and is <strong>not for sale</strong>.
+  </footer>
+</body>
+</html>

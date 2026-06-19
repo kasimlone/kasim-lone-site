@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clue #5 — Mixed Ciphers</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Special+Elite&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    font-family: "Special Elite", "Courier New", monospace;
+    color: #1a1a1a;
+    background-color: #c9954a;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(90,55,20,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 32%, rgba(60,35,10,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 33% 67%, rgba(110,70,30,0.35) 0 2px, transparent 3px),
+      radial-gradient(circle at 88% 82%, rgba(70,40,15,0.45) 0 2px, transparent 3px),
+      radial-gradient(circle at 55% 45%, rgba(140,90,40,0.30) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 22% 88%, rgba(80,45,15,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 67% 12%, rgba(120,75,30,0.35) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 5%  55%, rgba(95,55,20,0.40) 0 2px, transparent 3px),
+      radial-gradient(circle at 95% 60%, rgba(105,65,25,0.40) 0 2px, transparent 3px),
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 100%);
+    background-size: 90px 90px, 110px 110px, 130px 130px, 100px 100px,
+                     70px 70px, 120px 120px, 85px 85px, 95px 95px, 105px 105px, 100% 100%;
+    padding-bottom: 80px;
+  }
+
+  /* Nav */
+  nav.menu {
+    position: sticky; top: 0; z-index: 100;
+    background: #1a3a5c; border-bottom: 4px solid #f0c419;
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    margin-bottom: 40px;
+  }
+  nav.menu .badge { font-family: "Bebas Neue", sans-serif; color: #f0c419; font-size: 1.4rem; letter-spacing: 2px; text-shadow: 2px 2px 0 #0a1a30; }
+  nav.menu .badge::before { content: "★ "; color: #fff; }
+  nav.menu a {
+    font-family: "Bebas Neue", sans-serif; color: #fff; text-decoration: none;
+    font-size: 0.95rem; letter-spacing: 1px;
+    padding: 6px 14px; border-radius: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  nav.menu a:hover, nav.menu a.active { background: #f0c419; color: #1a3a5c; }
+  nav.menu .spacer { flex: 1; }
+  nav.menu .case-id { color: #f0c419; font-family: "Bebas Neue"; letter-spacing: 1.5px; }
+
+  h1 {
+    font-family: "Permanent Marker", cursive;
+    text-align: center; margin: 0 0 6px; font-size: 2.6rem;
+    color: #fff; text-shadow: 3px 3px 0 #8b0000, 6px 6px 12px rgba(0,0,0,0.6);
+    letter-spacing: 2px; transform: rotate(-1deg);
+  }
+  p.sub {
+    font-family: "Permanent Marker", cursive; text-align: center;
+    margin: 0 auto 14px; font-size: 1.1rem;
+    color: #fffbe6; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+
+  .hint-card {
+    max-width: 880px; margin: 0 auto 24px;
+    background: #fffdf3; border: 3px solid #1a1a1a; border-radius: 10px;
+    padding: 14px 20px; box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+    font-size: 0.95rem; line-height: 1.5;
+  }
+  .hint-card strong { color: #b71c1c; }
+  .hint-card ul { margin: 6px 0 0 18px; padding: 0; }
+  .hint-card li { margin: 2px 0; }
+
+  /* Cipher panel — evidence sheet */
+  .cipher-panel {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fffdf3;
+    background-image: linear-gradient(180deg, #fefcf3 0%, #f1ead0 100%);
+    border: 3px solid #1a1a1a;
+    padding: 40px 26px 38px;
+    border-radius: 6px;
+    box-shadow: 8px 10px 24px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .cipher-panel::before {
+    content: "EVIDENCE";
+    position: absolute; top: 10px; right: 16px;
+    font-family: "Bebas Neue", sans-serif; font-size: 0.85rem;
+    letter-spacing: 3px; color: #b71c1c;
+    border: 2px solid #b71c1c; padding: 2px 8px;
+    transform: rotate(4deg); opacity: 0.7;
+  }
+
+  .puzzle-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 32px;
+    justify-content: flex-start;
+    margin-bottom: 22px;
+  }
+  .word { display: flex; flex-direction: column; }
+  .row { display: flex; gap: 4px; }
+  .cipher-row { margin-bottom: 4px; }
+
+  .cell-cipher, .cell-input {
+    height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px;
+  }
+  .cell-cipher {
+    background: #1a3a5c; color: #f0c419;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.4rem; letter-spacing: 2px;
+    border: 2px solid #0a1a30;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.3);
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+  .cell-input { background: #fff; border: 2px dashed #1a1a1a; padding: 0; }
+  .cell-input input {
+    width: 100%; height: 100%;
+    border: none; outline: none; background: transparent;
+    text-align: center;
+    font-family: "Permanent Marker", cursive;
+    font-size: 1.6rem; color: #b71c1c;
+    text-transform: uppercase; caret-color: #b71c1c;
+    padding: 0 6px;
+  }
+  .cell-input input:focus { background: rgba(240, 196, 25, 0.18); border-radius: 2px; }
+  .cell-input.correct { background: rgba(80, 170, 90, 0.18); border-style: solid; border-color: #2e7d32; }
+  .cell-input.correct input { color: #2e7d32; }
+
+  /* Toolbar */
+  .toolbar {
+    max-width: 1100px; margin: 26px auto 0;
+    display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+  }
+  .btn {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.15rem; letter-spacing: 1.5px;
+    padding: 10px 22px;
+    border: 3px solid #1a1a1a; border-radius: 6px;
+    background: #fff; color: #1a1a1a; cursor: pointer;
+    box-shadow: 4px 4px 0 #1a1a1a;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #1a1a1a; }
+  .btn:active { transform: translate(0,0); box-shadow: 2px 2px 0 #1a1a1a; }
+  .btn.primary { background: #b71c1c; color: #fff; }
+  .btn.primary:hover { background: #d12424; }
+
+  .verdict {
+    max-width: 1100px; margin: 24px auto 0; text-align: center;
+    font-family: "Permanent Marker", cursive;
+    font-size: 1.6rem; min-height: 2em;
+    color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+  }
+  .verdict.win { color: #6dff7c; }
+  .verdict.lose { color: #ffaaaa; }
+
+  /* ─── Mobile responsive ─── */
+  @media (max-width: 700px) {
+    body { padding-bottom: 40px; }
+    nav.menu { flex-wrap: wrap; gap: 6px 12px; padding: 10px 14px; margin-bottom: 24px; }
+    nav.menu .badge { font-size: 1.05rem; letter-spacing: 1.5px; flex-basis: 100%; }
+    nav.menu a { font-size: 0.78rem; padding: 4px 8px; letter-spacing: 0.5px; }
+    nav.menu .spacer, nav.menu .case-id { display: none; }
+
+    h1 { font-size: 1.9rem !important; letter-spacing: 1px; }
+    p.sub { font-size: 1rem !important; }
+
+    .scene, .layout { grid-template-columns: 1fr !important; padding: 0 14px !important; gap: 20px !important; }
+    .hint-card { margin: 0 14px 20px !important; padding: 12px 14px !important; font-size: 0.9rem !important; }
+
+    /* Cipher panels */
+    .cipher-panel { padding: 28px 12px 32px !important; gap: 14px !important; }
+    .cell-cipher, .cell-input { width: 42px !important; height: 46px !important; font-size: 1.2rem !important; }
+    .cell-input input { font-size: 1.3rem !important; }
+    .cell-cipher { font-size: 1.1rem !important; }
+    .puzzle-row { gap: 14px 16px !important; justify-content: center !important; }
+
+    /* Clue 3 single-input rows */
+    .ciph-row { grid-template-columns: 1fr !important; gap: 6px !important; }
+    .ciph-cell { font-size: 1.15rem !important; padding: 10px 12px !important; }
+    .ans-cell input { font-size: 1.25rem !important; min-height: 44px !important; }
+
+    /* Reference panels */
+    .keypad-panel, .morse-panel { position: static !important; }
+    .morse-grid { grid-template-columns: repeat(2, 1fr) !important; font-size: 0.85rem !important; }
+
+    /* Speech bubble */
+    .bubble { padding: 18px 18px !important; font-size: 0.98rem !important; }
+    .bubble::before, .bubble::after { display: none !important; }
+
+    /* Suspects board */
+    .board { padding: 14px !important; gap: 30px 14px !important; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; }
+    .polaroid { padding: 10px 10px 36px !important; }
+    .photo { height: 160px !important; }
+
+    /* Index ID card */
+    .id-card { width: 100% !important; max-width: 320px; transform: rotate(-1deg) !important; }
+    .id-body { grid-template-columns: 110px 1fr !important; }
+    .burns-set { gap: 12px !important; }
+    .burns-card { width: 150px !important; }
+    .burns-card img { height: 130px !important; }
+
+    /* Solve case file */
+    .case-file { padding: 28px 14px 60px !important; }
+    .case-content { flex-wrap: wrap !important; gap: 16px !important; padding: 8px 0 0 !important; }
+    .case-photo { width: 130px !important; padding: 8px 8px 14px !important; }
+    .case-photo img { height: 100px !important; }
+    .stamp { font-size: 1.8rem !important; letter-spacing: 3px !important; padding: 8px 18px !important; }
+    .prison img { height: 220px !important; }
+
+    .toolbar { padding: 0 14px; }
+    .btn { font-size: 1rem; padding: 8px 18px; }
+  }
+
+</style>
+  <!-- Vercel Web Analytics -->
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <nav class="menu">
+    <span class="badge">SPRINGFIELD P.D.</span>
+    <a href="index.html">Home</a>
+    <a href="suspects.html">Suspects</a>
+    <a href="clue1.html">Clue 1</a>
+    <a href="clue2.html">Clue 2</a>
+    <a href="clue3.html">Clue 3</a>
+    <a href="clue4.html">Clue 4</a>
+    <a href="clue5.html" class="active">Clue 5</a>
+    <a href="solve.html">Solve It</a>
+    <a href="more.html">More Sites</a>
+    <span class="spacer"></span>
+    <span class="case-id">CASE #1995-WSMB</span>
+  </nav>
+
+  <h1>CLUE #5</h1>
+  <p class="sub">— Mixed Cipher: A Real Puzzle —</p>
+
+  <div class="hint-card">
+    <p><strong>Detective's note:</strong> This one's a doozy. The perp mixed <em>all</em> the previous cipher styles into a single message:</p>
+    <ul>
+      <li><strong>Letters</strong> — Caesar cipher (work out the shift yourself!)</li>
+      <li><strong>Single digits / two-digit numbers</strong> — could be number cipher (1=A, 2=B, …) <em>or</em> a single phone-keypad press. Try both.</li>
+      <li><strong>Long digit strings</strong> (e.g. 444, 22277…) — phone keypad multi-tap. "&gt;" means next press is on the same key.</li>
+      <li><strong>Dots &amp; dashes</strong> — Morse code.</li>
+    </ul>
+    <p>Type each decoded chunk into the blue box below it. The cell may hold one letter or several.</p>
+  </div>
+
+  <div class="cipher-panel" id="panel"></div>
+
+  <div class="toolbar">
+    <button class="btn" id="clear">Clear</button>
+    <button class="btn primary" id="check">Check Answer</button>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+
+  <script>
+    // Each row = list of words. Each word = list of cells.
+    // Each cell: { cipher: shown text, answer: decoded text }
+    const rows = [
+      [ // Row 1
+        [{c:"13", a:"M"}, {c:"-.--", a:"Y"}],
+        [{c:"Q", a:"A"}, {c:"W", a:"G"}, {c:"5", a:"E"}],
+        [{c:"444", a:"I"}, {c:"...", a:"S"}],
+        [{c:"666", a:"O"}, {c:"888", a:"V"}, {c:"5", a:"E"}, {c:"H", a:"R"}],
+      ],
+      [ // Row 2
+        [{c:"V", a:"F"}, {c:"Y", a:"I"}, {c:"6", a:"F"}, {c:"-", a:"T"}, {c:"25", a:"Y"}],
+        [{c:"1", a:"A"}, {c:"-.", a:"N"}, {c:"3", a:"D"}],
+        [{c:"4446", a:"IM"}],
+      ],
+      [ // Row 3
+        [{c:"66", a:"N"}, {c:"---", a:"O"}, {c:"20", a:"T"}],
+        [{c:"22277729999>999", a:"CRAZY"}],
+      ],
+    ];
+    const fullAnswer = "MY AGE IS OVER FIFTY AND I'M NOT CRAZY";
+
+    const panel = document.getElementById("panel");
+    const inputs = [];
+
+    rows.forEach(row => {
+      const r = document.createElement("div");
+      r.className = "puzzle-row";
+
+      row.forEach(word => {
+        const w = document.createElement("div");
+        w.className = "word";
+        const cRow = document.createElement("div"); cRow.className = "row cipher-row";
+        const iRow = document.createElement("div"); iRow.className = "row";
+
+        word.forEach(cell => {
+          // Cipher box
+          const cb = document.createElement("div");
+          cb.className = "cell-cipher";
+          cb.textContent = cell.c;
+          cRow.appendChild(cb);
+
+          // Decide input width to roughly match the cipher box
+          const ib = document.createElement("div");
+          ib.className = "cell-input";
+          const inp = document.createElement("input");
+          inp.dataset.answer = cell.a;
+          inp.maxLength = cell.a.length + 2;
+          inp.addEventListener("input", e => {
+            e.target.value = e.target.value.toUpperCase().replace(/[^A-Z']/g, "");
+          });
+          ib.appendChild(inp);
+          iRow.appendChild(ib);
+
+          // Sync widths after layout
+          requestAnimationFrame(() => {
+            const w = cb.offsetWidth;
+            cb.style.minWidth = w + "px";
+            ib.style.minWidth = w + "px";
+          });
+          inputs.push(inp);
+        });
+
+        w.appendChild(cRow);
+        w.appendChild(iRow);
+        r.appendChild(w);
+      });
+
+      panel.appendChild(r);
+    });
+
+    document.getElementById("clear").onclick = () => {
+      inputs.forEach(i => { i.value = ""; i.parentElement.classList.remove("correct"); });
+      document.getElementById("verdict").textContent = "";
+      document.getElementById("verdict").className = "verdict";
+      inputs[0].focus();
+    };
+
+    document.getElementById("check").onclick = () => {
+      let allRight = true;
+      inputs.forEach(i => {
+        const want = i.dataset.answer;
+        const got = i.value.toUpperCase().replace(/'/g, "");
+        const correct = (got === want);
+        i.parentElement.classList.toggle("correct", correct);
+        if (!correct) allRight = false;
+      });
+      const v = document.getElementById("verdict");
+      if (allRight) {
+        v.textContent = "✓ CRACKED! The message reads: \"" + fullAnswer + "\"";
+        v.className = "verdict win";
+      } else {
+        v.textContent = "✗ A mix of cipher styles — keep at it, detective.";
+        v.className = "verdict lose";
+      }
+    };
+
+  
+    // ── persistence ──
+    const CLUE_KEY = "wsmb.clue5";
+    const _all = [...document.querySelectorAll(".cell-input input, .ans-cell input")];
+    const _save = () => localStorage.setItem(CLUE_KEY + ".inputs", JSON.stringify(_all.map(i => i.value)));
+    (JSON.parse(localStorage.getItem(CLUE_KEY + ".inputs") || "[]")).forEach((v, idx) => {
+      if (_all[idx] && v) _all[idx].value = v;
+    });
+    _all.forEach(i => i.addEventListener("input", _save));
+    document.getElementById("check").addEventListener("click", () => {
+      _save();
+      setTimeout(() => {
+        const won = document.getElementById("verdict").classList.contains("win");
+        if (won) localStorage.setItem(CLUE_KEY + ".solved", "true");
+        else      localStorage.removeItem(CLUE_KEY + ".solved");
+      }, 0);
+    });
+    document.getElementById("clear").addEventListener("click", () => {
+      localStorage.removeItem(CLUE_KEY + ".inputs");
+      localStorage.removeItem(CLUE_KEY + ".solved");
+    });
+  </script>
+
+
+  <footer style="max-width:900px;margin:40px auto 0;padding:18px 24px;text-align:center;font-family:'Special Elite', monospace;font-size:0.78rem;color:#fffbe6;text-shadow:1px 1px 2px rgba(0,0,0,0.6);line-height:1.6;opacity:0.9;">
+    All character images and likenesses are property of <strong>The Simpsons</strong> &copy; 20th Television / Disney.<br>
+    This site is a fan-made educational project and is <strong>not for sale</strong>.
+  </footer>
+</body>
+</html>

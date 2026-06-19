@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Mark Totaller</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .container { width: 720px; max-width: 100%; }
+    .total-card {
+      background: #eeecea;
+      border-radius: 12px;
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .total-label {
+      font-size: 12px;
+      color: #888780;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .total-number {
+      font-size: 80px;
+      font-weight: 500;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+    .marks-label { font-size: 14px; color: #888780; margin-top: 6px; }
+    .history {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      min-height: 60px;
+    }
+    .history-label { font-size: 12px; color: #aaa; margin-bottom: 8px; }
+    .history-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      background: #f5f5f3;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+    .tap-hint { font-size: 13px; color: #aaa; text-align: center; margin-bottom: 1.25rem; }
+    .hidden-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      top: 0; left: 0;
+      width: 1px; height: 1px;
+    }
+    .reset-btn {
+      display: block;
+      width: 100%;
+      padding: 11px;
+      font-size: 14px;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 8px;
+      color: #666;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .reset-btn:hover { background: #eeecea; }
+    .flash { animation: flash 0.15s ease; }
+    @keyframes flash { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    @media (prefers-color-scheme: dark) {
+      body { background: #1c1c1a; color: #f0ede8; }
+      .total-card { background: #2a2a28; }
+      .total-number { color: #f0ede8; }
+      .total-label, .marks-label { color: #888780; }
+      .history { background: #252523; border-color: rgba(255,255,255,0.1); }
+      .chip { background: #2a2a28; border-color: rgba(255,255,255,0.1); color: #f0ede8; }
+      .reset-btn { border-color: rgba(255,255,255,0.15); color: #aaa; }
+      .reset-btn:hover { background: #2a2a28; }
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app" tabindex="0">
+  <div class="total-card">
+    <p class="total-label">Total marks</p>
+    <p class="total-number" id="total">0</p>
+    <p class="marks-label" id="q-count">No marks entered</p>
+  </div>
+  <div class="history">
+    <p class="history-label">Questions entered</p>
+    <div class="history-chips" id="chips"><span style="font-size:13px;color:#aaa">&#8212;</span></div>
+  </div>
+  <p class="tap-hint">Type any digit (0&ndash;9) to add marks</p>
+  <input class="hidden-input" id="hidden" type="tel" inputmode="numeric">
+  <button class="reset-btn" id="reset-btn">&#8635; Reset</button>
+</div>
+<script>
+  var app = document.getElementById('app');
+  var totalEl = document.getElementById('total');
+  var countEl = document.getElementById('q-count');
+  var chipsEl = document.getElementById('chips');
+  var hiddenInput = document.getElementById('hidden');
+  var resetBtn = document.getElementById('reset-btn');
+  var marks = [];
+
+  function render() {
+    var sum = marks.reduce(function(a, b) { return a + b; }, 0);
+    totalEl.textContent = sum;
+    if (marks.length === 0) {
+      countEl.textContent = 'No marks entered';
+      chipsEl.innerHTML = '<span style="font-size:13px;color:#aaa">&mdash;</span>';
+    } else {
+      countEl.textContent = marks.length === 1 ? '1 question' : marks.length + ' questions';
+      chipsEl.innerHTML = marks.map(function(m, i) {
+        return '<span class="chip" title="Q' + (i + 1) + '">' + m + '</span>';
+      }).join('');
+    }
+  }
+
+  function addMark(n) {
+    marks.push(n);
+    totalEl.classList.remove('flash');
+    void totalEl.offsetWidth;
+    totalEl.classList.add('flash');
+    render();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key >= '0' && e.key <= '9') {
+      e.preventDefault();
+      addMark(parseInt(e.key));
+    }
+  });
+
+  hiddenInput.addEventListener('input', function() {
+    for (var i = 0; i < this.value.length; i++) {
+      var ch = this.value[i];
+      if (ch >= '0' && ch <= '9') addMark(parseInt(ch));
+    }
+    this.value = '';
+  });
+
+  app.addEventListener('click', function() { hiddenInput.focus(); });
+
+  resetBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    marks = [];
+    render();
+  });
+
+  app.focus();
+</script>
+</body>
+</html>
