@@ -5,6 +5,9 @@ import StaticSiteScripts from "@/components/StaticSiteScripts";
 
 export const metadata: Metadata = {
   title: "Exam Mark Totaller",
+  description:
+    "A quick classroom tool for totalling exam marks across multiple papers — built by Kasim Lone.",
+  alternates: { canonical: "/exam-total" },
 };
 
 export default async function ExamTotalPage() {

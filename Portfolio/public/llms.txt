@@ -1,0 +1,27 @@
+# Kasim Lone
+
+> Kasim Lone is Head of Computer Science and Digital Literacy and the founder of RunPy, an online Python IDE for classrooms. He builds interactive lessons, revision games and classroom tools for GCSE and A Level Computer Science.
+
+## About
+
+- Name: Kasim Lone
+- Role: Head of Computer Science and Digital Literacy
+- Founder of: RunPy (https://www.runpy.co.uk) — an online Python IDE used by teachers and students to write, run and share Python code in the browser.
+- Focus: computer science education, edtech, interactive lessons, revision games, programming, classroom tools.
+- Website: https://kasim-lone.dev
+
+## Projects
+
+- [RunPy](https://www.runpy.co.uk): Online Python IDE for classrooms. Code, share, manage and teach Python in the browser. Run Python online with feedback tools for teachers.
+- [REV11](https://kasim-lone.dev/revision11): Computer science revision games and flashcards styled as a football team-builder — quizzes, transfer market, packs and achievements.
+- [Sixth Form Taster](https://kasim-lone.dev/sixth-form-taster): A Level Computer Science taster lesson covering linear vs binary search, scaling and complexity.
+- [Bitmap Images](https://kasim-lone.dev/bitmap-images): GCSE Computer Science lesson on data representation — pixels, resolution, colour depth, file size, with hands-on demos.
+- [Who Shot Mr. Burns?](https://kasim-lone.dev/who-shot-mr-burns): Classroom mystery puzzle — sift through suspects, clues and eyewitness statements.
+- [SQL Injection Lab](https://sql-exploit-lab.base44.app): Interactive 8-step security lesson on SQL injection, data theft, 2FA and prevention.
+- [Exam Total](https://kasim-lone.dev/exam-total): Keyboard-first marking tool that totals exam marks as you type digits.
+- [IO Quiz](https://cswhitgift.my.canva.site/ioquiz): Interactive computer science revision quiz on input and output devices.
+
+## Contact
+
+- LinkedIn: https://www.linkedin.com/in/kasim-lone/
+- YouTube: https://www.youtube.com/@MrLoneCS

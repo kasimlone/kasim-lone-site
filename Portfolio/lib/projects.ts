@@ -15,8 +15,8 @@ export type Social = {
 export const projects: Project[] = [
   {
     title: "RunPy",
-    description: "Code, share, manage & teach Python in the browser. A user-friendly space for students to write Python, and for teachers to view, run, share and give feedback.",
-    tags: ["python", "education", "web"],
+    description: "An online Python IDE — code, share, manage and teach Python in the browser. Run Python online with a user-friendly space for students to write code, and for teachers to view, run, share and give feedback.",
+    tags: ["python", "IDE", "edtech"],
     href: "https://www.runpy.co.uk",
     preview: "/project-cards/runpy-preview.png",
   },
@@ -29,8 +29,8 @@ export const projects: Project[] = [
   },
   {
     title: "REV11",
-    description: "Build your Ultimate XI. A football team-builder with quizzes, transfer market, packs and manager progression — earn coins, collect cards and complete achievements.",
-    tags: ["next", "game", "football"],
+    description: "Build your Ultimate XI. Computer science revision games and flashcards dressed as a football team-builder — answer quiz questions to earn coins, open packs, collect cards and complete achievements.",
+    tags: ["revision", "flashcards", "game"],
     href: "/revision11",
     preview: "/project-cards/rev11-preview.png",
   },
@@ -51,21 +51,21 @@ export const projects: Project[] = [
   {
     title: "Bitmap Images",
     description: "A GCSE Computer Science lesson on data representation — explore how computers store pictures using pixels, resolution, colour depth and file size with hands-on demos.",
-    tags: ["next", "education", "gcse"],
+    tags: ["comp sci", "lessons", "gcse"],
     href: "/bitmap-images",
     preview: "/project-cards/bitmap-images-preview.png",
   },
   {
     title: "Sixth Form Taster",
     description: "A taster A Level Computer Science lesson — from data to decisions. Walks through linear vs binary search, scaling, complexity and the big idea behind algorithmic thinking.",
-    tags: ["next", "education", "algorithms"],
+    tags: ["comp sci", "lessons", "algorithms"],
     href: "/sixth-form-taster",
     preview: "/project-cards/sixth-form-taster-preview.png",
   },
   {
     title: "IO Quiz",
-    description: "Input & Output Devices — can you spot the difference? A quick interactive quiz covering computers, consoles and phones.",
-    tags: ["quiz", "education", "tech"],
+    description: "Input & Output Devices — can you spot the difference? A quick interactive computer science revision quiz covering computers, consoles and phones.",
+    tags: ["quiz", "revision", "comp sci"],
     href: "https://cswhitgift.my.canva.site/ioquiz",
     preview: "/project-cards/ioquiz-preview.png",
   },
