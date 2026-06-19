@@ -83,10 +83,7 @@ export default function Home() {
                 Head of Computer Science and Digital Literacy
               </p>
               <p className="text-zinc-300 font-mono text-sm">
-                Founder, <a href="https://www.runpy.co.uk" target="_blank" rel="noreferrer" className="text-syntax-keyword hover:underline">RunPy</a> — an online Python IDE for the classroom
-              </p>
-              <p className="mt-2 text-zinc-400 font-mono text-xs leading-relaxed max-w-xl">
-                Building edtech for computer science education — interactive lessons, revision games, flashcards and coding tools that help students learn programming.
+                Founder, <a href="https://www.runpy.co.uk" target="_blank" rel="noreferrer" className="text-syntax-keyword hover:underline">RunPy</a>
               </p>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {socials.map((s) => <SocialTile key={s.name} social={s} />)}
