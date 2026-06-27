@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+
 import Nav from "@/components/sixth-form-taster/Nav";
 import Reveal from "@/components/sixth-form-taster/Reveal";
 import BinarySearchAnimation from "@/components/sixth-form-taster/BinarySearchAnimation";

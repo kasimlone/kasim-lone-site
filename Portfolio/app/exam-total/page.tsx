@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { loadStaticIndex } from "@/lib/static-site-loader";
 import StaticSiteScripts from "@/components/StaticSiteScripts";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Exam Mark Totaller",
   description:

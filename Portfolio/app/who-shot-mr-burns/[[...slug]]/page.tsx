@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { loadWSMBPage, WSMB_SLUGS } from "@/lib/wsmb-loader";
 import WSMBScripts from "@/components/who-shot-mr-burns/WSMBScripts";
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   return WSMB_SLUGS.map((s) => ({ slug: s ? [s] : [] }));
 }

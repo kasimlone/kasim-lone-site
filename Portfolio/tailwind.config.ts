@@ -35,8 +35,8 @@ export default {
         leafSA: "#196B24",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "ui-monospace", "monospace"],
       },
       animation: {
         "fade-up": "fadeUp 0.7s ease-out both",

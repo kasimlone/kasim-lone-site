@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { loadStaticIndex } from "@/lib/static-site-loader";
 import StaticSiteScripts from "@/components/StaticSiteScripts";
 
+export const dynamic = "force-static";
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kasim-lone.dev";
 
 export const metadata: Metadata = {

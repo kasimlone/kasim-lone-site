@@ -3,6 +3,8 @@ import { ProjectTile } from "@/components/ProjectTile";
 import { SocialTile } from "@/components/SocialTile";
 import { projects, socials } from "@/lib/projects";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Kasim Lone — Computer Science Teacher & Builder",
   description:
@@ -16,7 +18,7 @@ export default function Home() {
       {/* Blurred classroom background */}
       <div
         className="fixed inset-0 bg-cover bg-center pointer-events-none"
-        style={{ backgroundImage: "url(/classroom.png)", filter: "blur(6px) saturate(1.15)", transform: "scale(1.15)", zIndex: 0 }}
+        style={{ backgroundImage: "url(/classroom.jpg)", filter: "blur(6px) saturate(1.15)", transform: "scale(1.15)", zIndex: 0 }}
         aria-hidden
       />
       {/* Dark overlay for readability */}
