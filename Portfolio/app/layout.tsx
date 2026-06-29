@@ -100,6 +100,9 @@ export const metadata: Metadata = {
     apple: "/kasim.png",
   },
   category: "education",
+  other: {
+    "google-adsense-account": "ca-pub-1129118659435264",
+  },
 };
 
 export const viewport: Viewport = {
