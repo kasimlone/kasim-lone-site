@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 1: The Internet</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a href="../index.html" class="home-link" aria-label="Back to home" title="Home" style="position:fixed;top:14px;left:14px;z-index:200;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(20,30,60,0.55);border:1px solid rgba(94,234,212,0.3);color:#5eead4;text-decoration:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background 0.18s ease,border-color 0.18s ease;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></a>
+
+<div id="progress-bar"></div>
+<div id="aim-indicator" aria-live="polite"></div>
+
+<nav id="side-nav" aria-label="Lesson sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#starter" data-label="Internet vs WWW"><span></span></a>
+  <a href="#url" data-label="URLs"><span></span></a>
+  <a href="#tld" data-label="Domains"><span></span></a>
+  <a href="#ip" data-label="IP addresses"><span></span></a>
+  <a href="#dns" data-label="DNS"><span></span></a>
+  <a href="#packets" data-label="Packets"><span></span></a>
+  <a href="#plenary" data-label="Plenary"><span></span></a>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero" class="section hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Year 9 · Computing</p>
+      <h1>Lesson 1<br/><span class="accent">The Internet</span></h1>
+      <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+    </div>
+  </section>
+
+  <!-- OBJECTIVES -->
+  <section id="objectives" class="section">
+    <div class="container">
+      <h2>Objectives</h2>
+      <p class="sub">By the end of this lesson you will be able to…</p>
+      <ul class="objectives-list">
+        <li>Understand what the <strong>Internet</strong> and <strong>World Wide Web</strong> are, and how they differ.</li>
+        <li>Identify the <strong>components of a web address</strong>.</li>
+        <li>Understand what a <strong>protocol</strong> is, and the use of <strong>HTTP</strong> for transferring web pages.</li>
+        <li>Understand the purpose of <strong>DNS servers</strong>.</li>
+        <li>Understand how <strong>packet switching</strong> works, and simulate it to send information.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STARTER -->
+  <section id="starter" class="section" data-aim="Understand what the Internet and World Wide Web are, and how they differ.">
+    <div class="container">
+      <h2>Starter</h2>
+      <p class="sub">Click each card to reveal the answer.</p>
+
+      <div class="flip-grid">
+        <button class="flip-card" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>What is the <em>Internet</em>?</h3>
+              <p class="hint">Click to reveal</p>
+            </div>
+            <div class="flip-face flip-back">
+              <p>The Internet is a worldwide collection of <strong>inter</strong>connected <strong>net</strong>works.</p>
+            </div>
+          </div>
+        </button>
+
+        <button class="flip-card" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>How is the Internet different from the <em>World Wide Web</em>?</h3>
+              <p class="hint">Click to reveal</p>
+            </div>
+            <div class="flip-face flip-back">
+              <p>The <strong>Internet</strong> is the network.<br/>The <strong>World Wide Web</strong> is one service that uses the Internet to distribute web pages.</p>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div class="callout">
+        <strong>Other services that use the Internet:</strong>
+        <span class="chip">Email</span>
+        <span class="chip">Phone calls (VoIP)</span>
+        <span class="chip">File transfer</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- URL -->
+  <section id="url" class="section" data-aim="Identify the components of a web address, and understand what a protocol (HTTP) is.">
+    <div class="container">
+      <h2>Web addresses</h2>
+      <p class="sub">A web address is technically called a <strong>Uniform Resource Locator (URL)</strong>. It identifies a file on the Internet. Click each coloured part below.</p>
+
+      <div class="url-line" id="url-line">
+        <span class="url-part" data-key="protocol">https://</span><span class="url-part" data-key="subdomain">www.</span><span class="url-part" data-key="domain">bbc.co.uk</span><span class="url-part" data-key="directory">/news/</span><span class="url-part" data-key="filename">article.html</span>
+      </div>
+
+      <div class="url-explainer" id="url-explainer">
+        <p class="muted">Click a part of the URL to learn what it is.</p>
+      </div>
+
+      <div class="callout note" id="http-callout" hidden>
+        <strong>HTTP is a protocol.</strong> A protocol is a set of rules computers follow when they send and receive information, in this case web pages.
+      </div>
+    </div>
+  </section>
+
+  <!-- TLD -->
+  <section id="tld" class="section" data-aim="Identify the components of a web address.">
+    <div class="container">
+      <h2>Top-level &amp; second-level domains</h2>
+      <p class="sub">Click a domain on the left, then click its matching meaning on the right.</p>
+
+      <div class="tld-game">
+        <div class="tld-col" id="tld-domains"></div>
+        <div class="tld-col" id="tld-meanings"></div>
+      </div>
+
+      <div class="tld-controls">
+        <span id="tld-score" class="score">Matched 0 / 8</span>
+        <button id="tld-reveal" class="btn">Reveal all</button>
+        <button id="tld-reset" class="btn ghost">Reset</button>
+      </div>
+
+      <div class="worksheet-callout">
+        📝 Now complete <strong>Task 1</strong> on <strong>OneNote</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- IP -->
+  <section id="ip" class="section" data-aim="Understand the purpose of DNS servers.">
+    <div class="container">
+      <h2>IP addresses</h2>
+      <p class="sub">An <strong>IP address</strong> (Internet Protocol address) identifies a particular computer on the Internet, like a house number identifies a particular house.</p>
+
+      <div class="ip-examples">
+        <span class="ip-pill">209.85.128.5</span>
+        <span class="ip-pill">64.18.12.221</span>
+        <span class="ip-pill">216.58.218.117</span>
+      </div>
+
+      <p class="sub">An IP address is <strong>four numbers separated by dots</strong>. Each number must be between 0 and 255. For each of these, decide whether it's a valid IP address:</p>
+
+      <div class="ip-quiz" id="ip-quiz"></div>
+    </div>
+  </section>
+
+  <!-- DNS -->
+  <section id="dns" class="section" data-aim="Understand the purpose of DNS servers.">
+    <div class="container">
+      <h2>DNS servers</h2>
+      <p class="sub">The <strong>Domain Name System</strong> links domain names to IP addresses. A DNS server <em>translates</em> a friendly name into the IP your computer actually needs.</p>
+
+      <div class="dns-stage">
+        <div class="dns-node browser" id="dns-browser">
+          <div class="node-emoji">💻</div>
+          <div class="node-label">Browser</div>
+        </div>
+
+        <div class="dns-wire">
+          <div class="dns-msg" id="dns-msg"></div>
+        </div>
+
+        <div class="dns-node server" id="dns-server">
+          <div class="node-emoji">🗄️</div>
+          <div class="node-label">DNS server</div>
+        </div>
+      </div>
+
+      <div class="dns-controls">
+        <input id="dns-input" type="text" placeholder="e.g. www.google.co.uk" />
+        <button id="dns-go" class="btn">Look up</button>
+      </div>
+      <p id="dns-result" class="feedback"></p>
+    </div>
+  </section>
+
+  <!-- PACKETS -->
+  <section id="packets" class="section" data-aim="Understand how packet switching works, and simulate it to send information.">
+    <div class="container">
+      <h2>Packet switching</h2>
+      <p class="sub">To travel across the Internet, data is split into <strong>packets</strong>. Each packet is numbered and may take a different route, so packets can arrive at different times, then they're reassembled in order.</p>
+
+      <div class="mode-tabs" role="tablist">
+        <button class="mode-tab active" data-mode="text" role="tab">📝 Send text</button>
+        <button class="mode-tab" data-mode="image" role="tab">🖼️ Send an image</button>
+        <button class="mode-tab" data-mode="route" role="tab">🚦 Fastest route</button>
+      </div>
+
+      <div class="packet-controls" id="packet-controls-text">
+        <input id="packet-input" type="text" placeholder="Type a short message…" maxlength="40" value="HELLO INTERNET" />
+        <button id="packet-send" class="btn">Send Text</button>
+      </div>
+
+      <div class="packet-controls" id="packet-controls-image" hidden>
+        <p class="route-info">An image is also just data, so it gets split into packets too.</p>
+        <button id="packet-send-image" class="btn">Send Image</button>
+      </div>
+
+      <div class="packet-controls" id="packet-controls-route" hidden>
+        <p class="route-info">
+          A file is split into <strong>10 packets</strong>. Routers send each packet along the
+          <strong>fastest open route</strong>, not necessarily the shortest one.
+          Different packets can take <strong>different paths</strong> depending on
+          live traffic and outages, and they reroute instantly around any link that goes down.
+        </p>
+        <button id="packet-send-route" class="btn">Send File</button>
+      </div>
+
+      <div class="packet-stage" id="packet-stage">
+        <div class="packet-endpoint left">
+          <div class="node-emoji">📤</div>
+          <div class="node-label">Sender</div>
+        </div>
+
+        <div class="packet-routes">
+          <div class="route route-top"><span class="route-label" id="route-label-top"></span></div>
+          <div class="route route-mid"><span class="route-label" id="route-label-mid"></span></div>
+          <div class="route route-bot"><span class="route-label" id="route-label-bot"></span></div>
+        </div>
+
+        <div class="packet-endpoint right">
+          <div class="node-emoji">📥</div>
+          <div class="node-label">Receiver</div>
+        </div>
+
+        <div class="packet-layer" id="packet-layer"></div>
+        <div id="network-view" hidden></div>
+      </div>
+
+      <div class="packet-output">
+        <div class="po-block">
+          <h4>Arriving (out of order)</h4>
+          <div id="packet-arrivals" class="packet-list"></div>
+        </div>
+        <div class="po-block">
+          <h4 id="packet-final-label">Reassembled message</h4>
+          <div id="packet-final" class="packet-final"></div>
+          <div id="packet-final-image" class="packet-final-image" hidden></div>
+        </div>
+      </div>
+
+      <div class="worksheet-callout">
+        📝 Now complete <strong>Task 2</strong>, <strong>Task 3</strong> and <strong>Task 4</strong> on <strong>OneNote</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- PLENARY -->
+  <section id="plenary" class="section">
+    <div class="container">
+      <h2>Plenary</h2>
+      <p class="sub">Click each term to reveal the definition. Then explain each to a partner.</p>
+
+      <div class="term-grid">
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Internet</h3></div>
+            <div class="flip-face flip-back"><p>The worldwide collection of interconnected networks.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>WWW</h3></div>
+            <div class="flip-face flip-back"><p>The World Wide Web. A service that uses the Internet to deliver web pages.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>URL</h3></div>
+            <div class="flip-face flip-back"><p>Uniform Resource Locator. A web address.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>DNS server</h3></div>
+            <div class="flip-face flip-back"><p>A Domain Name System server that translates domain names into IP addresses.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Protocol</h3></div>
+            <div class="flip-face flip-back"><p>A set of rules for communication. HTTP (Hypertext Transfer Protocol) is used for transferring web pages.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Packet</h3></div>
+            <div class="flip-face flip-back"><p>A small numbered chunk of data that makes up the original file. Used to make data transfer over the Internet possible.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Packet switching</h3></div>
+            <div class="flip-face flip-back"><p>Data is split into small numbered <strong>packets</strong> that travel separately across the network, possibly by different routes, then get reassembled in order at the destination.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Top-level domain</h3></div>
+            <div class="flip-face flip-back"><p>The last part of a domain name (e.g. <strong>.com</strong>, <strong>.org</strong>, <strong>.uk</strong>) that indicates the type or country of the site.</p></div>
+          </div>
+        </button>
+      </div>
+
+      <p class="end-note">🎉 End of Lesson 1</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

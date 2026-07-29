@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 3: Topologies</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a href="../index.html" class="home-link" aria-label="Back to home" title="Home" style="position:fixed;top:14px;left:14px;z-index:200;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(20,30,60,0.55);border:1px solid rgba(94,234,212,0.3);color:#5eead4;text-decoration:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background 0.18s ease,border-color 0.18s ease;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></a>
+
+<div id="progress-bar"></div>
+<div id="aim-indicator" aria-live="polite"></div>
+
+<nav id="side-nav" aria-label="Lesson sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#starter" data-label="Starter"><span></span></a>
+  <a href="#lan" data-label="LAN"><span></span></a>
+  <a href="#wan" data-label="WAN"><span></span></a>
+  <a href="#nic" data-label="NIC"><span></span></a>
+  <a href="#topologies" data-label="Topologies"><span></span></a>
+  <a href="#bus" data-label="Bus network"><span></span></a>
+  <a href="#star" data-label="Star network"><span></span></a>
+  <a href="#compare" data-label="Compare"><span></span></a>
+  <a href="#hardware" data-label="Hardware"><span></span></a>
+  <a href="#plenary" data-label="Plenary"><span></span></a>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero" class="section hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Year 9 · Computing</p>
+      <h1>Lesson 3<br/><span class="accent">Topologies</span></h1>
+      <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+    </div>
+  </section>
+
+  <!-- OBJECTIVES -->
+  <section id="objectives" class="section">
+    <div class="container">
+      <h2>Objectives</h2>
+      <p class="sub">By the end of this lesson you will be able to…</p>
+      <ul class="objectives-list">
+        <li>Understand the difference between a <strong>LAN</strong> and a <strong>WAN</strong>, and give examples of each.</li>
+        <li>Know the <strong>hardware</strong> required to build a LAN: NIC, switch, router and wireless access point.</li>
+        <li>Identify different <strong>network topologies</strong>, including <strong>bus</strong> and <strong>star</strong>.</li>
+        <li>Compare the <strong>advantages and disadvantages</strong> of each topology.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STARTER -->
+  <section id="starter" class="section" data-aim="Discuss the pros and cons of networking the computers in a school.">
+    <div class="container">
+      <h2>Starter</h2>
+      <p class="sub">Computers in a school can be connected to a <strong>network</strong>. Discuss with a partner:</p>
+      <ul class="objectives-list" style="margin-bottom: 1.5em;">
+        <li>What are at least <strong>three advantages</strong> of doing this?</li>
+        <li>What are at least <strong>two disadvantages</strong>?</li>
+      </ul>
+
+      <p class="sub">Click each card to reveal a suggested answer.</p>
+
+      <div class="proscons">
+        <div class="proscons-col">
+          <h3 class="pros-h">✅ Advantages</h3>
+          <div class="reveal-list" id="starter-pros"></div>
+        </div>
+        <div class="proscons-col">
+          <h3 class="cons-h">⚠️ Disadvantages</h3>
+          <div class="reveal-list" id="starter-cons"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAN -->
+  <section id="lan" class="section" data-aim="Understand what a Local Area Network (LAN) is.">
+    <div class="container">
+      <h2>Local Area Network (LAN)</h2>
+      <p class="sub">A <strong>LAN</strong> is a group of computers and devices connected together in a <strong>small geographical area</strong> — like an office, school, library or home.</p>
+
+      <div class="lan-diagram">
+        <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" class="lan-svg">
+          <!-- Building outline -->
+          <rect x="20" y="20" width="560" height="280" rx="16" fill="rgba(94,234,212,0.04)" stroke="rgba(94,234,212,0.35)" stroke-dasharray="6 6" stroke-width="2"/>
+          <text x="40" y="50" fill="#5eead4" font-size="14" font-weight="600" letter-spacing="0.1em">🏫 SCHOOL BUILDING (LAN)</text>
+
+          <!-- Switch in centre -->
+          <g class="lan-switch">
+            <rect x="260" y="140" width="80" height="46" rx="8" fill="#243057" stroke="#818cf8" stroke-width="2"/>
+            <text x="300" y="167" text-anchor="middle" fill="#e8eefc" font-size="14" font-weight="600">Switch</text>
+            <text x="300" y="200" text-anchor="middle" fill="#9aa8c7" font-size="11">central hub</text>
+          </g>
+
+          <!-- Cables: exit at switch edge, end at device circle edge -->
+          <g stroke="#5eead4" stroke-width="2" opacity="0.55" stroke-linecap="round">
+            <line x1="260" y1="149" x2="124" y2="99"/>
+            <line x1="260" y1="177" x2="124" y2="221"/>
+            <line x1="340" y1="149" x2="476" y2="99"/>
+            <line x1="340" y1="177" x2="476" y2="221"/>
+          </g>
+          <line x1="300" y1="186" x2="300" y2="238" stroke="#5eead4" stroke-width="2" opacity="0.55" stroke-dasharray="4 5"/>
+
+          <!-- Devices -->
+          <g class="lan-device" data-id="pc1">
+            <circle cx="100" cy="90" r="26" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="100" y="97" text-anchor="middle" font-size="22">💻</text>
+            <text x="100" y="135" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 1</text>
+          </g>
+          <g class="lan-device" data-id="pc2">
+            <circle cx="100" cy="230" r="26" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="100" y="237" text-anchor="middle" font-size="22">💻</text>
+            <text x="100" y="275" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 2</text>
+          </g>
+          <g class="lan-device" data-id="printer">
+            <circle cx="500" cy="90" r="26" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="500" y="98" text-anchor="middle" font-size="22">🖨️</text>
+            <text x="500" y="135" text-anchor="middle" fill="#9aa8c7" font-size="11">Printer</text>
+          </g>
+          <g class="lan-device" data-id="server">
+            <circle cx="500" cy="230" r="26" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="500" y="237" text-anchor="middle" font-size="22">🗄️</text>
+            <text x="500" y="275" text-anchor="middle" fill="#9aa8c7" font-size="11">File server</text>
+          </g>
+          <g class="lan-device" data-id="tablet">
+            <circle cx="300" cy="260" r="22" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="300" y="267" text-anchor="middle" font-size="18">📱</text>
+            <text x="300" y="300" text-anchor="middle" fill="#9aa8c7" font-size="11">Wi-Fi tablet</text>
+          </g>
+        </svg>
+        <div class="lan-controls">
+          <button id="lan-send" class="btn">📨 Send a file across the LAN</button>
+          <button id="lan-reset" class="btn ghost">⟲ Reset</button>
+        </div>
+        <p class="feedback" id="lan-feedback"></p>
+      </div>
+
+      <div class="callout">
+        💡 In a school LAN, computers connect to a central <strong>switch</strong> using either <strong>wired</strong> or <strong>wireless</strong> connections.
+      </div>
+    </div>
+  </section>
+
+  <!-- WAN -->
+  <section id="wan" class="section" data-aim="Understand what a Wide Area Network (WAN) is.">
+    <div class="container">
+      <h2>Wide Area Network (WAN)</h2>
+      <p class="sub">A <strong>WAN</strong> is created when <strong>two or more LANs</strong> are connected together — usually over a long distance using <strong>leased lines</strong> (dedicated telecommunications cables).</p>
+
+      <div class="wan-stage">
+        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" class="wan-svg">
+          <!-- LAN 1 -->
+          <g class="wan-lan">
+            <rect x="20" y="40" width="220" height="200" rx="14" fill="rgba(94,234,212,0.05)" stroke="rgba(94,234,212,0.4)" stroke-dasharray="6 6" stroke-width="2"/>
+            <text x="40" y="68" fill="#5eead4" font-size="13" font-weight="600">🏢 LONDON OFFICE (LAN 1)</text>
+            <rect x="105" y="130" width="50" height="28" rx="6" fill="#243057" stroke="#818cf8" stroke-width="1.5"/>
+            <text x="130" y="148" text-anchor="middle" fill="#e8eefc" font-size="10" font-weight="600">Switch</text>
+            <circle cx="60" cy="100" r="16" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <text x="60" y="106" text-anchor="middle" font-size="14">💻</text>
+            <circle cx="60" cy="200" r="16" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <text x="60" y="206" text-anchor="middle" font-size="14">💻</text>
+            <circle cx="200" cy="100" r="16" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <text x="200" y="106" text-anchor="middle" font-size="14">💻</text>
+            <circle cx="200" cy="200" r="16" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <text x="200" y="206" text-anchor="middle" font-size="14">🖨️</text>
+            <line x1="76" y1="100" x2="105" y2="138" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+            <line x1="76" y1="200" x2="105" y2="150" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+            <line x1="184" y1="100" x2="155" y2="138" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+            <line x1="184" y1="200" x2="155" y2="150" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+          </g>
+
+          <!-- LAN 2 -->
+          <g class="wan-lan">
+            <rect x="460" y="40" width="220" height="200" rx="14" fill="rgba(129,140,248,0.05)" stroke="rgba(129,140,248,0.4)" stroke-dasharray="6 6" stroke-width="2"/>
+            <text x="480" y="68" fill="#818cf8" font-size="13" font-weight="600">🏢 MANCHESTER (LAN 2)</text>
+            <rect x="545" y="130" width="50" height="28" rx="6" fill="#243057" stroke="#818cf8" stroke-width="1.5"/>
+            <text x="570" y="148" text-anchor="middle" fill="#e8eefc" font-size="10" font-weight="600">Switch</text>
+            <circle cx="500" cy="100" r="16" fill="#1a2547" stroke="#818cf8" stroke-width="1.5"/>
+            <text x="500" y="106" text-anchor="middle" font-size="14">💻</text>
+            <circle cx="500" cy="200" r="16" fill="#1a2547" stroke="#818cf8" stroke-width="1.5"/>
+            <text x="500" y="206" text-anchor="middle" font-size="14">💻</text>
+            <circle cx="640" cy="100" r="16" fill="#1a2547" stroke="#818cf8" stroke-width="1.5"/>
+            <text x="640" y="106" text-anchor="middle" font-size="14">🗄️</text>
+            <circle cx="640" cy="200" r="16" fill="#1a2547" stroke="#818cf8" stroke-width="1.5"/>
+            <text x="640" y="206" text-anchor="middle" font-size="14">💻</text>
+            <line x1="516" y1="100" x2="545" y2="138" stroke="#818cf8" stroke-width="1.5" opacity="0.5"/>
+            <line x1="516" y1="200" x2="545" y2="150" stroke="#818cf8" stroke-width="1.5" opacity="0.5"/>
+            <line x1="624" y1="100" x2="595" y2="138" stroke="#818cf8" stroke-width="1.5" opacity="0.5"/>
+            <line x1="624" y1="200" x2="595" y2="150" stroke="#818cf8" stroke-width="1.5" opacity="0.5"/>
+          </g>
+
+          <!-- Leased line between LANs -->
+          <line x1="155" y1="144" x2="545" y2="144" stroke="#fbbf24" stroke-width="3" stroke-dasharray="10 6" id="wan-line"/>
+          <text x="350" y="135" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="600">⚡ Leased line</text>
+          <text x="350" y="170" text-anchor="middle" fill="#9aa8c7" font-size="11">(dedicated cable)</text>
+
+          <!-- Packet -->
+          <circle id="wan-packet" cx="155" cy="144" r="9" fill="#fbbf24" opacity="0"/>
+        </svg>
+
+        <div class="wan-overlay">
+          <span class="wan-tag">WAN = LAN 1 + LAN 2</span>
+        </div>
+
+        <div class="lan-controls">
+          <button id="wan-send" class="btn">🚀 Send data from London → Manchester</button>
+        </div>
+      </div>
+
+      <div class="callout note">
+        🌐 The <strong>internet</strong> is the biggest WAN of all — it connects <strong>millions</strong> of LANs worldwide.
+      </div>
+
+      <h3 style="margin-top: 2.5em;">🔗 What is a leased line <em>actually made of</em>?</h3>
+      <p class="sub">Remember from <strong>Lesson 2</strong> — data has to travel through some kind of <strong>physical medium</strong>. A leased line is just a posh name for a <strong>dedicated cable</strong> rented from a telecoms company.</p>
+
+      <div class="wan-media-grid">
+        <div class="wan-media">
+          <div class="wan-media-icon">
+            <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="20" width="100" height="14" rx="7" fill="#0f172a" stroke="#5eead4"/>
+              <rect x="12" y="23" width="96" height="8" rx="4" fill="url(#fibGlow)" opacity="0.9"/>
+              <defs>
+                <linearGradient id="fibGlow" x1="0" x2="1">
+                  <stop offset="0" stop-color="#5eead4"/>
+                  <stop offset="0.5" stop-color="#fbbf24"/>
+                  <stop offset="1" stop-color="#5eead4"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h4>Fibre optic</h4>
+          <p>Most modern leased lines are <strong>fibre optic</strong> — pulses of light through glass strands. Very fast and reliable over long distances.</p>
+        </div>
+        <div class="wan-media">
+          <div class="wan-media-icon">
+            <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 25 Q 20 10, 35 25 T 65 25 T 95 25 T 115 25" fill="none" stroke="#fb923c" stroke-width="3"/>
+              <path d="M5 30 Q 20 45, 35 30 T 65 30 T 95 30 T 115 30" fill="none" stroke="#3b82f6" stroke-width="3"/>
+            </svg>
+          </div>
+          <h4>Copper (twisted pair)</h4>
+          <p>Older or shorter leased lines may still use <strong>copper twisted pair</strong> — cheap, but slower and limited in distance.</p>
+        </div>
+        <div class="wan-media">
+          <div class="wan-media-icon">
+            <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 35 Q 30 12, 60 28 T 115 18" fill="none" stroke="#0ea5e9" stroke-width="2"/>
+              <path d="M5 38 Q 30 18, 60 32 T 115 24" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.6"/>
+              <text x="60" y="48" text-anchor="middle" fill="#9aa8c7" font-size="9">🌊 seabed</text>
+            </svg>
+          </div>
+          <h4>Submarine cable</h4>
+          <p>For WANs that cross oceans, the data travels along <strong>submarine fibre-optic cables</strong> on the seabed (160 Tb/s — Lesson 2!).</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2em;">🛰️ Where does an <em>ISP</em> fit in?</h3>
+      <p class="sub">Big companies can <em>afford</em> to rent a leased line just for themselves. What about your home? Click each step to follow the journey.</p>
+
+      <div class="isp-flow">
+        <button class="isp-step" data-step="1">
+          <div class="isp-num">1</div>
+          <div class="isp-text">
+            <h4>🏠 Your home LAN</h4>
+            <div class="isp-body">Your house is a small LAN: laptops, phones and the TV all connect to a router via Wi-Fi or Ethernet.</div>
+          </div>
+        </button>
+        <div class="isp-arrow">↓</div>
+        <button class="isp-step" data-step="2">
+          <div class="isp-num">2</div>
+          <div class="isp-text">
+            <h4>📡 The ISP (Internet Service Provider)</h4>
+            <div class="isp-body">Companies like <strong>BT, Sky, Virgin Media</strong> and <strong>TalkTalk</strong> are <strong>ISPs</strong>. They own a huge WAN of cables stretching across the country, and they <strong>rent you</strong> a connection to it. The cable from your house to the ISP is usually <strong>fibre to the cabinet</strong> at the end of your street, then copper or fibre into your home.</div>
+          </div>
+        </button>
+        <div class="isp-arrow">↓</div>
+        <button class="isp-step" data-step="3">
+          <div class="isp-num">3</div>
+          <div class="isp-text">
+            <h4>🌐 The internet backbone</h4>
+            <div class="isp-body">ISPs connect to each other through massive <strong>backbone fibre-optic cables</strong>. To reach websites hosted abroad, your data hops onto the <strong>submarine cables</strong> we looked at in Lesson 2.</div>
+          </div>
+        </button>
+        <div class="isp-arrow">↓</div>
+        <button class="isp-step" data-step="4">
+          <div class="isp-num">4</div>
+          <div class="isp-text">
+            <h4>🗄️ The server's LAN</h4>
+            <div class="isp-body">At the far end, another ISP delivers your data into the <strong>LAN of the data centre</strong> hosting the website. The reply travels all the way back along the same chain.</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="callout">
+        💡 <strong>Putting it together:</strong> Lesson 2 was about the <em>cables</em> data travels through. Lesson 3 is about <em>how networks are arranged</em>. The internet works because <strong>millions of LANs</strong> are joined by <strong>fibre, copper and submarine cables</strong>, all stitched together by <strong>ISPs</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- NIC -->
+  <section id="nic" class="section" data-aim="Understand the role of a Network Interface Card.">
+    <div class="container">
+      <h2>Network Interface Card (NIC)</h2>
+      <p class="sub">Every device that joins a network needs a <strong>NIC</strong>. It's the part of the computer that physically connects it to the network — either by cable or by radio waves.</p>
+
+      <div class="nic-grid">
+        <button class="nic-card" data-id="wired" data-img="images/nic-wired.png" data-caption="A real wired NIC — a PCI-Express Gigabit Ethernet card with its RJ-45 port (left), status LEDs and gold edge connector (right) that slots into a PC's motherboard.">
+          <div class="nic-icon">
+            <!-- Realistic PCIe Ethernet card -->
+            <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="pcbGrad" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0" stop-color="#0e6b3a"/>
+                  <stop offset="1" stop-color="#063d20"/>
+                </linearGradient>
+              </defs>
+              <!-- PCB body -->
+              <path d="M20 30 H 200 V 105 H 150 L 145 115 H 75 L 70 105 H 20 Z"
+                    fill="url(#pcbGrad)" stroke="#1f8a4c" stroke-width="1.2"/>
+              <!-- Metal bracket (left side) -->
+              <rect x="14" y="20" width="10" height="100" fill="#cbd5e1" stroke="#64748b"/>
+              <rect x="14" y="20" width="10" height="3" fill="#94a3b8"/>
+              <!-- Gold edge connector (bottom) -->
+              <rect x="80" y="115" width="60" height="14" fill="#facc15" stroke="#a16207" stroke-width="0.5"/>
+              <g fill="#a16207">
+                <rect x="84" y="117" width="2" height="10"/>
+                <rect x="89" y="117" width="2" height="10"/>
+                <rect x="94" y="117" width="2" height="10"/>
+                <rect x="99" y="117" width="2" height="10"/>
+                <rect x="104" y="117" width="2" height="10"/>
+                <rect x="109" y="117" width="2" height="10"/>
+                <rect x="114" y="117" width="2" height="10"/>
+                <rect x="119" y="117" width="2" height="10"/>
+                <rect x="124" y="117" width="2" height="10"/>
+                <rect x="129" y="117" width="2" height="10"/>
+                <rect x="134" y="117" width="2" height="10"/>
+              </g>
+              <!-- RJ-45 port -->
+              <g>
+                <rect x="28" y="42" width="38" height="28" fill="#1e293b" stroke="#94a3b8" stroke-width="1.2" rx="2"/>
+                <rect x="32" y="46" width="30" height="20" fill="#0f172a" stroke="#475569"/>
+                <!-- pins inside -->
+                <g stroke="#fbbf24" stroke-width="0.6">
+                  <line x1="34" y1="48" x2="34" y2="58"/>
+                  <line x1="37" y1="48" x2="37" y2="58"/>
+                  <line x1="40" y1="48" x2="40" y2="58"/>
+                  <line x1="43" y1="48" x2="43" y2="58"/>
+                  <line x1="46" y1="48" x2="46" y2="58"/>
+                  <line x1="49" y1="48" x2="49" y2="58"/>
+                  <line x1="52" y1="48" x2="52" y2="58"/>
+                  <line x1="55" y1="48" x2="55" y2="58"/>
+                </g>
+                <!-- LEDs -->
+                <circle cx="34" cy="66" r="1.8" fill="#22c55e"/>
+                <circle cx="60" cy="66" r="1.8" fill="#facc15"/>
+                <text x="47" y="80" text-anchor="middle" fill="#94a3b8" font-size="7">RJ-45</text>
+              </g>
+              <!-- Network controller chip -->
+              <rect x="95" y="50" width="40" height="30" fill="#1e293b" stroke="#475569" rx="2"/>
+              <text x="115" y="63" text-anchor="middle" fill="#cbd5e1" font-size="7" font-weight="600">NETWORK</text>
+              <text x="115" y="73" text-anchor="middle" fill="#cbd5e1" font-size="7" font-weight="600">CONTROLLER</text>
+              <!-- Small components -->
+              <g fill="#1e293b">
+                <rect x="150" y="48" width="6" height="10"/>
+                <rect x="160" y="48" width="6" height="10"/>
+                <rect x="170" y="48" width="6" height="10"/>
+                <rect x="150" y="65" width="6" height="10"/>
+                <rect x="160" y="65" width="6" height="10"/>
+                <rect x="180" y="58" width="10" height="14"/>
+              </g>
+              <!-- Capacitors -->
+              <circle cx="160" cy="92" r="5" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5"/>
+              <circle cx="180" cy="92" r="5" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5"/>
+              <!-- Solder dots -->
+              <g fill="#94a3b8" opacity="0.6">
+                <circle cx="80" cy="40" r="0.8"/>
+                <circle cx="90" cy="40" r="0.8"/>
+                <circle cx="80" cy="95" r="0.8"/>
+                <circle cx="90" cy="95" r="0.8"/>
+                <circle cx="140" cy="95" r="0.8"/>
+                <circle cx="150" cy="95" r="0.8"/>
+              </g>
+            </svg>
+          </div>
+          <h3>Wired NIC</h3>
+          <p>A card that slots inside a PC. Has an <strong>RJ-45 Ethernet port</strong> for the cable. Common in desktop PCs and servers.</p>
+        </button>
+
+        <button class="nic-card" data-id="wireless" data-img="images/nic-wireless.png" data-caption="A real wireless NIC with two antennas — a Wi-Fi mini-PCIe card. The antennas pick up radio signals so the laptop can join a network without a cable.">
+          <div class="nic-icon">
+            <!-- Realistic Wi-Fi card with two antennas -->
+            <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+              <!-- Antennas -->
+              <g>
+                <rect x="40" y="14" width="6" height="34" rx="3" fill="#0f172a" stroke="#475569"/>
+                <rect x="174" y="14" width="6" height="34" rx="3" fill="#0f172a" stroke="#475569"/>
+                <!-- Antenna cables -->
+                <path d="M43 48 Q 50 60, 70 70" fill="none" stroke="#1e293b" stroke-width="2"/>
+                <path d="M177 48 Q 170 60, 150 70" fill="none" stroke="#1e293b" stroke-width="2"/>
+                <!-- Radio waves -->
+                <path d="M30 30 Q 43 18, 56 30" fill="none" stroke="#5eead4" stroke-width="1.2" opacity="0.7"/>
+                <path d="M22 28 Q 43 6,  64 28" fill="none" stroke="#5eead4" stroke-width="1.2" opacity="0.45"/>
+                <path d="M164 30 Q 177 18, 190 30" fill="none" stroke="#5eead4" stroke-width="1.2" opacity="0.7"/>
+                <path d="M156 28 Q 177 6,  198 28" fill="none" stroke="#5eead4" stroke-width="1.2" opacity="0.45"/>
+              </g>
+              <!-- Mini PCIe card body -->
+              <path d="M50 70 H 170 V 120 H 130 L 125 130 H 95 L 90 120 H 50 Z"
+                    fill="#0e6b3a" stroke="#1f8a4c" stroke-width="1.2"/>
+              <!-- Gold edge connector -->
+              <rect x="95" y="128" width="30" height="10" fill="#facc15" stroke="#a16207" stroke-width="0.5"/>
+              <g fill="#a16207">
+                <rect x="98" y="130" width="1.5" height="6"/>
+                <rect x="102" y="130" width="1.5" height="6"/>
+                <rect x="106" y="130" width="1.5" height="6"/>
+                <rect x="110" y="130" width="1.5" height="6"/>
+                <rect x="114" y="130" width="1.5" height="6"/>
+                <rect x="118" y="130" width="1.5" height="6"/>
+                <rect x="122" y="130" width="1.5" height="6"/>
+              </g>
+              <!-- Wireless chip with shield -->
+              <rect x="85" y="80" width="50" height="30" fill="#94a3b8" stroke="#475569" rx="2"/>
+              <text x="110" y="93" text-anchor="middle" fill="#1e293b" font-size="7" font-weight="700">WIRELESS</text>
+              <text x="110" y="103" text-anchor="middle" fill="#1e293b" font-size="7" font-weight="700">CHIP</text>
+              <!-- Connectors for antennas -->
+              <circle cx="63" cy="78" r="3.5" fill="#cbd5e1" stroke="#475569"/>
+              <circle cx="63" cy="78" r="1.5" fill="#1e293b"/>
+              <circle cx="157" cy="78" r="3.5" fill="#cbd5e1" stroke="#475569"/>
+              <circle cx="157" cy="78" r="1.5" fill="#1e293b"/>
+              <!-- Small components -->
+              <g fill="#1e293b">
+                <rect x="58" y="100" width="4" height="8"/>
+                <rect x="66" y="100" width="4" height="8"/>
+                <rect x="150" y="100" width="4" height="8"/>
+                <rect x="158" y="100" width="4" height="8"/>
+                <rect x="142" y="113" width="6" height="4"/>
+                <rect x="74" y="113" width="6" height="4"/>
+              </g>
+              <text x="110" y="120" text-anchor="middle" fill="#cbd5e1" font-size="6">Wi-Fi mini PCIe</text>
+            </svg>
+          </div>
+          <h3>Wireless NIC</h3>
+          <p>Uses <strong>antennas</strong> to send and receive radio waves. Built into laptops, tablets and phones — no cable needed.</p>
+        </button>
+
+        <button class="nic-card" data-id="builtin" data-img="images/nic-builtin.png" data-caption="A real built-in NIC — the small chip soldered directly onto a phone or laptop motherboard. There's no external port, but it still does the same job.">
+          <div class="nic-icon">
+            <!-- Motherboard close-up with built-in NIC chip + RJ-45 -->
+            <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+              <!-- Motherboard PCB -->
+              <rect x="6" y="10" width="208" height="130" rx="6" fill="#0e6b3a" stroke="#1f8a4c"/>
+              <!-- Trace pattern -->
+              <g stroke="#facc15" stroke-width="0.4" opacity="0.55" fill="none">
+                <path d="M30 25 H 90 V 60 H 130"/>
+                <path d="M30 35 H 70 V 100"/>
+                <path d="M150 25 H 180 V 90 H 120"/>
+                <path d="M180 110 H 130 V 70"/>
+                <path d="M30 130 H 200"/>
+                <path d="M55 130 V 110"/>
+                <path d="M95 130 V 110"/>
+              </g>
+              <!-- Built-in RJ-45 jack (on motherboard edge) -->
+              <g>
+                <rect x="14" y="36" width="36" height="26" fill="#1e293b" stroke="#94a3b8" stroke-width="1.2" rx="2"/>
+                <rect x="18" y="40" width="28" height="18" fill="#0f172a" stroke="#475569"/>
+                <g stroke="#fbbf24" stroke-width="0.5">
+                  <line x1="20" y1="42" x2="20" y2="52"/>
+                  <line x1="23" y1="42" x2="23" y2="52"/>
+                  <line x1="26" y1="42" x2="26" y2="52"/>
+                  <line x1="29" y1="42" x2="29" y2="52"/>
+                  <line x1="32" y1="42" x2="32" y2="52"/>
+                  <line x1="35" y1="42" x2="35" y2="52"/>
+                  <line x1="38" y1="42" x2="38" y2="52"/>
+                  <line x1="41" y1="42" x2="41" y2="52"/>
+                </g>
+                <circle cx="20" cy="58" r="1.4" fill="#22c55e"/>
+                <circle cx="44" cy="58" r="1.4" fill="#facc15"/>
+              </g>
+              <!-- Highlighted NIC chip with arrow -->
+              <rect x="90" y="58" width="50" height="40" fill="#1e293b" stroke="#5eead4" stroke-width="2" rx="3"/>
+              <text x="115" y="74" text-anchor="middle" fill="#5eead4" font-size="8" font-weight="700">NIC</text>
+              <text x="115" y="84" text-anchor="middle" fill="#cbd5e1" font-size="6">ETHERNET</text>
+              <text x="115" y="92" text-anchor="middle" fill="#cbd5e1" font-size="6">CONTROLLER</text>
+              <!-- Callout arrow -->
+              <path d="M115 110 L 115 122" stroke="#5eead4" stroke-width="1.2" stroke-dasharray="2 2"/>
+              <text x="115" y="134" text-anchor="middle" fill="#5eead4" font-size="7" font-weight="600">built-in NIC chip</text>
+              <!-- CPU socket -->
+              <rect x="155" y="35" width="44" height="44" fill="#475569" stroke="#94a3b8" rx="3"/>
+              <rect x="160" y="40" width="34" height="34" fill="#1e293b" stroke="#64748b"/>
+              <text x="177" y="60" text-anchor="middle" fill="#94a3b8" font-size="6">CPU</text>
+              <!-- RAM slots -->
+              <g fill="#1e293b" stroke="#94a3b8" stroke-width="0.5">
+                <rect x="158" y="92" width="50" height="6"/>
+                <rect x="158" y="102" width="50" height="6"/>
+              </g>
+              <!-- Capacitors -->
+              <circle cx="65" cy="80" r="5" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5"/>
+              <circle cx="78" cy="80" r="5" fill="#1e293b" stroke="#94a3b8" stroke-width="0.5"/>
+              <!-- Mounting holes -->
+              <circle cx="12" cy="16" r="2" fill="#0f172a" stroke="#94a3b8"/>
+              <circle cx="208" cy="16" r="2" fill="#0f172a" stroke="#94a3b8"/>
+            </svg>
+          </div>
+          <h3>Built-in NIC</h3>
+          <p>On laptops and phones the NIC is a tiny chip <strong>soldered onto the motherboard</strong> — you can't see it from the outside.</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPOLOGIES INTRO -->
+  <section id="topologies" class="section" data-aim="Understand what a network topology is.">
+    <div class="container">
+      <h2>Network topologies</h2>
+      <p class="sub">A <strong>topology</strong> is the way the parts of a network <strong>connect together</strong>. It doesn't show where things physically are — only how they're linked.</p>
+
+      <details class="analogy-details" open>
+        <summary><span class="analogy-icon">🚇</span> Analogy: London Underground map</summary>
+        <div class="analogy-card">
+          <div class="analogy-text">
+            <p>A tube map shows you which <strong>stations</strong> connect to which <strong>lines</strong>. It doesn't tell you exactly <strong>where</strong> each station sits in the real world.</p>
+            <p style="margin-bottom:0;">Network topologies work the same way: they show <strong>connections</strong>, not physical positions.</p>
+          </div>
+          <div class="analogy-visual">
+            <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" class="tube-svg">
+              <line x1="20" y1="100" x2="260" y2="100" stroke="#5eead4" stroke-width="6"/>
+              <line x1="140" y1="20" x2="140" y2="180" stroke="#fbbf24" stroke-width="6"/>
+              <line x1="40" y1="40" x2="240" y2="160" stroke="#f472b6" stroke-width="6" opacity="0.85"/>
+              <g fill="#0f172a" stroke="#e8eefc" stroke-width="2">
+                <circle cx="20" cy="100" r="8"/>
+                <circle cx="140" cy="100" r="9"/>
+                <circle cx="260" cy="100" r="8"/>
+                <circle cx="140" cy="20" r="8"/>
+                <circle cx="140" cy="180" r="8"/>
+                <circle cx="40" cy="40" r="7"/>
+                <circle cx="240" cy="160" r="7"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </details>
+
+      <p class="sub" style="margin-top: 1.5em;">There are many network topologies. In this lesson we'll look at two of the most common:</p>
+
+      <div class="topo-preview">
+        <a href="#bus" class="topo-preview-card">
+          <div class="topo-mini">
+            <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+              <line x1="20" y1="40" x2="180" y2="40" stroke="#5eead4" stroke-width="3"/>
+              <line x1="20" y1="32" x2="20" y2="48" stroke="#fbbf24" stroke-width="4"/>
+              <line x1="180" y1="32" x2="180" y2="48" stroke="#fbbf24" stroke-width="4"/>
+              <line x1="60" y1="40" x2="60" y2="22" stroke="#5eead4" stroke-width="2"/>
+              <line x1="100" y1="40" x2="100" y2="22" stroke="#5eead4" stroke-width="2"/>
+              <line x1="140" y1="40" x2="140" y2="22" stroke="#5eead4" stroke-width="2"/>
+              <circle cx="60" cy="18" r="6" fill="#1a2547" stroke="#5eead4"/>
+              <circle cx="100" cy="18" r="6" fill="#1a2547" stroke="#5eead4"/>
+              <circle cx="140" cy="18" r="6" fill="#1a2547" stroke="#5eead4"/>
+              <line x1="60" y1="40" x2="60" y2="62" stroke="#5eead4" stroke-width="2"/>
+              <line x1="140" y1="40" x2="140" y2="62" stroke="#5eead4" stroke-width="2"/>
+              <circle cx="60" cy="66" r="6" fill="#1a2547" stroke="#5eead4"/>
+              <circle cx="140" cy="66" r="6" fill="#1a2547" stroke="#5eead4"/>
+            </svg>
+          </div>
+          <h3>Bus network</h3>
+          <p>All devices share one main cable.</p>
+        </a>
+        <a href="#star" class="topo-preview-card">
+          <div class="topo-mini">
+            <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+              <line x1="100" y1="40" x2="30"  y2="14" stroke="#818cf8" stroke-width="2"/>
+              <line x1="100" y1="40" x2="170" y2="14" stroke="#818cf8" stroke-width="2"/>
+              <line x1="100" y1="40" x2="30"  y2="66" stroke="#818cf8" stroke-width="2"/>
+              <line x1="100" y1="40" x2="170" y2="66" stroke="#818cf8" stroke-width="2"/>
+              <line x1="100" y1="40" x2="100" y2="6"  stroke="#818cf8" stroke-width="2"/>
+              <rect x="84" y="30" width="32" height="20" rx="4" fill="#243057" stroke="#818cf8"/>
+              <text x="100" y="44" text-anchor="middle" fill="#e8eefc" font-size="9">Switch</text>
+              <circle cx="30" cy="14" r="6" fill="#1a2547" stroke="#818cf8"/>
+              <circle cx="170" cy="14" r="6" fill="#1a2547" stroke="#818cf8"/>
+              <circle cx="30" cy="66" r="6" fill="#1a2547" stroke="#818cf8"/>
+              <circle cx="170" cy="66" r="6" fill="#1a2547" stroke="#818cf8"/>
+              <circle cx="100" cy="6" r="6" fill="#1a2547" stroke="#818cf8"/>
+            </svg>
+          </div>
+          <h3>Star network</h3>
+          <p>Every device has its own cable to a central switch.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUS -->
+  <section id="bus" class="section" data-aim="Identify how a bus network is arranged and its strengths and weaknesses.">
+    <div class="container">
+      <h2>Bus networks</h2>
+      <p class="sub">A bus network has <strong>one main cable</strong> (the "bus") which every device connects to. A <strong>terminator</strong> sits at each end to stop the signal bouncing back.</p>
+
+      <div class="topo-stage" id="bus-stage">
+        <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" class="topo-svg">
+          <!-- Bus cable segments (so we can break individual ones) -->
+          <g id="bus-cable">
+            <line class="bus-seg" data-seg="0" x1="60"  y1="170" x2="200" y2="170" stroke="#5eead4" stroke-width="5"/>
+            <line class="bus-seg" data-seg="1" x1="200" y1="170" x2="360" y2="170" stroke="#5eead4" stroke-width="5"/>
+            <line class="bus-seg" data-seg="2" x1="360" y1="170" x2="520" y2="170" stroke="#5eead4" stroke-width="5"/>
+            <line class="bus-seg" data-seg="3" x1="520" y1="170" x2="660" y2="170" stroke="#5eead4" stroke-width="5"/>
+          </g>
+
+          <!-- Terminators -->
+          <g>
+            <rect x="50" y="158" width="14" height="24" fill="#fbbf24" rx="3"/>
+            <text x="57" y="200" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">Terminator</text>
+            <rect x="656" y="158" width="14" height="24" fill="#fbbf24" rx="3"/>
+            <text x="663" y="200" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">Terminator</text>
+          </g>
+
+          <!-- Drops + devices -->
+          <g>
+            <line x1="140" y1="170" x2="140" y2="90" stroke="#5eead4" stroke-width="2"/>
+            <circle cx="140" cy="70" r="24" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="140" y="78" text-anchor="middle" font-size="22">💻</text>
+            <text x="140" y="40" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 1</text>
+
+            <line x1="280" y1="170" x2="280" y2="90" stroke="#5eead4" stroke-width="2"/>
+            <circle cx="280" cy="70" r="24" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="280" y="78" text-anchor="middle" font-size="22">🖨️</text>
+            <text x="280" y="40" text-anchor="middle" fill="#9aa8c7" font-size="11">Printer</text>
+
+            <line x1="440" y1="170" x2="440" y2="90" stroke="#5eead4" stroke-width="2"/>
+            <circle cx="440" cy="70" r="24" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="440" y="78" text-anchor="middle" font-size="22">🗄️</text>
+            <text x="440" y="40" text-anchor="middle" fill="#9aa8c7" font-size="11">Server</text>
+
+            <line x1="220" y1="170" x2="220" y2="250" stroke="#5eead4" stroke-width="2"/>
+            <circle cx="220" cy="270" r="24" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="220" y="278" text-anchor="middle" font-size="22">💻</text>
+            <text x="220" y="305" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 2</text>
+
+            <line x1="380" y1="170" x2="380" y2="250" stroke="#5eead4" stroke-width="2"/>
+            <circle cx="380" cy="270" r="24" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="380" y="278" text-anchor="middle" font-size="22">💻</text>
+            <text x="380" y="305" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 3</text>
+
+            <line x1="560" y1="170" x2="560" y2="250" stroke="#5eead4" stroke-width="2"/>
+            <circle cx="560" cy="270" r="24" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="560" y="278" text-anchor="middle" font-size="22">💻</text>
+            <text x="560" y="305" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 4</text>
+          </g>
+
+          <!-- Packet -->
+          <g id="bus-packet" opacity="0">
+            <rect x="-18" y="-12" width="36" height="24" rx="6" fill="#fbbf24" stroke="#0f172a" stroke-width="1.5"/>
+            <text y="5" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">DATA</text>
+          </g>
+        </svg>
+
+        <div class="topo-controls">
+          <button id="bus-send" class="btn">📨 Send data PC 1 → PC 4</button>
+          <button id="bus-break" class="btn ghost">✂️ Cut the cable</button>
+          <button id="bus-repair" class="btn ghost">🔧 Repair cable</button>
+          <button id="bus-add" class="btn ghost">➕ Add a computer</button>
+        </div>
+        <p class="feedback" id="bus-feedback">💡 Click <strong>"Send data"</strong> to watch a packet travel along the bus. Then try cutting the cable!</p>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Advantages & disadvantages</h3>
+      <p class="sub">Discuss two of each with a partner, then click to reveal.</p>
+
+      <div class="proscons">
+        <div class="proscons-col">
+          <h3 class="pros-h">✅ Advantages</h3>
+          <div class="reveal-list" id="bus-pros"></div>
+        </div>
+        <div class="proscons-col">
+          <h3 class="cons-h">⚠️ Disadvantages</h3>
+          <div class="reveal-list" id="bus-cons"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAR -->
+  <section id="star" class="section" data-aim="Identify how a star network is arranged and its strengths and weaknesses.">
+    <div class="container">
+      <h2>Star networks</h2>
+      <p class="sub">A star network has a <strong>central switch (or hub)</strong>. Every device connects to it with <strong>its own cable</strong>. To add a new device, you just plug it into the switch.</p>
+
+      <div class="topo-stage" id="star-stage">
+        <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" class="topo-svg">
+          <!-- Cables -->
+          <g id="star-cables">
+            <line class="star-cable" data-id="pc1"     x1="360" y1="180" x2="160" y2="80"  stroke="#818cf8" stroke-width="3"/>
+            <line class="star-cable" data-id="printer" x1="360" y1="180" x2="560" y2="80"  stroke="#818cf8" stroke-width="3"/>
+            <line class="star-cable" data-id="server"  x1="360" y1="180" x2="600" y2="180" stroke="#818cf8" stroke-width="3"/>
+            <line class="star-cable" data-id="pc2"     x1="360" y1="180" x2="560" y2="280" stroke="#818cf8" stroke-width="3"/>
+            <line class="star-cable" data-id="pc3"     x1="360" y1="180" x2="160" y2="280" stroke="#818cf8" stroke-width="3"/>
+            <line class="star-cable" data-id="pc4"     x1="360" y1="180" x2="120" y2="180" stroke="#818cf8" stroke-width="3"/>
+          </g>
+
+          <!-- Central switch -->
+          <g>
+            <rect x="320" y="160" width="80" height="40" rx="8" fill="#243057" stroke="#818cf8" stroke-width="2.5"/>
+            <text x="360" y="185" text-anchor="middle" fill="#e8eefc" font-size="14" font-weight="600">Switch</text>
+          </g>
+
+          <!-- Devices -->
+          <g class="star-dev" data-id="pc1">
+            <circle cx="160" cy="80" r="26" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <text x="160" y="88" text-anchor="middle" font-size="22">💻</text>
+            <text x="160" y="46" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 1</text>
+          </g>
+          <g class="star-dev" data-id="printer">
+            <circle cx="560" cy="80" r="26" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <text x="560" y="88" text-anchor="middle" font-size="22">🖨️</text>
+            <text x="560" y="46" text-anchor="middle" fill="#9aa8c7" font-size="11">Printer</text>
+          </g>
+          <g class="star-dev" data-id="server">
+            <circle cx="620" cy="180" r="26" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <text x="620" y="188" text-anchor="middle" font-size="22">🗄️</text>
+            <text x="620" y="220" text-anchor="middle" fill="#9aa8c7" font-size="11">Server</text>
+          </g>
+          <g class="star-dev" data-id="pc2">
+            <circle cx="560" cy="280" r="26" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <text x="560" y="288" text-anchor="middle" font-size="22">💻</text>
+            <text x="560" y="320" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 2</text>
+          </g>
+          <g class="star-dev" data-id="pc3">
+            <circle cx="160" cy="280" r="26" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <text x="160" y="288" text-anchor="middle" font-size="22">💻</text>
+            <text x="160" y="320" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 3</text>
+          </g>
+          <g class="star-dev" data-id="pc4">
+            <circle cx="100" cy="180" r="26" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <text x="100" y="188" text-anchor="middle" font-size="22">💻</text>
+            <text x="100" y="220" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 4</text>
+          </g>
+
+          <!-- Packet -->
+          <g id="star-packet" opacity="0">
+            <rect x="-18" y="-12" width="36" height="24" rx="6" fill="#5eead4" stroke="#0f172a" stroke-width="1.5"/>
+            <text y="5" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">DATA</text>
+          </g>
+        </svg>
+
+        <div class="topo-controls">
+          <button id="star-send" class="btn">📨 Send PC 3 → Printer</button>
+          <button id="star-break" class="btn ghost">✂️ Break a random cable</button>
+          <button id="star-repair" class="btn ghost">🔧 Repair all cables</button>
+        </div>
+        <p class="feedback" id="star-feedback">💡 Click a cable in the diagram to break it. See what happens — only one device loses its connection!</p>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Advantages & disadvantages</h3>
+      <p class="sub">Discuss two of each with a partner, then click to reveal.</p>
+
+      <div class="proscons">
+        <div class="proscons-col">
+          <h3 class="pros-h">✅ Advantages</h3>
+          <div class="reveal-list" id="star-pros"></div>
+        </div>
+        <div class="proscons-col">
+          <h3 class="cons-h">⚠️ Disadvantages</h3>
+          <div class="reveal-list" id="star-cons"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section id="compare" class="section" data-aim="Compare bus and star topologies side by side.">
+    <div class="container">
+      <h2>Side-by-side comparison</h2>
+      <p class="sub">Click each row to compare bus vs star. The <strong>green badge</strong> shows which one is better for that category.</p>
+
+      <div class="compare-controls">
+        <button class="btn" id="compare-all">🔍 Reveal all</button>
+        <button class="btn ghost" id="compare-hide">⟲ Hide all</button>
+      </div>
+
+      <div class="compare-table">
+        <div class="compare-row" data-row="cost" data-winner="bus">
+          <button class="cr-toggle">
+            <span class="cr-num">1</span>
+            <span class="cr-label">💷 Installation cost</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="bus">
+              <div class="cr-side-head bus"><span>🚌</span> Bus network</div>
+              <span class="cr-verdict good">✅ Cheaper</span>
+              <p>Only <strong>one main cable</strong> and two terminators are needed.</p>
+            </div>
+            <div class="cr-cell" data-side="star">
+              <div class="cr-side-head star"><span>⭐</span> Star network</div>
+              <span class="cr-verdict bad">⚠️ Expensive</span>
+              <p>Every device needs its <strong>own cable</strong> running to the switch — plus you have to buy the switch.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="reliability" data-winner="star">
+          <button class="cr-toggle">
+            <span class="cr-num">2</span>
+            <span class="cr-label">🛡️ Reliability</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="bus">
+              <div class="cr-side-head bus"><span>🚌</span> Bus network</div>
+              <span class="cr-verdict bad">⚠️ Risky</span>
+              <p>If the main cable breaks, <strong>every computer</strong> loses its connection.</p>
+            </div>
+            <div class="cr-cell" data-side="star">
+              <div class="cr-side-head star"><span>⭐</span> Star network</div>
+              <span class="cr-verdict good">✅ Reliable</span>
+              <p>If one cable breaks, only <strong>that one device</strong> goes offline — the rest of the network keeps working.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="speed" data-winner="star">
+          <button class="cr-toggle">
+            <span class="cr-num">3</span>
+            <span class="cr-label">⚡ Performance</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="bus">
+              <div class="cr-side-head bus"><span>🚌</span> Bus network</div>
+              <span class="cr-verdict bad">⚠️ Slows down</span>
+              <p>All devices <strong>share the same cable</strong>, so bandwidth drops as more computers are added.</p>
+            </div>
+            <div class="cr-cell" data-side="star">
+              <div class="cr-side-head star"><span>⭐</span> Star network</div>
+              <span class="cr-verdict good">✅ Faster</span>
+              <p>Each device has its own <strong>dedicated link</strong> to the switch — no sharing.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="adding" data-winner="bus">
+          <button class="cr-toggle">
+            <span class="cr-num">4</span>
+            <span class="cr-label">➕ Adding new devices</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="bus">
+              <div class="cr-side-head bus"><span>🚌</span> Bus network</div>
+              <span class="cr-verdict good">✅ Easy</span>
+              <p>Just <strong>tap into the main cable</strong> at the new device's location.</p>
+            </div>
+            <div class="cr-cell" data-side="star">
+              <div class="cr-side-head star"><span>⭐</span> Star network</div>
+              <span class="cr-verdict bad">⚠️ Fiddly</span>
+              <p>You have to run a <strong>new cable</strong> all the way back to the switch.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="hardware" data-winner="bus">
+          <button class="cr-toggle">
+            <span class="cr-num">5</span>
+            <span class="cr-label">🔧 Extra hardware</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="bus">
+              <div class="cr-side-head bus"><span>🚌</span> Bus network</div>
+              <span class="cr-verdict good">✅ Minimal</span>
+              <p>Just two <strong>terminators</strong> on the ends of the cable.</p>
+            </div>
+            <div class="cr-cell" data-side="star">
+              <div class="cr-side-head star"><span>⭐</span> Star network</div>
+              <span class="cr-verdict bad">⚠️ Needs a switch</span>
+              <p>A <strong>switch or hub</strong> is essential — and if it fails, the whole LAN fails.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-summary">
+        <div class="cs-card cs-bus">
+          <h3>🚌 Pick a bus when…</h3>
+          <p>You want a <strong>cheap network</strong> with very few computers, and reliability isn't critical.</p>
+        </div>
+        <div class="cs-card cs-star">
+          <h3>⭐ Pick a star when…</h3>
+          <p>You need <strong>speed and reliability</strong> — like a school, office or modern home network.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HARDWARE -->
+  <section id="hardware" class="section" data-aim="Identify routers, switches and wireless access points.">
+    <div class="container">
+      <h2>Routers, switches & access points</h2>
+      <p class="sub">A LAN is built from several pieces of <strong>network hardware</strong>. Click each card to find out what it does.</p>
+
+      <div class="hw-grid">
+        <button class="hw-card" data-id="switch" data-img="images/hw-switch.png" data-caption="A real switch — this 24-port Gigabit Ethernet switch lets up to 24 computers connect to the same LAN. Each device plugs into one of the RJ-45 ports.">
+
+          <div class="hw-svg">
+            <svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="30" width="180" height="34" rx="6" fill="#243057" stroke="#818cf8" stroke-width="2"/>
+              <g fill="#0b1226" stroke="#5eead4">
+                <rect x="22" y="42" width="14" height="12" rx="2"/>
+                <rect x="44" y="42" width="14" height="12" rx="2"/>
+                <rect x="66" y="42" width="14" height="12" rx="2"/>
+                <rect x="88" y="42" width="14" height="12" rx="2"/>
+                <rect x="110" y="42" width="14" height="12" rx="2"/>
+                <rect x="132" y="42" width="14" height="12" rx="2"/>
+                <rect x="154" y="42" width="14" height="12" rx="2"/>
+              </g>
+              <circle cx="178" cy="48" r="2" fill="#34d399"/>
+            </svg>
+          </div>
+          <h3>Switch</h3>
+          <p class="hw-short">Connects devices on the same LAN</p>
+          <div class="hw-info">
+            Has many <strong>ports</strong>. Computer cables plug in and the switch lets every device talk to every other device on the LAN.
+          </div>
+        </button>
+        <button class="hw-card" data-id="router" data-img="images/hw-router.png" data-caption="A real router — the yellow RJ-45 ports connect LAN devices, and the separate port (left) is where the cable from the ISP plugs in. The antennas would make this device a combined router + wireless access point.">
+
+          <div class="hw-svg">
+            <svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="34" width="160" height="36" rx="6" fill="#1a2547" stroke="#f472b6" stroke-width="2"/>
+              <line x1="60" y1="34" x2="60" y2="14" stroke="#5eead4" stroke-width="2"/>
+              <line x1="100" y1="34" x2="100" y2="8" stroke="#5eead4" stroke-width="2"/>
+              <line x1="140" y1="34" x2="140" y2="14" stroke="#5eead4" stroke-width="2"/>
+              <circle cx="60" cy="12" r="3" fill="#5eead4"/>
+              <circle cx="100" cy="6" r="3" fill="#5eead4"/>
+              <circle cx="140" cy="12" r="3" fill="#5eead4"/>
+              <circle cx="36" cy="52" r="3" fill="#34d399"/>
+              <circle cx="50" cy="52" r="3" fill="#fbbf24"/>
+              <text x="100" y="58" text-anchor="middle" fill="#e8eefc" font-size="11" font-weight="600">ROUTER</text>
+            </svg>
+          </div>
+          <h3>Router</h3>
+          <p class="hw-short">Connects your LAN to other networks</p>
+          <div class="hw-info">
+            Looks at the <strong>packets</strong> of data and decides where each one needs to go. Used to connect a LAN to <strong>the internet</strong>.
+          </div>
+        </button>
+        <button class="hw-card" data-id="ap" data-img="images/hw-ap.png" data-caption="A real wireless access point — a small 5-port unit (NETGEAR GS305E). The Ethernet ports connect it to the wired LAN, and it broadcasts a Wi-Fi signal so phones, tablets and laptops can join without cables.">
+
+          <div class="hw-svg">
+            <svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="60" r="18" fill="#243057" stroke="#5eead4" stroke-width="2"/>
+              <circle cx="100" cy="60" r="3" fill="#5eead4"/>
+              <path d="M70 50 Q 100 20, 130 50" fill="none" stroke="#5eead4" stroke-width="2"/>
+              <path d="M55 50 Q 100 8,  145 50" fill="none" stroke="#5eead4" stroke-width="2" opacity="0.7"/>
+              <path d="M40 50 Q 100 -8, 160 50" fill="none" stroke="#5eead4" stroke-width="2" opacity="0.4"/>
+            </svg>
+          </div>
+          <h3>Wireless Access Point</h3>
+          <p class="hw-short">Lets wireless devices join the LAN</p>
+          <div class="hw-info">
+            Broadcasts a <strong>Wi-Fi signal</strong> so laptops, phones and tablets can connect to the network without a cable.
+          </div>
+        </button>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-text">
+          <h3>🏠 In real life: 2-in-1 (and 3-in-1!) boxes</h3>
+          <p>In school we look at a switch, a router and a wireless access point as <strong>three separate devices</strong> — because each one does a different job. But at <strong>home</strong>, your ISP gives you a single black box that combines them all:</p>
+          <ul class="combo-list">
+            <li><strong>Router</strong> — to connect your home LAN to the internet</li>
+            <li><strong>Wireless Access Point</strong> — to broadcast your home Wi-Fi</li>
+            <li><strong>Switch</strong> — usually 4 yellow Ethernet ports on the back to plug in wired devices</li>
+          </ul>
+          <p style="margin-bottom:0;">That's why your "Wi-Fi router" has <strong>antennas <em>and</em> Ethernet ports</strong> — it's really three devices in one case.</p>
+        </div>
+        <button class="combo-img-btn" data-img="images/hw-combined.png" data-caption="Common home routers (BT, eero, ASUS, etc.). These all combine a router + wireless access point + a small switch into one box — that's why they have antennas AND Ethernet ports on the back.">
+          <img src="images/hw-combined.png" alt="Common home Wi-Fi routers" />
+          <span class="combo-img-tag">🔍 Click to enlarge</span>
+        </button>
+      </div>
+
+      <div class="worksheet-callout">
+        📝 Now complete <strong>Task 1</strong> on <strong>Worksheet 3</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- PLENARY -->
+  <section id="plenary" class="section">
+    <div class="container">
+      <h2>Plenary</h2>
+      <p class="sub">Work with a partner. Match each <strong>networking word</strong> on the left to its <strong>definition</strong> on the right.</p>
+
+      <div class="tld-game">
+        <div class="tld-col" id="term-items"></div>
+        <div class="tld-col" id="term-labels"></div>
+      </div>
+
+      <div class="tld-controls">
+        <span id="term-score" class="score">Matched 0 / 8</span>
+        <button id="term-reveal" class="btn">Reveal all</button>
+        <button id="term-reset" class="btn ghost">Reset</button>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Key terms</h3>
+      <p class="sub">Click each term to reveal its definition.</p>
+
+      <div class="term-grid">
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>LAN</h3></div>
+            <div class="flip-face flip-back"><p>A <strong>Local Area Network</strong> — computers connected in a small geographical area.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>WAN</h3></div>
+            <div class="flip-face flip-back"><p>A <strong>Wide Area Network</strong> — two or more LANs joined together.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Topology</h3></div>
+            <div class="flip-face flip-back"><p>The <strong>arrangement and connections</strong> of computers on a network.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Bus network</h3></div>
+            <div class="flip-face flip-back"><p>Computers connect to a single <strong>bus cable</strong> with terminators at each end.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Star network</h3></div>
+            <div class="flip-face flip-back"><p>Every computer connects to a <strong>central switch or hub</strong> using its own cable.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Switch</h3></div>
+            <div class="flip-face flip-back"><p>A device with many ports used to <strong>connect computers</strong> on the same LAN.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Router</h3></div>
+            <div class="flip-face flip-back"><p>Looks at packets of data and <strong>routes them</strong> towards their destination. Connects a LAN to the internet.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Wireless Access Point</h3></div>
+            <div class="flip-face flip-back"><p>Allows a <strong>wireless device</strong> to connect to a network.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>NIC</h3></div>
+            <div class="flip-face flip-back"><p><strong>Network Interface Card</strong> — connects a device to a network. Can be wired or wireless.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Terminator</h3></div>
+            <div class="flip-face flip-back"><p>A small device at each end of a <strong>bus cable</strong> that stops the signal from bouncing back.</p></div>
+          </div>
+        </button>
+      </div>
+
+      <p class="end-note">🎉 End of Lesson 3</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Image lightbox -->
+<div id="lightbox" class="lightbox" hidden>
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+  <figure class="lightbox-inner">
+    <img id="lightbox-img" alt="" />
+    <figcaption id="lightbox-caption"></figcaption>
+  </figure>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

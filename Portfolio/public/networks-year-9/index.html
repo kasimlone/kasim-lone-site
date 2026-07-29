@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Networks — Year 9</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --bg-2: #111c36;
+    --panel: #1a2547;
+    --ink: #e8eefc;
+    --ink-dim: #9aa8c7;
+    --accent: #5eead4;
+    --accent-2: #818cf8;
+    --line: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(1200px 800px at 20% 10%, #1b2a55 0%, var(--bg) 55%) fixed;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 24px 80px;
+    line-height: 1.5;
+  }
+  header {
+    text-align: center;
+    max-width: 720px;
+    margin-bottom: 56px;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    margin: 0 0 14px;
+    letter-spacing: -0.02em;
+  }
+  h1 .accent {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header p {
+    color: var(--ink-dim);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: 26px 22px;
+    background: linear-gradient(180deg, var(--panel), var(--bg-2));
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(94,234,212,0.06), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.18s ease;
+    pointer-events: none;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(94, 234, 212, 0.35);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  }
+  .card:hover::before { opacity: 1; }
+  .card .tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .card h2 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+  }
+  .card p {
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: 0.95rem;
+  }
+  .card.sim .tag { color: var(--accent-2); }
+  .card.sim {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #1e2a5a, #1a2547);
+    border-color: rgba(129, 140, 248, 0.3);
+  }
+  .card.sim:hover { border-color: rgba(129, 140, 248, 0.6); }
+  .card.sim h2 { font-size: 1.5rem; }
+  .section-title {
+    width: 100%;
+    max-width: 1000px;
+    color: var(--ink-dim);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 32px 0 12px;
+  }
+  .section-title:first-of-type { margin-top: 0; }
+  footer {
+    margin-top: 60px;
+    color: var(--ink-dim);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Networks <span class="accent">Year 9</span></h1>
+    <p>Interactive lessons on how the internet works — plus a hands-on network simulator.</p>
+  </header>
+
+  <div class="section-title">Try the tool</div>
+  <div class="grid" style="margin-bottom: 8px;">
+    <a class="card sim" href="Network Simulator/index.html">
+      <span class="tag">Interactive</span>
+      <h2>Network Simulator</h2>
+      <p>Drag, connect, and test devices to build your own network. Then take on the challenges.</p>
+    </a>
+  </div>
+
+  <div class="section-title">Lessons</div>
+  <div class="grid">
+    <a class="card" href="Lesson 1/index.html">
+      <span class="tag">Lesson 1</span>
+      <h2>The Internet</h2>
+      <p>URLs, domains, IP addresses, DNS and packets.</p>
+    </a>
+    <a class="card" href="Lesson 2/index.html">
+      <span class="tag">Lesson 2</span>
+      <h2>Connectivity</h2>
+      <p>How devices connect — wired, wireless, and everything in between.</p>
+    </a>
+    <a class="card" href="Lesson 3/index.html">
+      <span class="tag">Lesson 3</span>
+      <h2>Topologies</h2>
+      <p>Bus, star, mesh — how networks are arranged.</p>
+    </a>
+    <a class="card" href="Lesson 4/index.html">
+      <span class="tag">Lesson 4</span>
+      <h2>Network Types</h2>
+      <p>LAN, WAN, PAN and the differences between them.</p>
+    </a>
+  </div>
+
+  <footer>Built for Year 9 Computing.</footer>
+</body>
+</html>

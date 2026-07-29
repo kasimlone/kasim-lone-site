@@ -70,10 +70,18 @@ export const projects: Project[] = [
     preview: "/project-cards/ioquiz-preview.webp",
   },
   {
+    title: "Network Introduction Lessons",
+    description: "Year 9 Computer Science lessons on networks — the internet, connectivity, topologies and network types — plus a hands-on network simulator to build and test your own networks.",
+    tags: ["comp sci", "lessons", "networks"],
+    href: "/networks-year-9",
+    preview: "/project-cards/networks-year-9-preview.jpg",
+  },
+  {
     title: "Teacher Planner",
     description: "A planning tool for teachers — organise lessons, classes and schedules in one place. Built with Next.js and Supabase.",
     tags: ["next", "edtech", "tool"],
-    href: "/teacher-planner",
+    href: "https://teacher-planner-nu.vercel.app",
+    preview: "/project-cards/teacher-planner-preview.jpg",
   },
 ];
 

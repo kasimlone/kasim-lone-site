@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 4: Network Types</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a href="../index.html" class="home-link" aria-label="Back to home" title="Home" style="position:fixed;top:14px;left:14px;z-index:200;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(20,30,60,0.55);border:1px solid rgba(94,234,212,0.3);color:#5eead4;text-decoration:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background 0.18s ease,border-color 0.18s ease;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></a>
+
+<div id="progress-bar"></div>
+<div id="aim-indicator" aria-live="polite"></div>
+
+<nav id="side-nav" aria-label="Lesson sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#starter" data-label="Starter"><span></span></a>
+  <a href="#servers" data-label="Servers"><span></span></a>
+  <a href="#csmodel" data-label="Client-server"><span></span></a>
+  <a href="#datacentres" data-label="Data centres"><span></span></a>
+  <a href="#p2p" data-label="Peer-to-peer"><span></span></a>
+  <a href="#compare" data-label="Compare"><span></span></a>
+  <a href="#cloud" data-label="The Cloud"><span></span></a>
+  <a href="#plenary" data-label="Plenary"><span></span></a>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero" class="section hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Year 9 · Computing</p>
+      <h1>Lesson 4<br/><span class="accent">Network Types</span></h1>
+      <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+    </div>
+  </section>
+
+  <!-- OBJECTIVES -->
+  <section id="objectives" class="section">
+    <div class="container">
+      <h2>Objectives</h2>
+      <p class="sub">By the end of this lesson you will be able to…</p>
+      <ul class="objectives-list">
+        <li>Understand the term <strong>client-server model</strong>.</li>
+        <li>Understand the term <strong>peer-to-peer network</strong>.</li>
+        <li>Understand the term <strong>cloud computing</strong>.</li>
+        <li>Give some <strong>advantages and disadvantages</strong> for each of the above.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STARTER -->
+  <section id="starter" class="section" data-aim="Describe what happens when you request a web page in a browser.">
+    <div class="container">
+      <h2>Starter</h2>
+      <p class="sub">Describe what happens when you <strong>request a web page</strong> in a browser. The six steps below are jumbled up — click them in the <strong>correct order</strong>, starting from the moment you press Enter.</p>
+
+      <div class="seq-game">
+        <div class="seq-list" id="seq-list"></div>
+        <div class="tld-controls">
+          <span id="seq-score" class="score">Placed 0 / 6</span>
+          <button id="seq-reveal" class="btn">Reveal answer</button>
+          <button id="seq-reset" class="btn ghost">Reset</button>
+        </div>
+        <p class="feedback" id="seq-feedback">💡 Click the step you think happens <strong>first</strong>.</p>
+      </div>
+
+      <div class="callout note">
+        🤔 The journey ends at a <strong>web server</strong>… but what <em>is</em> a server? Scroll on to find out.
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVERS -->
+  <section id="servers" class="section" data-aim="Understand what a server is and where servers are kept.">
+    <div class="container">
+      <h2>Servers</h2>
+      <p class="sub">Servers are <strong>powerful computers</strong> dedicated to carrying out a <strong>service</strong> — such as the delivery of web pages. They don't have their own screens or keyboards; they just sit in racks doing their job 24/7.</p>
+
+      <div class="server-grid">
+        <button class="server-card" data-img="images/servers-datacentre.jpg" data-caption="A real rack server — a flat 'pizza box' computer designed to slide into a cabinet. The bays on the left hold hot-swappable hard drives; there's no screen or keyboard because it's managed over the network.">
+          <div class="server-svg">
+            <svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+              <!-- Cabinet -->
+              <rect x="55" y="8" width="110" height="124" rx="6" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+              <!-- Rack units -->
+              <g fill="#0b1226" stroke="#5eead4" stroke-width="1">
+                <rect x="64" y="18" width="92" height="16" rx="2"/>
+                <rect x="64" y="40" width="92" height="16" rx="2"/>
+                <rect x="64" y="62" width="92" height="16" rx="2"/>
+                <rect x="64" y="84" width="92" height="16" rx="2"/>
+                <rect x="64" y="106" width="92" height="16" rx="2"/>
+              </g>
+              <!-- LEDs -->
+              <g>
+                <circle cx="148" cy="26" r="2.2" fill="#34d399" class="led"/>
+                <circle cx="148" cy="48" r="2.2" fill="#34d399" class="led led-2"/>
+                <circle cx="148" cy="70" r="2.2" fill="#fbbf24" class="led led-3"/>
+                <circle cx="148" cy="92" r="2.2" fill="#34d399" class="led led-4"/>
+                <circle cx="148" cy="114" r="2.2" fill="#34d399" class="led led-5"/>
+              </g>
+              <!-- Vents -->
+              <g stroke="#243057" stroke-width="1.5">
+                <line x1="70" y1="24" x2="100" y2="24"/><line x1="70" y1="28" x2="100" y2="28"/>
+                <line x1="70" y1="46" x2="100" y2="46"/><line x1="70" y1="50" x2="100" y2="50"/>
+                <line x1="70" y1="68" x2="100" y2="68"/><line x1="70" y1="72" x2="100" y2="72"/>
+                <line x1="70" y1="90" x2="100" y2="90"/><line x1="70" y1="94" x2="100" y2="94"/>
+                <line x1="70" y1="112" x2="100" y2="112"/><line x1="70" y1="116" x2="100" y2="116"/>
+              </g>
+            </svg>
+          </div>
+          <h3>🏫 A server cabinet</h3>
+          <p>Servers are stored in <strong>cabinets</strong> (racks). A school or business might have one or two cabinets in a locked room.</p>
+        </button>
+
+        <div class="server-aside">
+          <div class="callout" style="margin-top:0;">
+            💡 A <strong>server</strong> = a powerful computer dedicated to providing a <strong>service</strong> — like delivering web pages, storing files or printing.
+          </div>
+          <div class="callout note">
+            🏢 A school or business may keep a cabinet on site. The really big services keep their servers in <strong>data centres</strong> — more on those shortly!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENT-SERVER -->
+  <section id="csmodel" class="section" data-aim="Understand how the client-server model works, with its advantages and disadvantages.">
+    <div class="container">
+      <h2>The client-server model</h2>
+      <p class="sub">In the <strong>client-server model</strong>, computers called <strong>clients</strong> request services from a central <strong>server</strong>, and the server responds. Here's a small local network — like your school's — with four clients connected to one server.</p>
+
+      <div class="topo-stage" id="local-stage">
+        <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" class="topo-svg">
+          <!-- Links -->
+          <g>
+            <line class="cl-link" data-id="pc1" x1="160" y1="85"  x2="322" y2="125" stroke="#5eead4" stroke-width="2" opacity="0.55"/>
+            <line class="cl-link" data-id="pc2" x1="560" y1="85"  x2="398" y2="125" stroke="#5eead4" stroke-width="2" opacity="0.55"/>
+            <line class="cl-link" data-id="pc3" x1="160" y1="245" x2="322" y2="185" stroke="#5eead4" stroke-width="2" opacity="0.55"/>
+            <line class="cl-link" data-id="pc4" x1="560" y1="245" x2="398" y2="185" stroke="#5eead4" stroke-width="2" opacity="0.55"/>
+          </g>
+
+          <!-- Server (centre) -->
+          <g id="local-server">
+            <rect x="322" y="100" width="76" height="110" rx="8" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <g fill="#0b1226" stroke="#5eead4" stroke-width="1">
+              <rect x="331" y="110" width="58" height="16" rx="2"/>
+              <rect x="331" y="132" width="58" height="16" rx="2"/>
+              <rect x="331" y="154" width="58" height="16" rx="2"/>
+              <rect x="331" y="176" width="58" height="16" rx="2"/>
+            </g>
+            <circle cx="381" cy="118" r="2" fill="#34d399" class="led srv-led"/>
+            <circle cx="381" cy="140" r="2" fill="#34d399" class="led led-2 srv-led"/>
+            <circle cx="381" cy="162" r="2" fill="#fbbf24" class="led led-3 srv-led"/>
+            <circle cx="381" cy="184" r="2" fill="#34d399" class="led led-4 srv-led"/>
+            <text x="360" y="232" text-anchor="middle" fill="#818cf8" font-size="13" font-weight="600">SERVER</text>
+            <text class="srv-x" x="360" y="172" text-anchor="middle" font-size="44" opacity="0">❌</text>
+          </g>
+
+          <!-- Clients -->
+          <g class="cl-dev" data-id="pc1">
+            <circle cx="160" cy="75" r="28" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="160" y="84" text-anchor="middle" font-size="24">🖥️</text>
+            <text x="160" y="32" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 1 · client</text>
+          </g>
+          <g class="cl-dev" data-id="pc2">
+            <circle cx="560" cy="75" r="28" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="560" y="84" text-anchor="middle" font-size="24">🖥️</text>
+            <text x="560" y="32" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 2 · client</text>
+          </g>
+          <g class="cl-dev" data-id="pc3">
+            <circle cx="160" cy="255" r="28" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="160" y="264" text-anchor="middle" font-size="24">🖥️</text>
+            <text x="160" y="305" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 3 · client</text>
+          </g>
+          <g class="cl-dev" data-id="pc4">
+            <circle cx="560" cy="255" r="28" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="560" y="264" text-anchor="middle" font-size="24">🖥️</text>
+            <text x="560" y="305" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 4 · client</text>
+          </g>
+
+          <!-- Packet -->
+          <g id="local-packet" opacity="0">
+            <rect x="-26" y="-13" width="52" height="26" rx="7" fill="#5eead4" stroke="#0f172a" stroke-width="1.5"/>
+            <text y="5" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="700" id="local-packet-label">REQ</text>
+          </g>
+        </svg>
+
+        <div class="topo-controls">
+          <button id="local-send" class="btn">📨 Ask the server for a file</button>
+          <button id="local-serverfail" class="btn ghost">💥 Make the server fail</button>
+          <button id="local-repair" class="btn ghost">🔧 Repair everything</button>
+        </div>
+        <p class="feedback" id="local-feedback">💡 Click a <strong>computer</strong> to switch it off — watch what happens to the others. Then try making the <strong>server</strong> fail…</p>
+      </div>
+
+      <div class="callout">
+        💡 Clients don't depend on <em>each other</em> — one can be off or broken and the rest work as normal. But <strong>everyone</strong> depends on the <strong>server</strong>.
+      </div>
+
+      <h3 style="margin-top: 2.5em;">🌍 The Internet is a client-server model too</h3>
+      <p class="sub">The exact same model works at a global scale. When you request a web page, <strong>your browser is the client</strong> — and the server might be on the other side of the world.</p>
+
+      <div class="cs-stage" id="cs-stage">
+        <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" class="cs-svg">
+          <!-- Connection lines -->
+          <line x1="150" y1="150" x2="272" y2="150" stroke="#5eead4" stroke-width="2" opacity="0.55"/>
+          <line x1="448" y1="150" x2="562" y2="150" stroke="#5eead4" stroke-width="2" opacity="0.55"/>
+
+          <!-- Internet cloud -->
+          <g id="cs-cloud">
+            <ellipse cx="360" cy="150" rx="88" ry="50" fill="rgba(129,140,248,0.06)" stroke="rgba(129,140,248,0.5)" stroke-dasharray="6 6" stroke-width="2"/>
+            <text x="360" y="145" text-anchor="middle" font-size="22">🌐</text>
+            <text x="360" y="170" text-anchor="middle" fill="#818cf8" font-size="12" font-weight="600">The Internet</text>
+          </g>
+
+          <!-- Client -->
+          <g id="cs-client">
+            <circle cx="115" cy="150" r="34" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="115" y="160" text-anchor="middle" font-size="28">💻</text>
+            <text x="115" y="205" text-anchor="middle" fill="#5eead4" font-size="13" font-weight="600">CLIENT</text>
+            <text x="115" y="222" text-anchor="middle" fill="#9aa8c7" font-size="11">your computer + browser</text>
+          </g>
+
+          <!-- Server -->
+          <g id="cs-server">
+            <rect x="565" y="95" width="76" height="110" rx="8" fill="#1a2547" stroke="#818cf8" stroke-width="2"/>
+            <g fill="#0b1226" stroke="#5eead4" stroke-width="1">
+              <rect x="574" y="105" width="58" height="16" rx="2"/>
+              <rect x="574" y="127" width="58" height="16" rx="2"/>
+              <rect x="574" y="149" width="58" height="16" rx="2"/>
+              <rect x="574" y="171" width="58" height="16" rx="2"/>
+            </g>
+            <circle cx="624" cy="113" r="2" fill="#34d399" class="led"/>
+            <circle cx="624" cy="135" r="2" fill="#34d399" class="led led-2"/>
+            <circle cx="624" cy="157" r="2" fill="#fbbf24" class="led led-3"/>
+            <circle cx="624" cy="179" r="2" fill="#34d399" class="led led-4"/>
+            <text x="603" y="228" text-anchor="middle" fill="#818cf8" font-size="13" font-weight="600">SERVER</text>
+            <text x="603" y="245" text-anchor="middle" fill="#9aa8c7" font-size="11">responds to requests</text>
+          </g>
+
+          <!-- Request packet -->
+          <g id="cs-request" opacity="0">
+            <rect x="-26" y="-13" width="52" height="26" rx="7" fill="#5eead4" stroke="#0f172a" stroke-width="1.5"/>
+            <text y="5" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">GET</text>
+          </g>
+          <!-- Response packet -->
+          <g id="cs-response" opacity="0">
+            <rect x="-26" y="-13" width="52" height="26" rx="7" fill="#fbbf24" stroke="#0f172a" stroke-width="1.5"/>
+            <text y="5" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="700">PAGE</text>
+          </g>
+        </svg>
+
+        <div class="topo-controls">
+          <button id="cs-send" class="btn">🌐 Request a web page</button>
+          <button id="cs-reset" class="btn ghost">⟲ Reset</button>
+        </div>
+        <p class="feedback" id="cs-feedback">💡 Click <strong>"Request a web page"</strong> to watch the client-server model in action.</p>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">The client-server model is used for…</h3>
+      <p class="sub">Click each card to find out what that type of server does.</p>
+
+      <div class="hw-grid">
+        <button class="hw-card" data-id="web">
+          <div class="hw-emoji">🌐</div>
+          <h3>Web servers</h3>
+          <p class="hw-short">Deliver web pages</p>
+          <div class="hw-info">
+            Store websites. When your browser sends a request, the web server <strong>processes it</strong> and sends the page back — exactly like the starter activity.
+          </div>
+        </button>
+        <button class="hw-card" data-id="db">
+          <div class="hw-emoji">🗃️</div>
+          <h3>Database servers</h3>
+          <p class="hw-short">Store organised data</p>
+          <div class="hw-info">
+            Hold huge, organised collections of data — like the school's student records — and answer <strong>queries</strong> from client programs.
+          </div>
+        </button>
+        <button class="hw-card" data-id="file">
+          <div class="hw-emoji">📁</div>
+          <h3>File servers</h3>
+          <p class="hw-short">Store users' files centrally</p>
+          <div class="hw-info">
+            Keep everyone's documents in <strong>one central place</strong> — that's why you can log on to any computer in school and still see your files.
+          </div>
+        </button>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Advantages & disadvantages</h3>
+      <p class="sub">Discuss with a partner, then click to reveal.</p>
+
+      <div class="proscons">
+        <div class="proscons-col">
+          <h3 class="pros-h">✅ Advantages</h3>
+          <div class="reveal-list" id="cs-pros"></div>
+        </div>
+        <div class="proscons-col">
+          <h3 class="cons-h">⚠️ Disadvantages</h3>
+          <div class="reveal-list" id="cs-cons"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA CENTRES -->
+  <section id="datacentres" class="section" data-aim="Understand what a data centre is and what data centres are used for.">
+    <div class="container">
+      <h2>Data centres</h2>
+      <p class="sub">Where do the servers behind the world's websites and apps actually live? In <strong>data centres</strong> — huge buildings that contain <strong>thousands of servers</strong>, stacked in row after row of cabinets.</p>
+
+      <div class="dc-visual">
+        <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" class="dc-svg">
+          <text x="360" y="24" text-anchor="middle" fill="#5eead4" font-size="14" font-weight="600" letter-spacing="0.1em">🏢 INSIDE A DATA CENTRE</text>
+          <g>
+            <rect x="30"  y="45" width="70" height="130" rx="4" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <rect x="130" y="45" width="70" height="130" rx="4" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <rect x="230" y="45" width="70" height="130" rx="4" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <rect x="330" y="45" width="70" height="130" rx="4" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <rect x="430" y="45" width="70" height="130" rx="4" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <rect x="530" y="45" width="70" height="130" rx="4" fill="#1a2547" stroke="#5eead4" stroke-width="1.5"/>
+            <rect x="630" y="45" width="60" height="130" rx="4" fill="#1a2547" stroke="#5eead4" stroke-width="1.5" opacity="0.5"/>
+          </g>
+          <g fill="#0b1226" stroke="#243057">
+            <rect x="38" y="55" width="54" height="12"/><rect x="38" y="73" width="54" height="12"/><rect x="38" y="91" width="54" height="12"/><rect x="38" y="109" width="54" height="12"/><rect x="38" y="127" width="54" height="12"/><rect x="38" y="145" width="54" height="12"/>
+            <rect x="138" y="55" width="54" height="12"/><rect x="138" y="73" width="54" height="12"/><rect x="138" y="91" width="54" height="12"/><rect x="138" y="109" width="54" height="12"/><rect x="138" y="127" width="54" height="12"/><rect x="138" y="145" width="54" height="12"/>
+            <rect x="238" y="55" width="54" height="12"/><rect x="238" y="73" width="54" height="12"/><rect x="238" y="91" width="54" height="12"/><rect x="238" y="109" width="54" height="12"/><rect x="238" y="127" width="54" height="12"/><rect x="238" y="145" width="54" height="12"/>
+            <rect x="338" y="55" width="54" height="12"/><rect x="338" y="73" width="54" height="12"/><rect x="338" y="91" width="54" height="12"/><rect x="338" y="109" width="54" height="12"/><rect x="338" y="127" width="54" height="12"/><rect x="338" y="145" width="54" height="12"/>
+            <rect x="438" y="55" width="54" height="12"/><rect x="438" y="73" width="54" height="12"/><rect x="438" y="91" width="54" height="12"/><rect x="438" y="109" width="54" height="12"/><rect x="438" y="127" width="54" height="12"/><rect x="438" y="145" width="54" height="12"/>
+            <rect x="538" y="55" width="54" height="12"/><rect x="538" y="73" width="54" height="12"/><rect x="538" y="91" width="54" height="12"/><rect x="538" y="109" width="54" height="12"/><rect x="538" y="127" width="54" height="12"/><rect x="538" y="145" width="54" height="12"/>
+          </g>
+          <g>
+            <circle cx="86" cy="61"  r="1.8" fill="#34d399" class="led"/>
+            <circle cx="186" cy="97" r="1.8" fill="#34d399" class="led led-2"/>
+            <circle cx="286" cy="133" r="1.8" fill="#fbbf24" class="led led-3"/>
+            <circle cx="386" cy="79" r="1.8" fill="#34d399" class="led led-4"/>
+            <circle cx="486" cy="115" r="1.8" fill="#34d399" class="led led-5"/>
+            <circle cx="586" cy="61" r="1.8" fill="#34d399" class="led led-3"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="callout">
+        🌡️ Data centres need industrial <strong>cooling</strong>, backup <strong>power generators</strong> and tight <strong>security</strong> — because millions of people rely on the servers inside, 24 hours a day.
+      </div>
+
+      <h3 style="margin-top: 2.5em;">🎥 Take a look inside a real one</h3>
+      <p class="sub">This news report goes inside one of <strong>Google's data centres</strong> — look out for the racks of servers, the cooling systems and the sheer size of the buildings.</p>
+
+      <a class="video-photo" href="https://www.youtube.com/watch?v=TfW5pWpsHAo" target="_blank" rel="noopener" aria-label="Watch: Inside a Google data centre (opens YouTube in a new tab)">
+        <img src="images/google data.jpeg" alt="Aerial view of a Google data centre campus, with cooling plants and wind turbines nearby" />
+        <span class="video-play">▶</span>
+        <span class="video-photo-tag">🎥 Click to watch: Inside a Google data centre</span>
+      </a>
+      <p class="sub" style="font-size: 0.92rem;">This is one of Google's real data centres — notice the <strong>wind turbines</strong> powering it and the blue <strong>cooling plants</strong> on the roofs.</p>
+
+      <h3 style="margin-top: 2em;">What are data centres used for?</h3>
+      <p class="sub">Almost everything you do online ends up at a data centre. Click each card for examples.</p>
+
+      <div class="hw-grid">
+        <button class="hw-card" data-id="streaming">
+          <div class="hw-emoji">🎬</div>
+          <h3>Video streaming</h3>
+          <p class="hw-short">Netflix, YouTube, Disney+</p>
+          <div class="hw-info">
+            Every film and video is stored on servers in data centres. Copies are kept in <strong>different countries</strong> so the video streams from somewhere near you.
+          </div>
+        </button>
+        <button class="hw-card" data-id="gaming">
+          <div class="hw-emoji">🎮</div>
+          <h3>Online gaming</h3>
+          <p class="hw-short">Fortnite, Roblox, Minecraft</p>
+          <div class="hw-info">
+            <strong>Game servers</strong> match players together and keep everyone's game world in sync — every player is a client of the same server.
+          </div>
+        </button>
+        <button class="hw-card" data-id="web">
+          <div class="hw-emoji">🌐</div>
+          <h3>Websites &amp; apps</h3>
+          <p class="hw-short">Every site you visit</p>
+          <div class="hw-info">
+            The <strong>web servers</strong> from our starter activity live here. Big sites use <strong>thousands of servers</strong> sharing the work so they never go down.
+          </div>
+        </button>
+        <button class="hw-card" data-id="storage">
+          <div class="hw-emoji">☁️</div>
+          <h3>Cloud storage</h3>
+          <p class="hw-short">Google Drive, iCloud, OneDrive</p>
+          <div class="hw-info">
+            Your "cloud" photos and documents are really sitting on <strong>file servers</strong> in a data centre — probably backed up in more than one.
+          </div>
+        </button>
+        <button class="hw-card" data-id="ai">
+          <div class="hw-emoji">🤖</div>
+          <h3>AI chatbots</h3>
+          <p class="hw-short">ChatGPT, Claude, Gemini</p>
+          <div class="hw-info">
+            AI models run on <strong>extremely powerful servers</strong>. When you chat to an AI, your message travels to a data centre and the reply travels back — client-server again!
+          </div>
+        </button>
+        <button class="hw-card" data-id="shopping">
+          <div class="hw-emoji">🛒</div>
+          <h3>Shopping &amp; banking</h3>
+          <p class="hw-short">Amazon, PayPal, your bank</p>
+          <div class="hw-info">
+            <strong>Database servers</strong> in data centres keep track of orders, deliveries and every payment — securely and without losing a single record.
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEER TO PEER -->
+  <section id="p2p" class="section" data-aim="Understand how a peer-to-peer network shares resources, with its advantages and disadvantages.">
+    <div class="container">
+      <h2>Peer-to-peer networks (P2P)</h2>
+      <p class="sub">In a <strong>peer-to-peer</strong> network there is <strong>no central server</strong>. Each computer is an equal — a <strong>peer</strong> — and each peer can share its resources (printers, scanners, storage) with the others.</p>
+
+      <div class="topo-stage" id="p2p-stage">
+        <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" class="topo-svg">
+          <!-- Mesh cables (click to break) -->
+          <g stroke="#818cf8" stroke-width="3">
+            <line class="p2p-link" data-link="laptop-pc1" x1="150" y1="95"  x2="570" y2="95"/>
+            <line class="p2p-link" data-link="pc1-pc2"    x1="150" y1="95"  x2="150" y2="255"/>
+            <line class="p2p-link" data-link="laptop-pc3" x1="570" y1="95"  x2="570" y2="255"/>
+            <line class="p2p-link" data-link="pc2-pc3"    x1="150" y1="255" x2="570" y2="255"/>
+            <line class="p2p-link" data-link="pc1-pc3"    x1="150" y1="95"  x2="570" y2="255"/>
+            <line class="p2p-link" data-link="laptop-pc2" x1="570" y1="95"  x2="150" y2="255"/>
+          </g>
+
+          <!-- Peers -->
+          <g class="peer" data-id="pc1" data-share="its internal storage — the files saved on its hard drive">
+            <circle cx="150" cy="95" r="30" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="150" y="104" text-anchor="middle" font-size="24">🖥️</text>
+            <text x="150" y="48" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 1</text>
+            <g class="peer-badge">
+              <circle cx="186" cy="66" r="14" fill="#0b1226" stroke="#fbbf24" stroke-width="1.5"/>
+              <text x="186" y="71" text-anchor="middle" font-size="12">🗂️</text>
+            </g>
+          </g>
+          <g class="peer" data-id="laptop" data-share="its scanner — any peer can scan a photo through it">
+            <circle cx="570" cy="95" r="30" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="570" y="104" text-anchor="middle" font-size="24">💻</text>
+            <text x="570" y="48" text-anchor="middle" fill="#9aa8c7" font-size="11">Laptop</text>
+            <g class="peer-badge">
+              <circle cx="606" cy="66" r="14" fill="#0b1226" stroke="#fbbf24" stroke-width="1.5"/>
+              <text x="606" y="71" text-anchor="middle" font-size="12">📠</text>
+            </g>
+          </g>
+          <g class="peer" data-id="pc2" data-share="its printer — any peer can print through it">
+            <circle cx="150" cy="255" r="30" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="150" y="264" text-anchor="middle" font-size="24">🖥️</text>
+            <text x="150" y="310" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 2</text>
+            <g class="peer-badge">
+              <circle cx="186" cy="284" r="14" fill="#0b1226" stroke="#fbbf24" stroke-width="1.5"/>
+              <text x="186" y="289" text-anchor="middle" font-size="12">🖨️</text>
+            </g>
+          </g>
+          <g class="peer" data-id="pc3" data-share="its external storage drive — extra space for everyone's files">
+            <circle cx="570" cy="255" r="30" fill="#1a2547" stroke="#5eead4" stroke-width="2"/>
+            <text x="570" y="264" text-anchor="middle" font-size="24">🖥️</text>
+            <text x="570" y="310" text-anchor="middle" fill="#9aa8c7" font-size="11">PC 3</text>
+            <g class="peer-badge">
+              <circle cx="606" cy="284" r="14" fill="#0b1226" stroke="#fbbf24" stroke-width="1.5"/>
+              <text x="606" y="289" text-anchor="middle" font-size="12">💾</text>
+            </g>
+          </g>
+
+          <!-- Packet -->
+          <g id="p2p-packet" opacity="0">
+            <rect x="-28" y="-13" width="56" height="26" rx="7" fill="#5eead4" stroke="#0f172a" stroke-width="1.5"/>
+            <text y="5" text-anchor="middle" fill="#0f172a" font-size="10" font-weight="700" id="p2p-packet-label">SCAN?</text>
+          </g>
+        </svg>
+
+        <div class="topo-controls">
+          <button id="p2p-file" class="btn">📁 PC 1 asks PC 3 for a file</button>
+          <button id="p2p-scan" class="btn">📠 PC 1 uses the laptop's scanner</button>
+          <button id="p2p-print" class="btn">🖨️ PC 3 prints on PC 2's printer</button>
+          <button id="p2p-repair" class="btn ghost">🔧 Repair everything</button>
+        </div>
+        <p class="feedback" id="p2p-feedback">💡 Click a <strong>computer</strong> to switch it off, or click a <strong>cable</strong> to break it — then run the demos and see what still works. Notice there's no server anywhere!</p>
+      </div>
+
+      <div class="callout">
+        💡 <strong>Compare it with client-server:</strong> when the <em>server</em> failed, the whole network was useless. In P2P, a broken computer or cable only takes out <strong>that one part</strong> — everything else keeps working, because there is <strong>no single point of failure</strong>.
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Advantages & disadvantages</h3>
+      <p class="sub">What are the advantages and disadvantages of peer-to-peer networks? Discuss, then click to reveal.</p>
+
+      <div class="proscons">
+        <div class="proscons-col">
+          <h3 class="pros-h">✅ Advantages</h3>
+          <div class="reveal-list" id="p2p-pros"></div>
+        </div>
+        <div class="proscons-col">
+          <h3 class="cons-h">⚠️ Disadvantages</h3>
+          <div class="reveal-list" id="p2p-cons"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section id="compare" class="section" data-aim="Compare the client-server model with peer-to-peer networks.">
+    <div class="container">
+      <h2>Side-by-side comparison</h2>
+      <p class="sub">Click each row to compare client-server vs peer-to-peer. The <strong>green badge</strong> shows which one wins that category.</p>
+
+      <div class="compare-controls">
+        <button class="btn" id="compare-all">🔍 Reveal all</button>
+        <button class="btn ghost" id="compare-hide">⟲ Hide all</button>
+      </div>
+
+      <div class="compare-table">
+        <div class="compare-row" data-row="backup" data-winner="cs">
+          <button class="cr-toggle">
+            <span class="cr-num">1</span>
+            <span class="cr-label">💾 Backing up data</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="cs">
+              <div class="cr-side-head cs"><span>🗄️</span> Client-server</div>
+              <span class="cr-verdict good">✅ Easy</span>
+              <p>Everything is stored in <strong>one central place</strong> — back up the server and you've backed up everyone.</p>
+            </div>
+            <div class="cr-cell" data-side="p2p">
+              <div class="cr-side-head p2p"><span>🤝</span> Peer-to-peer</div>
+              <span class="cr-verdict bad">⚠️ Hard</span>
+              <p><strong>Every computer</strong> needs its own backup system.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="security" data-winner="cs">
+          <button class="cr-toggle">
+            <span class="cr-num">2</span>
+            <span class="cr-label">🔐 Security</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="cs">
+              <div class="cr-side-head cs"><span>🗄️</span> Client-server</div>
+              <span class="cr-verdict good">✅ Easier to secure</span>
+              <p>There is <strong>one central location</strong> to protect and keep secure.</p>
+            </div>
+            <div class="cr-cell" data-side="p2p">
+              <div class="cr-side-head p2p"><span>🤝</span> Peer-to-peer</div>
+              <span class="cr-verdict bad">⚠️ Less secure</span>
+              <p><strong>Every computer</strong> needs to be secured individually.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="admin" data-winner="cs">
+          <button class="cr-toggle">
+            <span class="cr-num">3</span>
+            <span class="cr-label">🧑‍💼 Administration</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="cs">
+              <div class="cr-side-head cs"><span>🗄️</span> Client-server</div>
+              <span class="cr-verdict good">✅ Central control</span>
+              <p>The whole network can be <strong>administered from one place</strong> — the server.</p>
+            </div>
+            <div class="cr-cell" data-side="p2p">
+              <div class="cr-side-head p2p"><span>🤝</span> Peer-to-peer</div>
+              <span class="cr-verdict bad">⚠️ Hard to manage</span>
+              <p>There is <strong>no central point</strong> to the network, so each peer is managed separately.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="cost" data-winner="p2p">
+          <button class="cr-toggle">
+            <span class="cr-num">4</span>
+            <span class="cr-label">💷 Cost</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="cs">
+              <div class="cr-side-head cs"><span>🗄️</span> Client-server</div>
+              <span class="cr-verdict bad">⚠️ Expensive</span>
+              <p>A powerful, dedicated <strong>server has to be bought</strong> — and maintained.</p>
+            </div>
+            <div class="cr-cell" data-side="p2p">
+              <div class="cr-side-head p2p"><span>🤝</span> Peer-to-peer</div>
+              <span class="cr-verdict good">✅ Cheap</span>
+              <p><strong>No dedicated server hardware</strong> needs to be bought — existing computers do the work.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-row" data-row="failure" data-winner="p2p">
+          <button class="cr-toggle">
+            <span class="cr-num">5</span>
+            <span class="cr-label">💥 Single point of failure</span>
+            <span class="cr-hint">Click to compare</span>
+          </button>
+          <div class="cr-body">
+            <div class="cr-cell" data-side="cs">
+              <div class="cr-side-head cs"><span>🗄️</span> Client-server</div>
+              <span class="cr-verdict bad">⚠️ Risky</span>
+              <p>If the <strong>server fails</strong>, no-one can access the services it offers.</p>
+            </div>
+            <div class="cr-cell" data-side="p2p">
+              <div class="cr-side-head p2p"><span>🤝</span> Peer-to-peer</div>
+              <span class="cr-verdict good">✅ Resilient</span>
+              <p>If one computer fails, files on the <strong>other computers are still available</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-summary">
+        <div class="cs-card sum-cs">
+          <h3>🗄️ Pick client-server when…</h3>
+          <p>You're a <strong>school or business</strong> that needs central backups, security and administration — and can afford a server.</p>
+        </div>
+        <div class="cs-card sum-p2p">
+          <h3>🤝 Pick peer-to-peer when…</h3>
+          <p>You have a <strong>small home or office network</strong> and just want to share printers and files cheaply, without buying a server.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOUD -->
+  <section id="cloud" class="section" data-aim="Understand what cloud computing is and the services it offers.">
+    <div class="container">
+      <h2>Cloud computing</h2>
+      <p class="sub">The <strong>Cloud</strong> is essentially another name for <strong>the Internet</strong>. "Cloud computing" covers services that are offered <strong>via the Internet</strong> instead of running on your own computer.</p>
+
+      <div class="callout">
+        ☁️ When your file is "in the cloud", it isn't floating in the sky — it's sitting on a <strong>server in a data centre</strong>, reached through the client-server model you've just learned about.
+      </div>
+
+      <h3 style="margin-top: 2em;">Cloud services include…</h3>
+      <p class="sub">Click each card for examples you probably use already.</p>
+
+      <div class="hw-grid">
+        <button class="hw-card" data-id="office">
+          <div class="hw-emoji">📝</div>
+          <h3>Office software</h3>
+          <p class="hw-short">Apps that run in your browser</p>
+          <div class="hw-info">
+            <strong>Google Docs</strong> and <strong>Microsoft 365</strong> let you write documents with nothing installed — the software runs on a server, and your browser is the client.
+          </div>
+        </button>
+        <button class="hw-card" data-id="storage">
+          <div class="hw-emoji">☁️</div>
+          <h3>File storage</h3>
+          <p class="hw-short">Your files, on any device</p>
+          <div class="hw-info">
+            <strong>Google Drive, OneDrive and iCloud</strong> keep your files on servers in a data centre, so you can open them from your phone, a school PC or a laptop at home.
+          </div>
+        </button>
+        <button class="hw-card" data-id="mis">
+          <div class="hw-emoji">🏫</div>
+          <h3>Management systems</h3>
+          <p class="hw-short">Employee &amp; student records</p>
+          <div class="hw-info">
+            Schools and businesses use cloud systems to track <strong>students and employees</strong> — registers, grades, payroll — accessible from anywhere with a login.
+          </div>
+        </button>
+      </div>
+
+      <div class="worksheet-callout">
+        📝 Now complete <strong>Task 1</strong> and <strong>Task 2</strong> on <strong>Worksheet 4</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- PLENARY -->
+  <section id="plenary" class="section">
+    <div class="container">
+      <h2>Plenary</h2>
+      <p class="sub">Work with a partner. Match each <strong>networking word</strong> on the left to its <strong>definition</strong> on the right.</p>
+
+      <div class="tld-game">
+        <div class="tld-col" id="term-items"></div>
+        <div class="tld-col" id="term-labels"></div>
+      </div>
+
+      <div class="tld-controls">
+        <span id="term-score" class="score">Matched 0 / 8</span>
+        <button id="term-reveal" class="btn">Reveal all</button>
+        <button id="term-reset" class="btn ghost">Reset</button>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Key terms</h3>
+      <p class="sub">Click each term to reveal its definition.</p>
+
+      <div class="term-grid">
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Client</h3></div>
+            <div class="flip-face flip-back"><p>A computer that <strong>requests a service</strong> — like your computer running a web browser.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Server</h3></div>
+            <div class="flip-face flip-back"><p>A powerful computer <strong>dedicated to a service</strong>, such as delivering web pages.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Client-server model</h3></div>
+            <div class="flip-face flip-back"><p>A client <strong>requests</strong> a service from a server; the server <strong>sends the response</strong>. Used by web, database and file servers.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Peer-to-peer network</h3></div>
+            <div class="flip-face flip-back"><p>Resources such as printers, scanners and storage are <strong>shared between equal computers</strong> — no central server.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Peer</h3></div>
+            <div class="flip-face flip-back"><p>One of the <strong>equal computers</strong> in a P2P network. It can both share and use resources.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Cloud computing</h3></div>
+            <div class="flip-face flip-back"><p><strong>Applications and storage</strong> that are available on the Internet.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Data centre</h3></div>
+            <div class="flip-face flip-back"><p>A building containing <strong>thousands of servers</strong> stored in cabinets.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Web server</h3></div>
+            <div class="flip-face flip-back"><p>A server that <strong>processes requests for web pages</strong> and sends them back to the client.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>File server</h3></div>
+            <div class="flip-face flip-back"><p>A server that stores users' <strong>files centrally</strong> so they can be reached from any computer.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Database server</h3></div>
+            <div class="flip-face flip-back"><p>A server that stores <strong>organised collections of data</strong> and answers queries about them.</p></div>
+          </div>
+        </button>
+      </div>
+
+      <p class="end-note">🎉 End of Lesson 4</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Image lightbox -->
+<div id="lightbox" class="lightbox" hidden>
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+  <figure class="lightbox-inner">
+    <img id="lightbox-img" alt="" />
+    <figcaption id="lightbox-caption"></figcaption>
+  </figure>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

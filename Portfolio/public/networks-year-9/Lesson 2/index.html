@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 2: Connectivity</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a href="../index.html" class="home-link" aria-label="Back to home" title="Home" style="position:fixed;top:14px;left:14px;z-index:200;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(20,30,60,0.55);border:1px solid rgba(94,234,212,0.3);color:#5eead4;text-decoration:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background 0.18s ease,border-color 0.18s ease;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></a>
+
+<div id="progress-bar"></div>
+<div id="aim-indicator" aria-live="polite"></div>
+
+<nav id="side-nav" aria-label="Lesson sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#starter" data-label="Starter: 1858"><span></span></a>
+  <a href="#submarine" data-label="Submarine cables"><span></span></a>
+  <a href="#cables" data-label="Cable types"><span></span></a>
+  <a href="#wireless" data-label="Wireless"><span></span></a>
+  <a href="#bandwidth" data-label="Bandwidth"><span></span></a>
+  <a href="#download" data-label="Download time"><span></span></a>
+  <a href="#buffering" data-label="Buffering"><span></span></a>
+  <a href="#plenary" data-label="Plenary"><span></span></a>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero" class="section hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Year 9 · Computing</p>
+      <h1>Lesson 2<br/><span class="accent">Connectivity</span></h1>
+      <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+    </div>
+  </section>
+
+  <!-- OBJECTIVES -->
+  <section id="objectives" class="section">
+    <div class="container">
+      <h2>Objectives</h2>
+      <p class="sub">By the end of this lesson you will be able to…</p>
+      <ul class="objectives-list">
+        <li>Understand different types of <strong>network media</strong>: twisted-pair copper, fibre optic, coaxial and <strong>wireless</strong>.</li>
+        <li>Explain what <strong>bandwidth</strong> is and how it affects file transfer time.</li>
+        <li><strong>Calculate</strong> the time taken to download files of different sizes at different bandwidths.</li>
+        <li>Understand why streaming video and audio uses <strong>buffering</strong>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STARTER -->
+  <section id="starter" class="section" data-aim="Understand the history of network cables.">
+    <div class="container">
+      <h2>Starter</h2>
+      <p class="sub">The first communication cable from the <strong>UK to the USA</strong> was installed in <strong>1858</strong>. Discuss with a partner, then click each card to reveal the answer.</p>
+
+      <div class="flip-grid">
+        <button class="flip-card" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>What do you think the cable was <em>made of</em>?</h3>
+              <p class="hint">Click to reveal</p>
+            </div>
+            <div class="flip-face flip-back">
+              <p>The cable contained <strong>seven copper wires</strong>.</p>
+            </div>
+          </div>
+        </button>
+
+        <button class="flip-card" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>How <em>long</em> do you think the cable was?</h3>
+              <p class="hint">Click to reveal</p>
+            </div>
+            <div class="flip-face flip-back">
+              <p><strong>2,500 miles long</strong> laid under the Atlantic ocean.<br/>It weighed <strong>one ton per mile</strong>.</p>
+              <p style="margin-top: 0.6em; font-size: 0.9rem; color: var(--ink-dim);">🗺️ That's about the same as the distance from <strong>New York to Los Angeles</strong> right across the USA.</p>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div class="callout note" id="fun-fact">
+        <strong>🎲 Fun fact</strong>
+        <div style="margin-top: 8px;">
+          <button id="fact-reveal" class="btn ghost">Reveal</button>
+        </div>
+        <p id="fact-answer" hidden style="margin-top: 14px;">
+          💥 The cable <strong>broke after just three weeks</strong>, having sent only <strong>732 messages</strong> in total.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMARINE CABLES TODAY -->
+  <section id="submarine" class="section" data-aim="Understand how submarine cables connect the world today.">
+    <div class="container">
+      <h2>Submarine cables today</h2>
+      <p class="sub">Internet cables now contain <strong>fibre-optic strands</strong>. The newest cables can transmit up to <strong>160 terabits per second</strong>.</p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num">160</div>
+          <div class="stat-unit">Terabits / second</div>
+          <p>Maximum bandwidth of the newest submarine cables.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">70<span class="stat-sub">million</span></div>
+          <div class="stat-unit">HD films streamed at once</div>
+          <p>That's how much data 160&nbsp;Tb/s could carry.</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">550+</div>
+          <div class="stat-unit">Cables under the sea</div>
+          <p>Connecting countries and continents around the world.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        🌍 Almost all international internet traffic travels through <strong>submarine cables on the seabed</strong>, not through satellites.
+        <div style="margin-top: 12px;">
+          <a class="btn" href="https://www.submarinecablemap.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: inline-block;">🗺️ Explore the live submarine cable map ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CABLE TYPES -->
+  <section id="cables" class="section" data-aim="Identify different types of network cable.">
+    <div class="container">
+      <h2>Cable types</h2>
+      <p class="sub">Click each cable to find out what it is and where it's used.</p>
+
+      <div class="cable-grid" id="cable-grid"></div>
+
+      <div class="callout note">
+        ❓ <strong>What other medium can data travel through without using a cable?</strong> Click below.
+        <div style="margin-top: 10px;">
+          <button id="wireless-reveal" class="btn ghost">Reveal answer</button>
+        </div>
+        <p id="wireless-answer" hidden style="margin-top: 14px;">
+          📡 Data can travel through <strong>air wirelessly</strong> using <strong>microwaves</strong> or <strong>radio</strong>. Both <strong>Wi-Fi</strong> and <strong>smartphones</strong> use wireless transmission.
+        </p>
+      </div>
+
+      <div class="worksheet-callout">
+        📝 Now complete <strong>Task 1</strong> on <strong>Worksheet 2</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- WIRELESS -->
+  <section id="wireless" class="section" data-aim="Compare advantages and disadvantages of wireless connections.">
+    <div class="container">
+      <h2>Wireless connections</h2>
+
+      <div class="proscons">
+        <div class="proscons-col">
+          <h3 class="pros-h">✅ Advantages</h3>
+          <div class="reveal-list" id="pros-list"></div>
+        </div>
+        <div class="proscons-col">
+          <h3 class="cons-h">⚠️ Disadvantages</h3>
+          <div class="reveal-list" id="cons-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANDWIDTH -->
+  <section id="bandwidth" class="section" data-aim="Understand what bandwidth is.">
+    <div class="container">
+      <h2>Bandwidth</h2>
+      <p class="sub">The amount of data which can be transferred through a cable each second is called its <strong>bandwidth</strong>.</p>
+
+      <p class="sub" style="margin-top: 1em;">Click an analogy to expand it.</p>
+
+      <details class="analogy-details">
+        <summary><span class="analogy-icon">💧</span> Analogy 1: Water pipe</summary>
+        <div class="analogy-card">
+          <div class="analogy-text">
+            <p>A <strong>thin pipe</strong> only lets a small amount of water through each second.<br/>A <strong>wide pipe</strong> lets a lot more water through in the same time.</p>
+            <p style="margin-bottom: 0;">Bandwidth works the same way. It's the <strong>"width" of the cable</strong>. The wider it is, the more <strong>data</strong> can flow through each second.</p>
+          </div>
+          <div class="analogy-visual">
+            <div class="pipe-row">
+              <div class="pipe-label">Thin pipe<br/><span>(low bandwidth)</span></div>
+              <div class="pipe thin"><div class="water"></div></div>
+              <div class="pipe-rate">💧 a little water</div>
+            </div>
+            <div class="pipe-row">
+              <div class="pipe-label">Medium pipe<br/><span>(medium bandwidth)</span></div>
+              <div class="pipe medium"><div class="water"></div></div>
+              <div class="pipe-rate">💧💧 more water</div>
+            </div>
+            <div class="pipe-row">
+              <div class="pipe-label">Wide pipe<br/><span>(high bandwidth)</span></div>
+              <div class="pipe wide"><div class="water"></div></div>
+              <div class="pipe-rate">💧💧💧 lots of water</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="analogy-details">
+        <summary><span class="analogy-icon">🛣️</span> Analogy 2: Motorway lanes</summary>
+        <div class="analogy-card">
+          <div class="analogy-text">
+            <p>Now let's put numbers on it. Data is made of <strong>bits</strong> (1s and 0s). Each row below has to deliver the <strong>same 48 bits</strong>, and every bit travels at the <strong>same speed</strong>.</p>
+            <p>The road with more lanes finishes first because more bits move <strong>in parallel</strong>. That's exactly what bigger bandwidth means: <strong>more bits per second</strong>.</p>
+            <div class="race-controls">
+              <button id="lane-start" class="btn">▶ Start transfer</button>
+              <button id="lane-reset" class="btn ghost">⟲ Reset</button>
+            </div>
+            <div id="lane-results" class="lane-results"></div>
+          </div>
+          <div class="analogy-visual">
+            <div class="road-row" data-lanes="1" data-bits="48">
+              <div class="road-label">1 lane<br/><span>(low bandwidth)</span></div>
+              <div class="road"></div>
+              <div class="road-rate">48 bits</div>
+            </div>
+            <div class="road-row" data-lanes="3" data-bits="48">
+              <div class="road-label">3 lanes<br/><span>(medium bandwidth)</span></div>
+              <div class="road"></div>
+              <div class="road-rate">48 bits</div>
+            </div>
+            <div class="road-row" data-lanes="6" data-bits="48">
+              <div class="road-label">6 lanes<br/><span>(high bandwidth)</span></div>
+              <div class="road"></div>
+              <div class="road-rate">48 bits</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <div class="bandwidth-compare">
+        <div class="bw-row">
+          <div class="bw-label">
+            <strong>Year 2000 modem</strong>
+            <span>56 kb/s</span>
+          </div>
+          <div class="bw-bar"><div class="bw-fill" data-speed="56000"></div></div>
+        </div>
+        <div class="bw-row">
+          <div class="bw-label">
+            <strong>Modern home internet</strong>
+            <span>100 Mb/s</span>
+          </div>
+          <div class="bw-bar"><div class="bw-fill" data-speed="100000000"></div></div>
+        </div>
+        <div class="bw-row">
+          <div class="bw-label">
+            <strong>Submarine fibre</strong>
+            <span>160 Tb/s</span>
+          </div>
+          <div class="bw-bar"><div class="bw-fill" data-speed="160000000000000"></div></div>
+        </div>
+      </div>
+
+      <p style="text-align: center; color: var(--ink-dim); margin-top: 1em;">
+        Modern home internet is more than <strong style="color: var(--accent);">1,750 times faster</strong> than a year 2000 modem.<br/>
+        <span style="font-size: 0.85rem;">📏 The bars use a <strong>squashed (logarithmic) scale</strong> — drawn to true scale, the modem's bar would be far too thin to see!</span>
+      </p>
+
+      <div class="callout note">
+        ⚠️ <strong>Watch the units!</strong>
+        <div class="units-grid">
+          <div><strong>Mb/s</strong> = <em>mega<u>bits</u></em> per second (lower-case <code>b</code>)</div>
+          <div><strong>MB/s</strong> = <em>mega<u>bytes</u></em> per second (upper-case <code>B</code>)</div>
+        </div>
+        <p style="margin: 0.7em 0 0;">Remember: <strong>1 byte = 8 bits</strong>, so MB/s is <strong>8 times bigger</strong> than Mb/s.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD CALCULATOR -->
+  <section id="download" class="section" data-aim="Calculate the time to download files at different bandwidths.">
+    <div class="container">
+      <h2>Calculating download time</h2>
+      <p class="sub">When calculating the time to download a file, remember the units.</p>
+
+      <div class="units-card">
+        <div><strong>8 bits (b)</strong> = 1 byte (B)</div>
+        <div><strong>1,000 bytes</strong> = 1 kilobyte (kB)</div>
+        <div><strong>1,000,000 bytes</strong> = 1 megabyte (MB)</div>
+        <div><strong>1,000,000,000 bytes</strong> = 1 gigabyte (GB)</div>
+      </div>
+
+      <h3 style="margin-top: 2em;">Worked example</h3>
+      <p class="sub">A home network has a bandwidth of <strong>100 Mb/s</strong>. How long will it take to download a <strong>300 MB</strong> file?</p>
+
+      <div class="calc-steps" id="worked-steps">
+        <button class="calc-step" data-step="1">
+          <span class="step-label">Step 1: Convert Mb/s to MB/s</span>
+          <span class="step-hint">Click to reveal ▾</span>
+          <div class="step-body">
+            100 megabits per second ÷ 8 = <strong>12.5 megabytes per second</strong>
+          </div>
+        </button>
+        <button class="calc-step" data-step="2">
+          <span class="step-label">Step 2: Divide file size by speed</span>
+          <span class="step-hint">Click to reveal ▾</span>
+          <div class="step-body">
+            300 MB ÷ 12.5 MB/s = <strong>24 seconds</strong>
+          </div>
+        </button>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Try it yourself</h3>
+      <p class="sub">Change the file size and bandwidth. The calculator will show every step.</p>
+
+      <div class="calc-tool">
+        <div class="calc-inputs">
+          <div class="calc-input">
+            <label for="file-size">File size</label>
+            <div class="input-row">
+              <input id="file-size" type="number" min="0" step="1" value="300" />
+              <select id="file-unit">
+                <option value="1">MB</option>
+                <option value="1000">GB</option>
+                <option value="0.001">kB</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-input">
+            <label for="bw-speed">Bandwidth</label>
+            <div class="input-row">
+              <input id="bw-speed" type="number" min="0" step="1" value="100" />
+              <select id="bw-unit">
+                <option value="1">Mb/s</option>
+                <option value="0.001">kb/s</option>
+                <option value="1000">Gb/s</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-presets">
+          <button class="preset-btn" data-fs="300" data-fu="1" data-bs="100" data-bu="1">300 MB @ 100 Mb/s</button>
+          <button class="preset-btn" data-fs="2" data-fu="1000" data-bs="100" data-bu="1">2 GB film @ 100 Mb/s</button>
+          <button class="preset-btn" data-fs="5" data-fu="1" data-bs="56" data-bu="0.001">5 MB photo @ 56 kb/s</button>
+          <button class="preset-btn" data-fs="50" data-fu="1" data-bs="1" data-bu="1000">50 MB song @ 1 Gb/s</button>
+        </div>
+
+        <div class="calc-reveal-wrap">
+          <button id="calc-reveal" class="btn">🔍 Reveal working &amp; answer</button>
+          <div class="calc-output" id="calc-output" hidden></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUFFERING -->
+  <section id="buffering" class="section" data-aim="Understand why streaming uses buffering.">
+    <div class="container">
+      <h2>Buffering</h2>
+      <p class="sub">When streaming video or music, the first few seconds are stored in a <strong>buffer</strong>. If the connection slows or drops, the buffer keeps the video playing.</p>
+
+      <div class="callout">
+        ⚖️ <strong>The key idea:</strong> if data <strong>downloads slower than the video plays</strong>, the buffer empties and the video has to <strong>stop and wait</strong>. That's <em>buffering</em>.
+        <br/>A <strong>larger bandwidth</strong> means data arrives faster, so the download can <strong>stay ahead</strong> of playback and the video plays smoothly.
+      </div>
+
+      <div class="buffer-stage">
+        <div class="buffer-screen">
+          <div class="buffer-video" id="buffer-video">
+            <div class="buffer-frame" id="buffer-frame">▶</div>
+            <div class="buffer-status" id="buffer-status">Ready</div>
+          </div>
+          <div class="buffer-bar">
+            <div class="buffer-loaded" id="buffer-loaded"></div>
+            <div class="buffer-played" id="buffer-played"></div>
+          </div>
+          <div class="buffer-legend">
+            <span><span class="legend-swatch played"></span> Played</span>
+            <span><span class="legend-swatch loaded"></span> Buffered ahead</span>
+            <span><span class="legend-swatch empty"></span> Not loaded</span>
+          </div>
+        </div>
+
+        <div class="buffer-controls">
+          <button id="buffer-good" class="btn">▶ Play with fast internet</button>
+          <button id="buffer-bad" class="btn ghost">📶 Play with slow internet</button>
+          <button id="buffer-stop" class="btn ghost">⏹ Reset</button>
+        </div>
+
+        <p id="buffer-log" class="feedback"></p>
+      </div>
+
+      <div class="callout note">
+        💡 If the internet connection isn't fast enough, the video will keep <strong>pausing</strong> while the buffer fills up again.
+      </div>
+
+      <div class="worksheet-callout">
+        📝 Now complete <strong>Task 2</strong> on <strong>Worksheet 2</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- PLENARY -->
+  <section id="plenary" class="section">
+    <div class="container">
+      <h2>Plenary</h2>
+      <p class="sub">Click a media type on the left, then click the matching label on the right.</p>
+
+      <div class="tld-game">
+        <div class="tld-col" id="media-items"></div>
+        <div class="tld-col" id="media-labels"></div>
+      </div>
+
+      <div class="tld-controls">
+        <span id="media-score" class="score">Matched 0 / 4</span>
+        <button id="media-reveal" class="btn">Reveal all</button>
+        <button id="media-reset" class="btn ghost">Reset</button>
+      </div>
+
+      <h3 style="margin-top: 2.5em;">Key terms</h3>
+      <p class="sub">Click each term to reveal its definition.</p>
+
+      <div class="term-grid">
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Bandwidth</h3></div>
+            <div class="flip-face flip-back"><p>The amount of data that can be transferred through a cable each second.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Fibre optic</h3></div>
+            <div class="flip-face flip-back"><p>A cable made of thin strands of glass that carry data as pulses of light. Very fast.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Twisted pair</h3></div>
+            <div class="flip-face flip-back"><p>Pairs of copper wires twisted together. Common Ethernet cable for home and school networks.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Coaxial cable</h3></div>
+            <div class="flip-face flip-back"><p>A single copper wire surrounded by insulation and a metal shield. Used for TV signals and some broadband.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Wireless</h3></div>
+            <div class="flip-face flip-back"><p>Data sent through the air using radio waves or microwaves. Includes Wi-Fi and mobile signal.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Mb/s vs MB/s</h3></div>
+            <div class="flip-face flip-back"><p><strong>Mb/s</strong> = megabits per second. <strong>MB/s</strong> = megabytes per second. 1 byte = 8 bits.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Buffer</h3></div>
+            <div class="flip-face flip-back"><p>A small store of data loaded ahead of time so video or audio keeps playing even if the connection slows.</p></div>
+          </div>
+        </button>
+        <button class="flip-card small" aria-pressed="false">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><h3>Submarine cable</h3></div>
+            <div class="flip-face flip-back"><p>A fibre-optic cable laid on the seabed to carry internet traffic between continents.</p></div>
+          </div>
+        </button>
+      </div>
+
+      <p class="end-note">🎉 End of Lesson 2</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Image lightbox -->
+<div id="lightbox" class="lightbox" hidden>
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+  <figure class="lightbox-inner">
+    <img id="lightbox-img" alt="" />
+    <figcaption id="lightbox-caption"></figcaption>
+  </figure>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Network Simulator — Challenges</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="../index.html" class="home-link" aria-label="Back to home" title="Home" style="position:fixed;top:14px;left:14px;z-index:200;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:rgba(20,30,60,0.55);border:1px solid rgba(94,234,212,0.3);color:#5eead4;text-decoration:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background 0.18s ease,border-color 0.18s ease;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></a>
+  <div class="app">
+    <header class="header">
+      <h1><span class="accent">Network</span> Simulator — Challenges</h1>
+      <nav>
+        <a href="index.html" class="btn ghost">Free build</a>
+      </nav>
+    </header>
+
+    <div class="main main-with-tasks">
+      <aside class="palette">
+        <h3>Devices</h3>
+        <div class="palette-item" data-type="computer"><svg viewBox="0 0 48 48"><g fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="10" width="32" height="22" rx="2"/><line x1="20" y1="32" x2="28" y2="32"/><line x1="16" y1="38" x2="32" y2="38"/></g></svg><span>Computer</span></div>
+        <div class="palette-item" data-type="laptop"><svg viewBox="0 0 48 48"><g fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 30 L38 30 L34 14 L14 14 Z"/><path d="M6 32 L42 32 L40 38 L8 38 Z"/></g></svg><span>Laptop</span></div>
+        <div class="palette-item" data-type="tablet"><svg viewBox="0 0 48 48"><g fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="8" width="20" height="32" rx="3"/><circle cx="24" cy="36" r="1.2" fill="#5eead4"/></g></svg><span>Tablet</span></div>
+        <div class="palette-item" data-type="printer"><svg viewBox="0 0 48 48"><g fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="18" width="24" height="14" rx="2"/><rect x="16" y="10" width="16" height="10" rx="1"/><rect x="16" y="28" width="16" height="8" rx="1"/><circle cx="32" cy="22" r="1.4" fill="#5eead4"/></g></svg><span>Printer</span></div>
+        <div class="palette-item" data-type="wap"><svg viewBox="0 0 48 48"><g fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="28" width="24" height="8" rx="2"/><circle cx="24" cy="32" r="1.2" fill="#5eead4"/><path d="M14 22 Q24 12 34 22"/><path d="M10 18 Q24 4 38 18"/></g></svg><span>WAP</span></div>
+        <div class="palette-item" data-type="switch"><svg viewBox="0 0 48 48"><g fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="18" width="40" height="12" rx="2"/><rect x="7" y="22" width="3" height="4"/><rect x="13" y="22" width="3" height="4"/><rect x="19" y="22" width="3" height="4"/><rect x="25" y="22" width="3" height="4"/><rect x="31" y="22" width="3" height="4"/><rect x="37" y="22" width="3" height="4"/></g></svg><span>Switch</span></div>
+        <div class="palette-item" data-type="hub"><svg viewBox="0 0 48 48"><g fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="18" width="36" height="12" rx="2"/><rect x="10" y="22" width="4" height="4"/><rect x="18" y="22" width="4" height="4"/><rect x="26" y="22" width="4" height="4"/><rect x="34" y="22" width="4" height="4"/></g></svg><span>Hub</span></div>
+        <div class="palette-item" data-type="router"><svg viewBox="0 0 48 48"><g fill="none" stroke="#818cf8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="22" width="36" height="14" rx="2"/><line x1="14" y1="22" x2="14" y2="12"/><line x1="20" y1="22" x2="20" y2="8"/><line x1="28" y1="22" x2="28" y2="8"/><line x1="34" y1="22" x2="34" y2="12"/></g></svg><span>Router</span></div>
+        <div class="palette-item" data-type="server"><svg viewBox="0 0 48 48"><g fill="none" stroke="#5eead4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="6" width="20" height="36" rx="2"/><line x1="18" y1="14" x2="30" y2="14"/><line x1="18" y1="20" x2="30" y2="20"/><line x1="18" y1="26" x2="30" y2="26"/><circle cx="28" cy="34" r="1.4" fill="#5eead4"/></g></svg><span>Server</span></div>
+      </aside>
+
+      <div class="canvas-column">
+        <div class="task-current">
+          <div class="task-current-text">
+            <h2 id="task-title">Pick a challenge</h2>
+            <p class="brief" id="task-brief">Choose one from the list on the right to get started.</p>
+            <details class="task-reqs" id="task-reqs" hidden open>
+              <summary>📋 Exactly what's needed</summary>
+              <ul id="task-reqs-list"></ul>
+            </details>
+          </div>
+          <div class="task-current-controls">
+            <div class="actions">
+              <button class="btn" id="check-btn" disabled>Check my answer</button>
+              <button class="btn ghost" id="reset-btn" disabled>Reset task</button>
+            </div>
+            <span class="feedback" id="task-feedback"></span>
+          </div>
+        </div>
+
+        <div class="canvas-wrap" id="canvas-wrap">
+          <div class="toolbar">
+            <button class="btn ghost" data-tool="new-lan">New LAN</button>
+            <button class="btn ghost" data-tool="delete">Delete mode</button>
+            <button class="btn ghost" data-tool="undo">Undo</button>
+            <button class="btn ghost" data-tool="redo">Redo</button>
+            <button class="btn ghost" data-tool="export">Export image</button>
+            <button class="btn ghost" data-tool="clear">Clear all</button>
+          </div>
+          <div class="zoom-controls">
+            <button class="btn ghost" data-tool="zoom-out" title="Zoom out">−</button>
+            <span class="zoom-level" id="zoom-level">100%</span>
+            <button class="btn ghost" data-tool="zoom-in" title="Zoom in">+</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="task-panel">
+        <div class="task-list" id="challenge-sidebar"></div>
+      </aside>
+    </div>
+
+    <div class="statusbar">Ready.</div>
+  </div>
+
+  <script src="simulator.js"></script>
+  <script src="challenges.js"></script>
+  <script>
+    const sim = initSimulator({ container: '#canvas-wrap', mode: 'challenge' });
+    const COMPLETED_KEY = 'netsim-challenges-complete-v1';
+    let completed = {};
+    try { completed = JSON.parse(localStorage.getItem(COMPLETED_KEY) || '{}'); } catch(e){}
+
+    let currentChallenge = null;
+
+    function saveCompleted() { localStorage.setItem(COMPLETED_KEY, JSON.stringify(completed)); }
+
+    function renderSidebar() {
+      const wrap = document.getElementById('challenge-sidebar');
+      const groups = { Starter: [], Intermediate: [], Advanced: [] };
+      NetChallenges.list.forEach(c => groups[c.difficulty].push(c));
+      let html = '<h2>All challenges</h2>';
+      for (const diff of ['Starter','Intermediate','Advanced']) {
+        groups[diff].forEach(c => {
+          const done = completed[c.id];
+          const cls = (currentChallenge && currentChallenge.id === c.id) ? ' active' : '';
+          html += `<a class="challenge-link${cls}" data-id="${c.id}" href="?challenge=${c.id}">
+            <span class="tick${done?'':' empty'}">${done?'✓':'○'}</span>${c.title}</a>`;
+        });
+      }
+      wrap.innerHTML = html;
+      wrap.querySelectorAll('.challenge-link').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          loadChallenge(a.dataset.id);
+          history.replaceState(null, '', '?challenge=' + a.dataset.id);
+        });
+      });
+    }
+
+    function loadChallenge(id) {
+      const c = NetChallenges.list.find(x => x.id === id);
+      if (!c) return;
+      currentChallenge = c;
+      document.getElementById('task-title').textContent = c.title;
+      document.getElementById('task-brief').textContent = c.brief;
+      const reqsBox = document.getElementById('task-reqs');
+      const reqsList = document.getElementById('task-reqs-list');
+      reqsList.innerHTML = '';
+      if (c.requirements && c.requirements.length) {
+        c.requirements.forEach(r => {
+          const li = document.createElement('li');
+          li.textContent = r;
+          reqsList.appendChild(li);
+        });
+        reqsBox.hidden = false;
+      } else {
+        reqsBox.hidden = true;
+      }
+      document.getElementById('task-feedback').textContent = '';
+      document.getElementById('task-feedback').className = 'feedback';
+      document.getElementById('check-btn').disabled = false;
+      document.getElementById('reset-btn').disabled = false;
+      sim.loadInitialState(c.initialState || { devices:[], wires:[], lans:[] });
+      renderSidebar();
+    }
+
+    document.getElementById('check-btn').addEventListener('click', () => {
+      if (!currentChallenge) return;
+      const result = NetChallenges.runChecks(sim, currentChallenge);
+      const fb = document.getElementById('task-feedback');
+      if (result.ok) {
+        fb.textContent = '✅ Nice work — challenge complete!';
+        fb.className = 'feedback good';
+        completed[currentChallenge.id] = true;
+        saveCompleted();
+        renderSidebar();
+      } else {
+        fb.textContent = '✗ ' + result.msg;
+        fb.className = 'feedback bad';
+      }
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      if (!currentChallenge) return;
+      sim.loadInitialState(currentChallenge.initialState || { devices:[], wires:[], lans:[] });
+      const fb = document.getElementById('task-feedback');
+      fb.textContent = ''; fb.className = 'feedback';
+    });
+
+    renderSidebar();
+    const params = new URLSearchParams(location.search);
+    if (params.has('challenge')) loadChallenge(params.get('challenge'));
+  </script>
+</body>
+</html>
