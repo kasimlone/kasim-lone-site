@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 import { loadStaticIndex } from "@/lib/static-site-loader";
 import StaticSiteScripts from "@/components/StaticSiteScripts";
@@ -17,6 +18,12 @@ export default async function ExamTotalPage() {
   if (!page) notFound();
   return (
     <>
+      <Script
+        async
+        strategy="afterInteractive"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1129118659435264"
+        crossOrigin="anonymous"
+      />
       <div dangerouslySetInnerHTML={{ __html: page.bodyHTML }} />
       <StaticSiteScripts scripts={page.scripts} />
     </>
