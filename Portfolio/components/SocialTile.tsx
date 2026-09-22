@@ -1,16 +1,14 @@
-import { Linkedin, Youtube, Music2 } from "lucide-react";
+import { Linkedin, Youtube } from "lucide-react";
 import type { Social } from "@/lib/projects";
 
 const iconMap = {
   LinkedIn: Linkedin,
   YouTube: Youtube,
-  TikTok: Music2,
 };
 
 const colorMap = {
   LinkedIn: "from-[#0a66c2] to-[#0077b5]",
   YouTube: "from-[#ff0000] to-[#cc0000]",
-  TikTok: "from-[#25f4ee] via-[#000] to-[#fe2c55]",
 };
 
 export function SocialTile({ social }: { social: Social }) {

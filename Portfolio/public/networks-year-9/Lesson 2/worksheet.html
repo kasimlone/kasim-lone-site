@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 2 Cover Worksheet — Bandwidth & Buffering</title>
+<style>
+  :root {
+    --ink: #0e1a2b;
+    --ink-dim: #465a72;
+    --accent: #0d7a6a;
+    --line: #cdd6df;
+    --panel: #f4f7fa;
+    --panel-2: #eaf1f6;
+    --note: #fff7d6;
+    --note-line: #e6c76a;
+    --recap: #eef4ff;
+    --recap-line: #a9c0e4;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.5; }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 28px 60px; }
+
+  header.sheet-head { border-bottom: 2px solid var(--ink); padding-bottom: 14px; margin-bottom: 22px; }
+  header .eyebrow { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  header h1 { margin: 6px 0 6px; font-size: 1.9rem; }
+  header .sub { color: var(--ink-dim); margin: 0; }
+  .name-row { display: flex; gap: 24px; margin-top: 14px; font-size: 0.95rem; }
+  .name-row .field { flex: 1; border-bottom: 1px solid var(--ink); padding: 8px 4px 4px; }
+  .name-row .field strong { color: var(--ink-dim); font-weight: 600; margin-right: 6px; }
+
+  .instructions { background: var(--panel); border-left: 4px solid var(--accent); padding: 12px 16px; margin: 18px 0 26px; border-radius: 4px; }
+  .instructions strong { color: var(--accent); }
+  .instructions ul { margin: 8px 0 0 18px; padding: 0; }
+
+  h2.task { display: flex; align-items: baseline; gap: 10px; margin: 30px 0 6px; font-size: 1.15rem; border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
+  h2.task .badge { background: var(--ink); color: #fff; font-size: 0.75rem; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 4px; font-weight: 700; }
+  h2.task .badge.recap { background: #3762a8; }
+  h2.task .marks { margin-left: auto; font-size: 0.8rem; color: var(--ink-dim); font-weight: 500; }
+  .task-intro { color: var(--ink-dim); margin: 0 0 10px; font-size: 0.95rem; }
+
+  ol.qs { padding-left: 22px; margin: 0; }
+  ol.qs > li { margin: 10px 0; }
+  ol.qs > li > .q { font-weight: 500; }
+  .lines { margin-top: 6px; }
+  .lines .line { border-bottom: 1px solid var(--line); height: 22px; }
+  .lines.short .line { height: 20px; }
+  .lines.long .line { height: 24px; }
+
+  .recap-box { background: var(--recap); border: 1px solid var(--recap-line); border-radius: 6px; padding: 14px 16px; }
+
+  table.mtable { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.mtable th, table.mtable td { border: 1px solid var(--line); padding: 10px 8px; text-align: left; vertical-align: top; font-size: 0.95rem; }
+  table.mtable th { background: var(--panel-2); font-weight: 600; }
+  table.mtable td.answer { height: 40px; }
+
+  .calc-box { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; margin-top: 10px; background: #fff; }
+  .calc-box .prompt { font-weight: 600; margin-bottom: 8px; }
+  .calc-box .prompt .qn { color: var(--accent); font-weight: 700; margin-right: 4px; }
+  .working { min-height: 110px; border: 1px dashed var(--line); border-radius: 4px; padding: 8px 10px; color: var(--ink-dim); font-size: 0.85rem; }
+  .working.tall { min-height: 140px; }
+  .answer-row { margin-top: 8px; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+  .answer-row .box { flex: 1; border-bottom: 1.5px solid var(--ink); height: 22px; }
+
+  .stretch { background: var(--note); border: 1px solid var(--note-line); border-radius: 6px; padding: 14px 16px; margin-top: 30px; }
+  .stretch h2 { margin: 0 0 6px; font-size: 1.05rem; }
+
+  .units-reminder { background: var(--panel); border-radius: 6px; padding: 12px 14px; margin: 10px 0 14px; font-size: 0.9rem; }
+  .units-reminder strong { color: var(--accent); }
+  .units-reminder .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; margin-top: 6px; }
+
+  .method-card { background: #f6faf9; border-left: 4px solid var(--accent); padding: 10px 14px; margin: 8px 0 14px; border-radius: 4px; font-size: 0.92rem; }
+  .method-card ol { margin: 6px 0 0 18px; padding: 0; }
+  .method-card li { margin: 2px 0; }
+
+  .footer-note { margin-top: 34px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--ink-dim); text-align: center; }
+
+  @media print {
+    @page { size: A4; margin: 12mm 12mm 14mm 12mm; }
+    body { font-size: 10.5pt; }
+    main { padding: 0; max-width: none; }
+    header.sheet-head { margin-bottom: 12px; break-after: avoid; break-inside: avoid; page-break-inside: avoid; }
+    .instructions { break-inside: avoid; page-break-inside: avoid; }
+    h2.task { break-after: avoid; page-break-after: avoid; }
+    main h2.task:not(:first-of-type) { break-before: page; page-break-before: always; }
+    .stretch { break-before: page; page-break-before: always; }
+    .task-block, .recap-block, .calc-box, .stretch, .recap-box, .method-card, .units-reminder, table.mtable, ol.qs > li { break-inside: avoid; page-break-inside: avoid; }
+    .instructions, .units-reminder, .method-card { background: #f7f7f7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .stretch { background: #fff8dc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .recap-box { background: #eef4ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    header .eyebrow, .instructions strong { color: #000 !important; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header class="sheet-head">
+    <p class="eyebrow">Year 9 · Computing · Cover Lesson</p>
+    <h1>Worksheet — Bandwidth, Download Time & Buffering</h1>
+    <p class="sub">Independent tasks. Answer every question on this sheet. Use the Lesson 2 web page to help you.</p>
+    <div class="name-row">
+      <div class="field"><strong>Name:</strong></div>
+      <div class="field"><strong>Class:</strong></div>
+      <div class="field"><strong>Date:</strong></div>
+    </div>
+  </header>
+
+  <div class="instructions">
+    <strong>Instructions for students</strong>
+    <ul>
+      <li>Open the Lesson 2 web page: <em>Networks Year 9 → Lesson 2: Connectivity</em>.</li>
+      <li>Start with the short <strong>Recap</strong>. Most of this worksheet is about <strong>bandwidth</strong>, <strong>download time</strong> and <strong>buffering</strong>, which are new today.</li>
+      <li>Work on your own, in silence. Write full sentences where the question asks you to <em>explain</em> or <em>describe</em>.</li>
+      <li><strong>Show your working for every calculation.</strong> A correct answer with no working only earns half marks.</li>
+      <li>If you finish early, complete the <strong>Stretch challenge</strong> at the bottom.</li>
+    </ul>
+  </div>
+
+  <!-- RECAP -->
+  <h2 class="task"><span class="badge recap">Recap</span> Last lesson: cables, submarine cables & Wi-Fi <span class="marks">/ 6 marks</span></h2>
+  <p class="task-intro">Quick recall — do this from memory first, then check the Lesson 2 page if you need to.</p>
+  <div class="recap-box">
+    <ol class="qs">
+      <li>
+        <div class="q">Name the <strong>three types of cable</strong> covered last lesson.</div>
+        <div class="lines short"><div class="line"></div><div class="line"></div></div>
+      </li>
+      <li>
+        <div class="q">Which cable type is the <strong>fastest</strong>, and what does it use to carry data?</div>
+        <div class="lines short"><div class="line"></div><div class="line"></div></div>
+      </li>
+      <li>
+        <div class="q">What is a <strong>submarine cable</strong> and what is it used for?</div>
+        <div class="lines short"><div class="line"></div><div class="line"></div></div>
+      </li>
+      <li>
+        <div class="q">Give <strong>one advantage</strong> and <strong>one disadvantage</strong> of using <strong>Wi-Fi</strong> instead of a wired connection.</div>
+        <div class="lines short"><div class="line"></div><div class="line"></div></div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- TASK 1: BANDWIDTH -->
+  <h2 class="task"><span class="badge">Task 1</span> Bandwidth <span class="marks">/ 6 marks</span></h2>
+  <p class="task-intro">Read the <em>Bandwidth</em> section on the Lesson 2 page.</p>
+  <ol class="qs">
+    <li>
+      <div class="q">Write a one-sentence definition of <strong>bandwidth</strong> in your own words.</div>
+      <div class="lines"><div class="line"></div><div class="line"></div></div>
+    </li>
+    <li>
+      <div class="q">The lesson uses a <strong>water pipe</strong> and a <strong>motorway</strong> to explain bandwidth. Pick one and explain how it helps you picture what bandwidth means.</div>
+      <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    </li>
+    <li>
+      <div class="q">What is the difference between <strong>Mb/s</strong> and <strong>MB/s</strong>? How many bits are in one byte?</div>
+      <div class="lines"><div class="line"></div><div class="line"></div></div>
+    </li>
+    <li>
+      <div class="q">A modem in the year 2000 ran at 56 kb/s. Modern home internet runs at around 100 Mb/s. Roughly how many times faster is modern home internet?</div>
+      <div class="lines short"><div class="line"></div></div>
+    </li>
+  </ol>
+
+  <!-- TASK 2: DOWNLOAD TIME -->
+  <h2 class="task"><span class="badge">Task 2</span> Calculating download time <span class="marks">/ 10 marks</span></h2>
+  <p class="task-intro">Use the <em>Calculating download time</em> section. Show all working — mark up each answer with what you divided and what unit you converted.</p>
+
+  <div class="units-reminder">
+    <strong>Unit reminder:</strong>
+    <div class="grid">
+      <div>8 bits (b) = 1 byte (B)</div>
+      <div>1,000 bytes = 1 kilobyte (kB)</div>
+      <div>1,000,000 bytes = 1 megabyte (MB)</div>
+      <div>1,000,000,000 bytes = 1 gigabyte (GB)</div>
+    </div>
+    <div style="margin-top:6px;">To convert Mb/s → MB/s, <strong>divide by 8</strong>.</div>
+  </div>
+
+  <div class="method-card">
+    <strong>Method (from the worked example):</strong>
+    <ol>
+      <li><strong>Step 1</strong> — Convert the bandwidth from bits/s into <em>bytes/s</em> (÷ 8).</li>
+      <li><strong>Step 2</strong> — Divide the file size by that speed. Answer = time in seconds.</li>
+      <li>Check the units match before you divide (both must be in bytes, or both in bits).</li>
+    </ol>
+  </div>
+
+  <div class="calc-box">
+    <div class="prompt"><span class="qn">Q1.</span> A home has a bandwidth of <strong>80 Mb/s</strong>. How long will it take to download a <strong>200 MB</strong> file?</div>
+    <div class="working">Working:</div>
+    <div class="answer-row"><strong>Answer:</strong><div class="box"></div><span>seconds</span></div>
+  </div>
+
+  <div class="calc-box">
+    <div class="prompt"><span class="qn">Q2.</span> A café Wi-Fi runs at <strong>40 Mb/s</strong>. How long will a <strong>2 GB</strong> film take to download? Give your answer in <em>minutes and seconds</em>.</div>
+    <div class="working">Working:</div>
+    <div class="answer-row"><strong>Answer:</strong><div class="box"></div></div>
+  </div>
+
+  <div class="calc-box">
+    <div class="prompt"><span class="qn">Q3.</span> Two friends both want to download a <strong>4 GB</strong> game. Ali has a <strong>50 Mb/s</strong> connection. Bea has a <strong>200 Mb/s</strong> connection. Calculate how long each of them waits, and work out how much time Bea saves compared with Ali. Give your answers in <em>minutes and seconds</em>.</div>
+    <div class="working tall">Working:</div>
+    <div class="answer-row"><strong>Ali:</strong><div class="box"></div></div>
+    <div class="answer-row"><strong>Bea:</strong><div class="box"></div></div>
+    <div class="answer-row"><strong>Time saved:</strong><div class="box"></div></div>
+  </div>
+
+  <!-- TASK 3: BUFFERING -->
+  <h2 class="task"><span class="badge">Task 3</span> Buffering <span class="marks">/ 10 marks</span></h2>
+  <p class="task-intro">Read the <em>Buffering</em> section and try both the <strong>fast internet</strong> and <strong>slow internet</strong> demos on the page before answering.</p>
+  <ol class="qs">
+    <li>
+      <div class="q">What is a <strong>buffer</strong>? Write a one-sentence definition.</div>
+      <div class="lines"><div class="line"></div><div class="line"></div></div>
+    </li>
+    <li>
+      <div class="q">Explain, in your own words, <strong>why the video pauses to buffer</strong> when the internet is slow. Use the words <em>bandwidth</em>, <em>buffer</em> and <em>playback</em> in your answer.</div>
+      <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    </li>
+    <li>
+      <div class="q">Why does a <strong>faster bandwidth</strong> mean fewer pauses when streaming?</div>
+      <div class="lines"><div class="line"></div><div class="line"></div></div>
+    </li>
+    <li>
+      <div class="q">A streaming service says a film needs <strong>25 Mb/s</strong> to play in 4K without buffering. A student's home internet runs at <strong>15 Mb/s</strong>. Describe what will happen when the film plays, and suggest <strong>two</strong> things the student could change to fix it.</div>
+      <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    </li>
+    <li>
+      <div class="q">Why does a video sometimes start playing <strong>almost instantly</strong> but stop a few seconds later? Link your answer to how the buffer fills up.</div>
+      <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+    </li>
+  </ol>
+
+  <!-- TASK 4: KEY TERMS -->
+  <h2 class="task"><span class="badge">Task 4</span> Key terms <span class="marks">/ 4 marks</span></h2>
+  <p class="task-intro">Use the <em>Plenary</em> key terms cards. Write a short definition for each.</p>
+  <table class="mtable">
+    <thead><tr><th style="width: 26%;">Term</th><th>Definition</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Bandwidth</strong></td><td class="answer"></td></tr>
+      <tr><td><strong>Buffer</strong></td><td class="answer"></td></tr>
+      <tr><td><strong>Mb/s vs MB/s</strong></td><td class="answer"></td></tr>
+      <tr><td><strong>Download time</strong></td><td class="answer"></td></tr>
+    </tbody>
+  </table>
+
+  <!-- STRETCH -->
+  <div class="stretch">
+    <h2>⭐ Stretch challenge (extension)</h2>
+    <p style="margin: 4px 0 10px;">Finished everything? Try these — they need you to think, not just read.</p>
+    <ol class="qs">
+      <li>
+        <div class="q">Bandwidth is often advertised in Mb/s but file sizes are given in MB. Why do you think internet companies advertise using <strong>Mb/s</strong> and not MB/s? Is this fair on the customer?</div>
+        <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+      </li>
+      <li>
+        <div class="q">A live football match streams in HD at around <strong>8 Mb/s</strong>. If 20 people in the same house all try to watch on different devices, the router has a total bandwidth of <strong>100 Mb/s</strong>. Explain what will happen, using the ideas of bandwidth and buffering.</div>
+        <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+      </li>
+      <li>
+        <div class="q">Design a rule you could give a family to <strong>reduce buffering</strong> at peak times, without upgrading their internet package. Explain <em>why</em> your rule would work.</div>
+        <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="footer-note">Cover worksheet — Year 9 Computing · Bandwidth, Download Time & Buffering · Total: 36 marks (+ stretch)</div>
+
+</main>
+</body>
+</html>

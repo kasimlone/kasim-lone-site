@@ -7,7 +7,7 @@ export type Project = {
 };
 
 export type Social = {
-  name: "LinkedIn" | "YouTube" | "TikTok";
+  name: "LinkedIn" | "YouTube";
   handle: string;
   href: string;
 };
@@ -88,5 +88,4 @@ export const projects: Project[] = [
 export const socials: Social[] = [
   { name: "LinkedIn", handle: "kasim-lone", href: "https://www.linkedin.com/in/kasim-lone/" },
   { name: "YouTube", handle: "@MrLoneCS", href: "https://www.youtube.com/@MrLoneCS" },
-  { name: "TikTok", handle: "@kasimlone", href: "#" },
 ];

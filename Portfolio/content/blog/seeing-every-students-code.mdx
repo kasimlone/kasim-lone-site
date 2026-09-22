@@ -1,0 +1,144 @@
+---
+title: "Seeing every student's code at once"
+description: "Teachers can scan a whole class's written work in OneNote in seconds, but code hides on 30 different screens. Here's the visibility gap that costs CS teachers the most, and how RunPy closes it."
+date: "2026-09-22"
+tags: ["teaching", "runpy", "edtech"]
+author: "Kasim Lone"
+---
+
+Walk into any English classroom mid-lesson. The teacher can glance around,
+open OneNote, flick through a dozen student pages in under a minute and
+know exactly who is stuck, who is racing ahead, and who has written the
+same sentence three times because they don&apos;t know what to do next.
+
+Now walk into a Computer Science classroom during a coding task. Thirty
+screens. Thirty IDEs. Thirty half-written programs, most of them not
+saved anywhere the teacher can actually reach. You can walk laps of the
+room, you can lean over shoulders, and by the end of the hour you still
+won&apos;t have seen more than about a third of the class&apos;s work.
+
+That gap is the single biggest reason coding lessons are harder to run
+well than most other lessons in the school, and it&apos;s the reason I built
+[RunPy](https://www.runpy.co.uk).
+
+## Written work is visible by default
+
+Written work has a very particular property that we take for granted:
+it&apos;s **laid flat**. A book is one page at a time. A OneNote section is a
+list of student names down the side. You click, you scan, you click the
+next name. The overhead of checking one more student is close to zero.
+
+That property is why formative assessment works on paper. You can walk
+the room, scan a page in three seconds, ask the right question, and
+move on. Multiply that by thirty and you&apos;ve done more meaningful
+feedback in a lesson than most e-learning platforms manage in a term.
+
+Code doesn&apos;t behave like that. Code sits inside an IDE, on a machine,
+in a file, sometimes on a network drive that mysteriously logs the
+student out. There is no "flick through the class" gesture. The default
+state of code, in a normal school setup, is **hidden**.
+
+## What you actually lose
+
+When you can&apos;t see the class&apos;s code, you lose things you probably
+don&apos;t notice you&apos;ve lost:
+
+- **The quiet stuck kid.** The one who won&apos;t raise a hand. In written
+  work you spot a mostly-blank page from three tables away. In an IDE
+  they can sit there with an empty file and a blinking cursor and you
+  never see it unless you happen to walk past.
+- **The misconception spreading in real time.** When four students all
+  make the same off-by-one error in the first five minutes, that&apos;s a
+  reteach opportunity. If you don&apos;t see it until you mark work later,
+  it&apos;s already baked in.
+- **Live feedback that means anything.** "Let me have a look" is a
+  brilliant sentence when you can actually see the code. It&apos;s a much
+  weaker sentence when you have to lean over a shoulder, ask them to
+  scroll, and squint at a 12pt font on a screen at a bad angle.
+- **An honest picture at the end of the lesson.** Ask any CS teacher how
+  many of the class actually finished the task. Most of us are guessing.
+  We&apos;ve seen a sample and extrapolated.
+- **Marking that reflects the process, not just the final file.** Code
+  that&apos;s handed in tells you what worked. Code you watched being
+  written tells you what they understood.
+
+None of these are exotic problems. They&apos;re the ordinary business of
+teaching. We just don&apos;t get to do them properly with code because the
+tools weren&apos;t built for a classroom.
+
+## Why generic IDEs make it worse
+
+A professional IDE is designed for one developer, alone, with their own
+files, their own settings, and their own sense of what a good workflow
+looks like. Every one of those defaults works against a teacher:
+
+- Files live on the local machine, or on a mapped drive that only that
+  student is logged into.
+- There&apos;s no concept of "the class". Just the current user.
+- Nothing is shared until the student explicitly shares it, usually as
+  an attachment in an email or a folder submission at the end of the
+  lesson.
+- The teacher gets nothing until the student volunteers it.
+
+Some schools patch around this with screen-monitoring software, which
+lets you look at any one student&apos;s screen at a time. That&apos;s useful
+for behaviour. It is not the same as seeing the class&apos;s code. Watching
+a video feed of a text editor is not scanning a page.
+
+## What a fix has to do
+
+For a coding lesson to feel like a normal, well-run lesson, you need
+four things:
+
+1. Every student&apos;s current code, live, on one screen for the teacher.
+2. The ability to open a student&apos;s work and **run it** exactly as they
+   wrote it, without emails or file transfers.
+3. Inline feedback that lands back in the student&apos;s workspace, not in
+   a separate document they&apos;ll never open.
+4. Low enough friction that a student can just start coding. If setup
+   takes ten minutes, you&apos;ve already lost the lesson.
+
+That is the specification. Everything else is detail.
+
+## How RunPy closes the gap
+
+RunPy is a browser-based Python IDE built around a **teacher view**.
+When a class is coding, the teacher sees a live grid of every student&apos;s
+work, updating as they type. You can:
+
+- **Scan the room from your desk.** Blank editors, syntax errors and
+  finished programs are all visible at a glance. The quiet stuck kid is
+  no longer invisible.
+- **Open any student&apos;s file and run it** with one click, as their code,
+  in your browser. No copy-paste, no file wrangling.
+- **Leave comments inline** that appear in the student&apos;s editor.
+- **Share your own code back** to the class when you want to model a
+  fix, without switching to the projector.
+
+Because it runs in a browser, there is nothing to install and nothing
+for a network team to break over the holidays. Students log in, click a
+class, and start. That&apos;s the whole setup.
+
+None of this is magic. It&apos;s just what OneNote does for written work,
+applied to code.
+
+## The bigger point
+
+The reason CS lessons often feel harder to run than other lessons
+isn&apos;t that the content is harder (though it is), or that the kids are
+less engaged (they usually aren&apos;t). It&apos;s that the tools we&apos;ve
+inherited were built for a different job. Professional IDEs are
+brilliant for professional work. In a classroom, they hide exactly the
+thing a teacher most needs to see.
+
+Give teachers the same visibility over code that they already have over
+written work, and the rest of the lesson looks a lot more like the rest
+of the timetable. That&apos;s the whole idea.
+
+***
+
+If you teach Computer Science and want to try running a lesson with
+every student&apos;s code visible at once, take a look at
+[RunPy](https://www.runpy.co.uk). If you have thoughts, questions or
+war stories about classroom coding, I&apos;m on
+[LinkedIn](https://www.linkedin.com/in/kasim-lone/).
