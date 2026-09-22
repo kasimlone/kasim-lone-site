@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Units &amp; Capacity — Data Representation</title>
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden></div>
+<div class="bg-tint" aria-hidden></div>
+
+<div class="chrome">
+  <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="file">kasim-lone.dev — data-representation / units</div>
+  <a class="back" href="../index.html">← topics</a>
+</div>
+
+<div id="progress-bar"></div>
+
+<nav id="side-nav" aria-label="Topic sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#why-binary" data-label="Why binary"><span></span></a>
+  <a href="#units" data-label="Units"><span></span></a>
+  <a href="#convert" data-label="Converting"><span></span></a>
+  <a href="#capacity" data-label="Capacity"><span></span></a>
+  <a href="#practice" data-label="Practice"><span></span></a>
+</nav>
+
+<main>
+
+  <section id="hero" class="section hero">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="eyebrow">GCSE · Data Representation</p>
+        <h1>Topic 1<br/><span class="accent">Units &amp; Capacity</span></h1>
+        <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="objectives" class="section">
+    <div class="container">
+      <p class="section-tag">objectives</p>
+      <h2>By the end you'll be able to…</h2>
+      <ul class="objectives-list">
+        <li>Explain <strong>why</strong> computers store data as binary.</li>
+        <li>Name and order every GCSE <strong>unit of data</strong> from bit to petabyte.</li>
+        <li><strong>Convert</strong> between units by multiplying or dividing by 8 (for bits/bytes) or 1000 (for everything bigger).</li>
+        <li>Calculate the <strong>capacity</strong> of a storage device and how many files it can hold.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="why-binary" class="section">
+    <div class="container">
+      <p class="section-tag">why binary?</p>
+      <h2>Why does everything become 1s and 0s?</h2>
+      <p>Every computer is built from billions of tiny <strong>switches</strong> called <strong>transistors</strong>. A switch has only two possible states: <em>on</em> or <em>off</em>. That's a perfect match for the binary number system, which has only <strong>two digits</strong>: <strong>1</strong> and <strong>0</strong>.</p>
+      <ul>
+        <li><strong>1</strong> = switch on / current flowing / magnetised north / laser reflected.</li>
+        <li><strong>0</strong> = switch off / no current / magnetised south / laser absorbed.</li>
+      </ul>
+      <p>Because computers can only store on/off, every piece of data — text, images, sound, video, anything — must first be <strong>converted into binary</strong> before it can be stored or processed.</p>
+
+      <div class="callout tip">
+        <div class="title">💡 Analogy: the accelerator pedal</div>
+        <p style="margin: 0;">A car's accelerator has hundreds of positions between 0 and 100 mph. A computer only has <strong>two</strong>: 0 mph (0) or 100 mph (1). Anything in between has to be built up from lots of ons and offs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="units" class="section">
+    <div class="container">
+      <p class="section-tag">units</p>
+      <h2>The units of data storage</h2>
+      <p>A single 1 or 0 is called a <strong>bit</strong>. That's the smallest unit of data a computer can store. It isn't very useful on its own, so bits are grouped into bigger units. These are the units you must know for GCSE:</p>
+
+      <table class="data">
+        <thead>
+          <tr><th>Unit</th><th>Symbol</th><th>Size</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Bit</strong></td><td>b</td><td>1 or 0</td><td>—</td></tr>
+          <tr><td><strong>Nibble</strong></td><td>—</td><td>4 bits</td><td>Half a byte</td></tr>
+          <tr><td><strong>Byte</strong></td><td>B</td><td>8 bits</td><td>A single character (e.g. "A")</td></tr>
+          <tr><td><strong>Kilobyte (KB)</strong></td><td>KB</td><td>1,000 B</td><td>A small text file</td></tr>
+          <tr><td><strong>Megabyte (MB)</strong></td><td>MB</td><td>1,000 KB</td><td>A music file</td></tr>
+          <tr><td><strong>Gigabyte (GB)</strong></td><td>GB</td><td>1,000 MB</td><td>A HD movie</td></tr>
+          <tr><td><strong>Terabyte (TB)</strong></td><td>TB</td><td>1,000 GB</td><td>A large hard drive</td></tr>
+          <tr><td><strong>Petabyte (PB)</strong></td><td>PB</td><td>1,000 TB</td><td>A large data centre</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <div class="title">💡 Examiner tip</div>
+        <p style="margin: 0;">Technically, 1 KB = 2<sup>10</sup> = 1024 bytes. In GCSE we simplify and use <strong>1,000</strong> to make the maths easier. Always use 1000 unless the question says otherwise.</p>
+      </div>
+
+      <h3>Quick flashcards — click to reveal</h3>
+      <div class="flip-grid">
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>How many bits in a nibble?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>4 bits</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>How many bits in a byte?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>8 bits</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>How many bytes in a KB?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>1,000 bytes</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>How many MB in a GB?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>1,000 MB</strong></p></div>
+        </div></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="convert" class="section">
+    <div class="container">
+      <p class="section-tag">converting</p>
+      <h2>Converting between units</h2>
+      <p>There are only <strong>two rules</strong> you ever need:</p>
+      <ol>
+        <li>Going between <strong>bits and bytes</strong>? Multiply or divide by <strong>8</strong>.</li>
+        <li>Going between any <strong>bigger units</strong> (B → KB → MB → GB → TB → PB)? Multiply or divide by <strong>1000</strong>.</li>
+      </ol>
+      <p>Rule of thumb:</p>
+      <ul>
+        <li>Going <em>up</em> a unit (smaller → bigger): <strong>divide</strong>.</li>
+        <li>Going <em>down</em> a unit (bigger → smaller): <strong>multiply</strong>.</li>
+      </ul>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example 1</div>
+        <p><strong>Convert 2000 KB into MB.</strong></p>
+        <p>KB → MB is going <em>up</em>, so divide by 1000.<br>2000 ÷ 1000 = <strong>2 MB</strong></p>
+      </div>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example 2</div>
+        <p><strong>Convert 2 TB into GB.</strong></p>
+        <p>TB → GB is going <em>down</em>, so multiply by 1000.<br>2 × 1000 = <strong>2000 GB</strong></p>
+      </div>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example 3</div>
+        <p><strong>Convert 24 bits into bytes.</strong></p>
+        <p>bits → bytes is going <em>up</em>, so divide by 8.<br>24 ÷ 8 = <strong>3 bytes</strong></p>
+      </div>
+
+      <h3>Try it yourself</h3>
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> How many bytes are in 6 nibbles?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>6 nibbles × 4 bits = 24 bits. 24 ÷ 8 = <strong>3 bytes</strong>.</div>
+      </div>
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> How many bits are in 5 kilobytes?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>5 KB × 1000 = 5000 bytes. 5000 × 8 = <strong>40,000 bits</strong>.</div>
+      </div>
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> Tick the equivalents: <em>2000 gigabytes = ? terabytes</em></p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>2000 GB ÷ 1000 = <strong>2 TB</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="capacity" class="section">
+    <div class="container">
+      <p class="section-tag">capacity</p>
+      <h2>Data capacity &amp; calculating how much fits</h2>
+      <p><strong>Data capacity</strong> is the maximum amount of information a storage device can hold. If you know the capacity and the size of one file, you can work out <strong>how many files</strong> the device can store.</p>
+
+      <table class="data">
+        <thead><tr><th>Device</th><th>Typical capacity</th></tr></thead>
+        <tbody>
+          <tr><td>CD</td><td>700 MB</td></tr>
+          <tr><td>USB flash drive</td><td>16 GB – 256 GB</td></tr>
+          <tr><td>SSD</td><td>128 GB – 2 TB</td></tr>
+          <tr><td>HDD</td><td>500 GB – 8 TB</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The three-step method</h3>
+      <ol>
+        <li><strong>Know</strong> the capacity of the device.</li>
+        <li><strong>Convert</strong> so the file size and capacity are in the <em>same units</em>.</li>
+        <li><strong>Divide</strong> capacity ÷ file size = number of files.</li>
+      </ol>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example — Lyla's images</div>
+        <p>Lyla creates images that are <strong>3 MB</strong> each. She stores them on a <strong>6 GB</strong> USB stick. How many images can she save?</p>
+        <p><strong>Step 1</strong> — convert to the same units. 6 GB = 6 × 1000 = <strong>6000 MB</strong>.<br>
+        <strong>Step 2</strong> — divide. 6000 ÷ 3 = <strong>2000 images</strong>.</p>
+      </div>
+
+      <h3>File-size formulas (for later topics)</h3>
+      <p>You'll meet these again in the images and sound topics — bookmark them for now:</p>
+      <table class="data">
+        <thead><tr><th>File type</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>Text file</td><td>(bytes per character) × (number of characters)</td></tr>
+          <tr><td>Image file</td><td>Resolution (W × H) × colour depth (bits)</td></tr>
+          <tr><td>Sound file</td><td>Sample rate × duration × bit depth</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="practice" class="section">
+    <div class="container">
+      <p class="section-tag">practice</p>
+      <h2>Exam-style practice</h2>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> A memory card has a capacity of <strong>32 GB</strong>. Each video is <strong>400 MB</strong>. How many videos fit?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>32 GB = 32,000 MB. 32,000 ÷ 400 = <strong>80 videos</strong>.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> A text file is <strong>5,000 characters</strong> long using Extended ASCII (1 byte per character). What is the file size in KB?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>5000 × 1 byte = 5000 bytes = 5000 ÷ 1000 = <strong>5 KB</strong>.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> A CD has 700 MB capacity. A song is 5 MB. How many songs fit on the CD?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>700 ÷ 5 = <strong>140 songs</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="end-note">// end of topic 1 — units &amp; capacity</p>
+
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

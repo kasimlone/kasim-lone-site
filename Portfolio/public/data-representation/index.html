@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Data Representation — Kasim Lone</title>
+<style>
+  :root {
+    --bg: #0f1419; --bg2: #161b22; --panel: #1a1f2e;
+    --zinc-700: #3f3f46; --zinc-600: #52525b; --zinc-500: #71717a;
+    --zinc-400: #a1a1aa; --zinc-300: #d4d4d8; --zinc-200: #e4e4e7;
+    --zinc-100: #f4f4f5; --zinc-50:  #fafafa;
+    --syntax-keyword: #82AAFF; --syntax-string:  #C3E88D;
+    --syntax-fn: #FFCB6B; --syntax-const: #F78C6C;
+    --syntax-comment: #546E7A; --syntax-text: #A6ACCD;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans); color: var(--zinc-200);
+    min-height: 100vh; line-height: 1.55;
+    background: var(--bg); isolation: isolate;
+  }
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("/classroom.jpg");
+    background-size: cover; background-position: center;
+    filter: blur(6px) saturate(1.15);
+    transform: scale(1.15);
+    pointer-events: none;
+  }
+  .bg-tint { position: fixed; inset: 0; background: rgba(15,20,25,0.6); z-index: 1; pointer-events: none; }
+
+  .chrome {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 20px;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--zinc-700);
+  }
+  .chrome .dots { display: flex; gap: 6px; }
+  .chrome .dots span { width: 14px; height: 14px; border-radius: 50%; }
+  .chrome .dots .r { background: #ff5f57; }
+  .chrome .dots .y { background: #febc2e; }
+  .chrome .dots .g { background: #28c840; }
+  .chrome .file {
+    font-family: var(--font-mono); font-weight: 600;
+    color: var(--zinc-100); margin-left: 12px; font-size: 1rem;
+  }
+  .chrome .meta {
+    margin-left: auto; font-family: var(--font-mono);
+    color: var(--zinc-300); font-size: 0.85rem;
+  }
+  @media (max-width: 640px) { .chrome .meta { display: none; } }
+
+  .page {
+    position: relative; z-index: 10;
+    max-width: 1100px; margin: 0 auto;
+    padding: 40px 28px 72px;
+  }
+  .hero-card {
+    background: rgba(26,31,46,0.7);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(63,63,70,0.6);
+    border-radius: 14px;
+    padding: 32px 30px 28px;
+    margin-bottom: 40px;
+    position: relative; overflow: hidden;
+  }
+  .hero-card::after {
+    content: ""; position: absolute; top: -60px; right: -60px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(130,170,255,0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-card h1 {
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    color: var(--zinc-50);
+  }
+  .hero-card .subtitle {
+    font-family: var(--font-mono); font-size: 0.9rem;
+    color: var(--zinc-300); margin: 0;
+  }
+  .hero-card .subtitle .kw { color: var(--syntax-keyword); }
+  .hero-card .subtitle .str { color: var(--syntax-string); }
+
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--zinc-100); margin: 32px 0 14px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    display: block;
+    border: 1px solid rgba(63,63,70,0.6);
+    background: rgba(26,31,46,0.7);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    text-decoration: none; color: inherit;
+    overflow: hidden;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--syntax-keyword);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  }
+  .card .tabbar {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(22,27,34,0.85);
+    border-bottom: 1px solid rgba(63,63,70,0.6);
+    padding: 6px 12px;
+  }
+  .card .tabbar .dots { display: flex; gap: 4px; }
+  .card .tabbar .dots span { width: 8px; height: 8px; border-radius: 50%; }
+  .card .tabbar .fn {
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--zinc-400); margin-left: 4px;
+  }
+  .card .tabbar .arrow {
+    margin-left: auto; color: var(--zinc-500);
+    font-family: var(--font-mono); font-size: 0.75rem;
+    transition: color 0.18s;
+  }
+  .card:hover .tabbar .arrow { color: var(--syntax-keyword); }
+
+  .card .body {
+    padding: 18px 20px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+  .card .body .row { display: flex; gap: 14px; }
+  .card .body .gutter {
+    color: rgba(84,110,122,0.6);
+    user-select: none; text-align: right; min-width: 14px;
+  }
+  .card .body .content { flex: 1; }
+  .card .body .comment { color: var(--syntax-comment); }
+  .card .body .kw { color: var(--syntax-keyword); }
+  .card .body .fn { color: var(--syntax-fn); }
+  .card .body .text { color: var(--syntax-text); }
+  .card .body .str { color: var(--syntax-string); }
+  .card .body .desc {
+    padding-left: 12px; color: rgba(166,172,205,0.9);
+    font-size: 0.75rem; margin: 2px 0 4px;
+    line-height: 1.5;
+  }
+  .card .tags {
+    padding: 0 20px 16px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .card .tags .tag {
+    padding: 2px 8px; border-radius: 4px;
+    background: rgba(130,170,255,0.15);
+    color: var(--syntax-keyword);
+    font-family: var(--font-mono); font-size: 0.7rem;
+  }
+
+  footer {
+    margin-top: 40px; padding-top: 20px;
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--zinc-600);
+  }
+</style>
+</head>
+<body>
+  <div class="bg-layer" aria-hidden></div>
+  <div class="bg-tint" aria-hidden></div>
+
+  <div class="chrome">
+    <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+    <div class="file">kasim-lone.dev — data-representation</div>
+    <div class="meta">OCR GCSE · Paper 1</div>
+  </div>
+
+  <div class="page">
+    <div class="hero-card">
+      <h1>Data Representation</h1>
+      <p class="subtitle">
+        <span class="kw">OCR GCSE</span> Computer Science —
+        <span class="str">"data storage &amp; compression"</span>
+      </p>
+    </div>
+
+    <div class="section-title">// topics</div>
+    <div class="grid">
+
+      <a class="card" href="Units/index.html">
+        <div class="tabbar">
+          <div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <span class="fn">units.tsx</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="gutter">1<br>2<br>3<br>4<br>5</div>
+            <div class="content">
+              <div><span class="comment">// 01</span></div>
+              <div><span class="kw">export const</span> <span class="fn">Units</span> <span class="text">=</span> {</div>
+              <div style="padding-left:12px;"><span class="text">name:</span> <span class="str">"Units &amp; Capacity"</span>,</div>
+              <div class="desc">Bit, nibble, byte, KB → PB. Converting between units and calculating file capacity.</div>
+              <div>}</div>
+            </div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">units</span><span class="tag">capacity</span><span class="tag">file size</span>
+        </div>
+      </a>
+
+      <a class="card" href="Binary/index.html">
+        <div class="tabbar">
+          <div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <span class="fn">binary.tsx</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="gutter">1<br>2<br>3<br>4<br>5</div>
+            <div class="content">
+              <div><span class="comment">// 02</span></div>
+              <div><span class="kw">export const</span> <span class="fn">Binary</span> <span class="text">=</span> {</div>
+              <div style="padding-left:12px;"><span class="text">name:</span> <span class="str">"Binary"</span>,</div>
+              <div class="desc">Denary ↔ binary, binary addition, overflow errors and binary shifts.</div>
+              <div>}</div>
+            </div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">conversion</span><span class="tag">addition</span><span class="tag">shifts</span>
+        </div>
+      </a>
+
+      <a class="card" href="Hexadecimal/index.html">
+        <div class="tabbar">
+          <div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <span class="fn">hexadecimal.tsx</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="gutter">1<br>2<br>3<br>4<br>5</div>
+            <div class="content">
+              <div><span class="comment">// 03</span></div>
+              <div><span class="kw">export const</span> <span class="fn">Hexadecimal</span> <span class="text">=</span> {</div>
+              <div style="padding-left:12px;"><span class="text">name:</span> <span class="str">"Hexadecimal"</span>,</div>
+              <div class="desc">Base-16, denary ↔ hex, binary ↔ hex, and why programmers use hex.</div>
+              <div>}</div>
+            </div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">base-16</span><span class="tag">MAC</span><span class="tag">colour</span>
+        </div>
+      </a>
+
+      <a class="card" href="Characters/index.html">
+        <div class="tabbar">
+          <div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <span class="fn">characters.tsx</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="gutter">1<br>2<br>3<br>4<br>5</div>
+            <div class="content">
+              <div><span class="comment">// 04</span></div>
+              <div><span class="kw">export const</span> <span class="fn">Characters</span> <span class="text">=</span> {</div>
+              <div style="padding-left:12px;"><span class="text">name:</span> <span class="str">"Characters"</span>,</div>
+              <div class="desc">Character sets, ASCII, Extended ASCII and Unicode.</div>
+              <div>}</div>
+            </div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">ASCII</span><span class="tag">Unicode</span>
+        </div>
+      </a>
+
+      <a class="card" href="Images/index.html">
+        <div class="tabbar">
+          <div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <span class="fn">images.tsx</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="gutter">1<br>2<br>3<br>4<br>5</div>
+            <div class="content">
+              <div><span class="comment">// 05</span></div>
+              <div><span class="kw">export const</span> <span class="fn">Images</span> <span class="text">=</span> {</div>
+              <div style="padding-left:12px;"><span class="text">name:</span> <span class="str">"Images"</span>,</div>
+              <div class="desc">Bitmap vs vector, resolution, colour depth, file size and metadata.</div>
+              <div>}</div>
+            </div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">bitmap</span><span class="tag">pixels</span><span class="tag">metadata</span>
+        </div>
+      </a>
+
+      <a class="card" href="Sound/index.html">
+        <div class="tabbar">
+          <div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <span class="fn">sound.tsx</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="gutter">1<br>2<br>3<br>4<br>5</div>
+            <div class="content">
+              <div><span class="comment">// 06</span></div>
+              <div><span class="kw">export const</span> <span class="fn">Sound</span> <span class="text">=</span> {</div>
+              <div style="padding-left:12px;"><span class="text">name:</span> <span class="str">"Sound"</span>,</div>
+              <div class="desc">Analogue → digital, sample rate, bit depth and file size.</div>
+              <div>}</div>
+            </div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">sampling</span><span class="tag">bit depth</span>
+        </div>
+      </a>
+
+      <a class="card" href="Compression/index.html">
+        <div class="tabbar">
+          <div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <span class="fn">compression.tsx</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="body">
+          <div class="row">
+            <div class="gutter">1<br>2<br>3<br>4<br>5</div>
+            <div class="content">
+              <div><span class="comment">// 07</span></div>
+              <div><span class="kw">export const</span> <span class="fn">Compression</span> <span class="text">=</span> {</div>
+              <div style="padding-left:12px;"><span class="text">name:</span> <span class="str">"Compression"</span>,</div>
+              <div class="desc">Why we compress. Lossy vs lossless — when to use each.</div>
+              <div>}</div>
+            </div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">lossy</span><span class="tag">lossless</span>
+        </div>
+      </a>
+
+    </div>
+
+    <footer>// © kasim lone — OCR GCSE data storage &amp; compression</footer>
+  </div>
+</body>
+</html>

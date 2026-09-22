@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sound — Data Representation</title>
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden></div>
+<div class="bg-tint" aria-hidden></div>
+
+<div class="chrome">
+  <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="file">kasim-lone.dev — data-representation / sound</div>
+  <a class="back" href="../index.html">← topics</a>
+</div>
+
+<div id="progress-bar"></div>
+
+<nav id="side-nav" aria-label="Topic sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#sampling" data-label="Sampling"><span></span></a>
+  <a href="#rate" data-label="Sample rate"><span></span></a>
+  <a href="#depth" data-label="Bit depth"><span></span></a>
+  <a href="#playground" data-label="Playground"><span></span></a>
+  <a href="#file-size" data-label="File size"><span></span></a>
+  <a href="#practice" data-label="Practice"><span></span></a>
+</nav>
+
+<main>
+
+  <section id="hero" class="section hero">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="eyebrow">GCSE · Data Representation</p>
+        <h1>Topic 6<br/><span class="accent">Sound</span></h1>
+        <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="objectives" class="section">
+    <div class="container">
+      <p class="section-tag">objectives</p>
+      <h2>By the end you'll be able to…</h2>
+      <ul class="objectives-list">
+        <li>Describe how an <strong>analogue sound wave</strong> is converted into digital form.</li>
+        <li>Define <strong>sample rate</strong> and <strong>bit depth</strong>.</li>
+        <li>Describe the effect of sample rate and bit depth on <strong>quality</strong> and <strong>file size</strong>.</li>
+        <li>Calculate the size of a sound file using the formula.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sampling" class="section">
+    <div class="container">
+      <p class="section-tag">sampling</p>
+      <h2>How sound becomes binary</h2>
+      <p>Sound in the real world is <strong>analogue</strong> — a smooth, continuous wave of air pressure. But computers can only store <strong>binary</strong>. So sound has to be converted from analogue to digital.</p>
+      <p>This process is called <strong>Analogue to Digital conversion (A2D)</strong>.</p>
+
+      <ol>
+        <li>The <strong>height (amplitude)</strong> of the wave is measured at regular time intervals. Each measurement is called a <strong>sample</strong>.</li>
+        <li>Each sample is stored as a binary value.</li>
+        <li>Using all these samples, the computer builds a <strong>stepped digital version</strong> of the original wave.</li>
+        <li>The digital wave is stored on secondary storage and can be played back at any time by reversing the process.</li>
+      </ol>
+
+      <div class="callout tip">
+        <div class="title">💡 Analogy: dot-to-dot</div>
+        <p style="margin: 0;">Sampling is like drawing a smooth curve as a dot-to-dot picture. The more dots, and the more accurately each dot is placed, the closer your dot-to-dot looks to the original curve.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="rate" class="section">
+    <div class="container">
+      <p class="section-tag">sample rate</p>
+      <h2>Sample rate</h2>
+      <p><strong>Sample rate</strong> is the number of samples taken <strong>per second</strong> of the analogue wave. It's measured in <strong>Hertz (Hz)</strong>. 1 Hz = 1 sample per second.</p>
+
+      <table class="data">
+        <thead><tr><th>Source</th><th>Typical sample rate</th></tr></thead>
+        <tbody>
+          <tr><td>Telephone</td><td>~16 / 22 kHz</td></tr>
+          <tr><td>Audio CD</td><td><strong>44.1 kHz</strong> (44,100 samples/s)</td></tr>
+          <tr><td>DVD</td><td>48 kHz</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>Higher sample rate</strong> → the digital wave is closer to the original → <strong>better quality sound</strong>. But it also means <strong>more data per second</strong> → larger file size.</p>
+
+      <div class="callout tip">
+        <div class="title">💡 That's why phone hold music sounds bad</div>
+        <p style="margin: 0;">Telephone systems use a low sample rate to save bandwidth. That's why hold music always sounds compressed and hollow — the wave is being reconstructed from too few samples.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="depth" class="section">
+    <div class="container">
+      <p class="section-tag">bit depth</p>
+      <h2>Bit depth</h2>
+      <p><strong>Bit depth</strong> is the number of <strong>bits stored per sample</strong>. It decides how accurately each sample's height can be measured.</p>
+
+      <ul>
+        <li>1 bit → 2 possible amplitude levels (very inaccurate).</li>
+        <li>8 bits → 256 levels.</li>
+        <li>16 bits → 65,536 levels (CD quality).</li>
+      </ul>
+
+      <p>A <strong>higher bit depth</strong> → a bigger range of amplitudes → <strong>better sound quality</strong> — but <strong>more data per sample</strong> → larger file size.</p>
+
+      <div class="callout tip">
+        <div class="title">💡 Bit depth vs colour depth</div>
+        <p style="margin: 0;">Bit depth in sound and colour depth in images measure the <em>same idea</em> — how many bits are stored per sample/pixel. The higher the number, the more precise each value.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="playground" class="section">
+    <div class="container">
+      <p class="section-tag">🖱️ playground</p>
+      <h2>See sampling in action</h2>
+      <p>Drag the sliders. Watch the grey <strong>analogue wave</strong> stay the same, while the <strong>blue digital wave</strong> and yellow sample dots change.</p>
+
+      <div class="wave-box">
+        <canvas id="snd-canvas"></canvas>
+      </div>
+
+      <div class="slider-row">
+        <label>Sample rate</label>
+        <input id="snd-sr" type="range" min="4" max="80" step="1" value="12">
+        <span class="val" id="snd-sr-val">12 samples/s</span>
+      </div>
+      <div class="slider-row">
+        <label>Bit depth</label>
+        <input id="snd-bd" type="range" min="1" max="16" step="1" value="4">
+        <span class="val" id="snd-bd-val">4 bits</span>
+      </div>
+      <div class="slider-row">
+        <label>Duration</label>
+        <input id="snd-dur" type="range" min="1" max="120" step="1" value="30">
+        <span class="val" id="snd-dur-val">30 s</span>
+      </div>
+
+      <div class="bit-display">
+        <span><span class="lbl">File size:</span> <span class="val" id="snd-size">—</span></span>
+        <span><span class="lbl">Formula:</span> <span class="val" style="font-size:0.85rem;color:var(--zinc-300);">rate × time × depth</span></span>
+      </div>
+
+      <div class="callout tip">
+        <div class="title">💡 Watch what happens</div>
+        <ul style="margin: 0;">
+          <li>Push <strong>sample rate</strong> up — the digital wave hugs the analogue wave more closely.</li>
+          <li>Push <strong>bit depth</strong> up — the vertical steps become smaller and more accurate.</li>
+          <li>Both make the sound better <em>and</em> the file bigger.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="file-size" class="section">
+    <div class="container">
+      <p class="section-tag">file size</p>
+      <h2>Calculating sound file size</h2>
+
+      <div class="callout">
+        <div class="title">📐 Formula</div>
+        <p style="margin: 0; font-family: var(--font-mono); color: var(--syntax-fn); font-size: 1.05rem;">Size (bits) = <strong>Sample rate</strong> × <strong>Duration</strong> (seconds) × <strong>Bit depth</strong></p>
+      </div>
+
+      <p>To get bytes, divide the answer by 8.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example</div>
+        <p>A recording is made at <strong>10 samples/second</strong>, <strong>4 bits per sample</strong>, lasting <strong>30 seconds</strong>. Calculate the file size in bytes.</p>
+        <p><strong>Step 1</strong> — bits: 10 × 30 × 4 = 1,200 bits<br>
+        <strong>Step 2</strong> — bytes: 1,200 ÷ 8 = <strong>150 bytes</strong> ✅</p>
+      </div>
+
+      <h3>Effect on quality and file size</h3>
+      <table class="data">
+        <thead><tr><th>Factor</th><th>Higher = quality</th><th>Higher = file size</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sample rate</strong></td><td>More detail, closer to original</td><td>More samples/s → more data</td></tr>
+          <tr><td><strong>Bit depth</strong></td><td>More precise amplitude, bigger range</td><td>More bits per sample → more data</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="practice" class="section">
+    <div class="container">
+      <p class="section-tag">practice</p>
+      <h2>Exam-style practice</h2>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> Describe how an analogue sound wave is converted into digital form. [3]</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>
+          1) The analogue sound wave is sampled.<br>
+          2) The amplitude (height) of the wave is measured…<br>
+          3) …at set/regular intervals.<br>
+          Each sample is stored as a binary value.
+        </div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> A song is recorded at 44,100 Hz with a bit depth of 16 bits, lasting 4 minutes. Calculate the file size in MB.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>Duration in seconds: 4 × 60 = 240s. Bits: 44,100 × 240 × 16 = 169,344,000 bits. Bytes: ÷ 8 = 21,168,000 bytes. MB: ÷ 1,000,000 ≈ <strong>21.17 MB</strong>.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> Explain the effect of doubling the sample rate on quality and file size.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>Quality would improve because more samples per second means the digital wave is closer to the original analogue wave. File size would double, because twice as much data is stored per second.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q4.</strong> Explain why telephone hold music often sounds poor quality.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>Telephone systems use a low sample rate (around 16 kHz), so fewer samples are taken per second. This means the digital wave doesn't match the original analogue wave as closely, giving a lower quality sound.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="end-note">// end of topic 6 — sound</p>
+
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

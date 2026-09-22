@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Images — Data Representation</title>
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden></div>
+<div class="bg-tint" aria-hidden></div>
+
+<div class="chrome">
+  <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="file">kasim-lone.dev — data-representation / images</div>
+  <a class="back" href="../index.html">← topics</a>
+</div>
+
+<div id="progress-bar"></div>
+
+<nav id="side-nav" aria-label="Topic sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#bitmap-vector" data-label="Bitmap/Vector"><span></span></a>
+  <a href="#resolution" data-label="Resolution"><span></span></a>
+  <a href="#colour-depth" data-label="Colour depth"><span></span></a>
+  <a href="#playground" data-label="Playground"><span></span></a>
+  <a href="#file-size" data-label="File size"><span></span></a>
+  <a href="#metadata" data-label="Metadata"><span></span></a>
+  <a href="#practice" data-label="Practice"><span></span></a>
+</nav>
+
+<main>
+
+  <section id="hero" class="section hero">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="eyebrow">GCSE · Data Representation</p>
+        <h1>Topic 5<br/><span class="accent">Images</span></h1>
+        <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="objectives" class="section">
+    <div class="container">
+      <p class="section-tag">objectives</p>
+      <h2>By the end you'll be able to…</h2>
+      <ul class="objectives-list">
+        <li>Explain the difference between <strong>bitmap</strong> and <strong>vector</strong> images.</li>
+        <li>Define <strong>pixel</strong>, <strong>resolution</strong> and <strong>colour depth</strong>.</li>
+        <li>Describe the impact of resolution and colour depth on <strong>file size</strong> and <strong>quality</strong>.</li>
+        <li>Calculate the size of a bitmap image using the formula.</li>
+        <li>Describe what <strong>metadata</strong> is and give three examples.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="bitmap-vector" class="section">
+    <div class="container">
+      <p class="section-tag">bitmap vs vector</p>
+      <h2>Two ways to store an image</h2>
+
+      <h3>Bitmap</h3>
+      <ul>
+        <li>Made up of tiny squares called <strong>pixels</strong> ("picture elements").</li>
+        <li>Each pixel is stored as a <strong>unique binary code</strong> for its colour.</li>
+        <li>The more colours and detail, the more binary that has to be stored.</li>
+        <li>A typical bitmap is a <strong>photograph</strong> (JPG, PNG).</li>
+      </ul>
+
+      <h3>Vector</h3>
+      <ul>
+        <li>Made up of <strong>mathematical equations and points</strong>.</li>
+        <li>Only the maths is stored — no pixels.</li>
+        <li>To store a circle you'd store the <em>centre point</em> and the <em>radius</em>.</li>
+        <li>Vectors are <strong>infinitely scalable</strong> — perfect for logos used on both a pen and a billboard.</li>
+      </ul>
+
+      <div class="callout warn">
+        <div class="title">⚠️ Exam focus</div>
+        <p style="margin: 0;">In the exam <strong>all image questions are about bitmaps</strong>. You just need to know what a vector is — after that, focus on pixels, resolution and colour depth.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="resolution" class="section">
+    <div class="container">
+      <p class="section-tag">resolution</p>
+      <h2>Resolution</h2>
+      <p><strong>Resolution</strong> is the total number of pixels that make up a bitmap image. It's calculated by <strong>multiplying the width by the height</strong> (in pixels).</p>
+
+      <table class="data">
+        <thead><tr><th>Example</th><th>Resolution</th><th>Total pixels</th></tr></thead>
+        <tbody>
+          <tr><td>Small image</td><td>100 × 100</td><td>10,000</td></tr>
+          <tr><td>Medium image</td><td>500 × 500</td><td>250,000</td></tr>
+          <tr><td>HD monitor</td><td>1920 × 1080</td><td>2,073,600</td></tr>
+          <tr><td>4K TV</td><td>3840 × 2160</td><td>~8.3 million</td></tr>
+        </tbody>
+      </table>
+
+      <p>The <strong>higher the resolution, the more detail</strong> in the image — but also the <strong>bigger the file size</strong>.</p>
+
+      <div class="callout tip">
+        <div class="title">💡 Resolution in real life</div>
+        <p style="margin: 0;">"1080p" (HD), "1440p" and "4K" all describe resolution. Bigger numbers = more pixels = sharper image = larger file.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="colour-depth" class="section">
+    <div class="container">
+      <p class="section-tag">colour depth</p>
+      <h2>Colour depth</h2>
+      <p><strong>Colour depth</strong> is the number of <strong>bits stored per pixel</strong>. It decides how many different colours each pixel can be.</p>
+      <p>With <em>n</em> bits per pixel, there are 2<sup>n</sup> possible colours:</p>
+
+      <table class="data">
+        <thead><tr><th>Colour depth</th><th>Colours available</th><th>Example use</th></tr></thead>
+        <tbody>
+          <tr><td>1 bit</td><td>2 (black &amp; white)</td><td>Retro pixel art</td></tr>
+          <tr><td>2 bits</td><td>4</td><td>Very limited colour</td></tr>
+          <tr><td>4 bits</td><td>16</td><td>Old computer games</td></tr>
+          <tr><td>8 bits</td><td>256</td><td>Simple graphics</td></tr>
+          <tr><td>24 bits</td><td>16,777,216 ("true colour")</td><td>Photographs</td></tr>
+        </tbody>
+      </table>
+
+      <div class="depth-grid">
+        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,#000 50%,#fff 50%);"></div><strong>1 bit</strong>2 colours</div>
+        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,#000,#555,#aaa,#fff);"></div><strong>2 bits</strong>4 colours</div>
+        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,#000,#333,#666,#999,#ccc,#fff);"></div><strong>4 bits</strong>16 colours</div>
+        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,red,orange,yellow,green,blue,indigo,violet);"></div><strong>8+ bits</strong>256+ colours</div>
+      </div>
+
+      <div class="callout tip">
+        <div class="title">💡 Quality vs file size</div>
+        <p style="margin: 0;">A higher colour depth means more colour detail — but more bits per pixel means a <strong>bigger file</strong>. There's always a trade-off between quality and size.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="playground" class="section">
+    <div class="container">
+      <p class="section-tag">🖱️ playground</p>
+      <h2>Change resolution &amp; colour depth</h2>
+      <p>Drag the sliders. Watch the number of colours and file size change together.</p>
+
+      <div class="slider-row">
+        <label>Resolution (W × H)</label>
+        <input id="img-res" type="range" min="10" max="1000" step="10" value="500">
+        <span class="val" id="img-res-val">500 × 500</span>
+      </div>
+      <div class="slider-row">
+        <label>Colour depth</label>
+        <input id="img-cd" type="range" min="1" max="24" step="1" value="24">
+        <span class="val" id="img-cd-val">24 bits</span>
+      </div>
+
+      <div class="bit-display">
+        <span><span class="lbl">Colours:</span> <span class="val" id="img-colours">16,777,216</span></span>
+        <span><span class="lbl">File size:</span> <span class="val" id="img-size">—</span></span>
+      </div>
+
+      <div class="depth-grid" id="img-swatches" style="grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));"></div>
+    </div>
+  </section>
+
+  <section id="file-size" class="section">
+    <div class="container">
+      <p class="section-tag">file size</p>
+      <h2>Calculating image file size</h2>
+
+      <div class="callout">
+        <div class="title">📐 Formula</div>
+        <p style="margin: 0; font-family: var(--font-mono); color: var(--syntax-fn); font-size: 1.05rem;">Size (bits) = <strong>Resolution</strong> (W × H) × <strong>Colour depth</strong> (bits per pixel)</p>
+      </div>
+
+      <p>To get bytes, <strong>divide by 8</strong>. To get KB, divide by 1000. To get MB, divide by another 1000.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example</div>
+        <p>An image is 500 × 500 pixels with a colour depth of 24 bits. Calculate the file size in KB.</p>
+        <p><strong>Step 1</strong> — pixels: 500 × 500 = 250,000<br>
+        <strong>Step 2</strong> — bits: 250,000 × 24 = 6,000,000 bits<br>
+        <strong>Step 3</strong> — bytes: 6,000,000 ÷ 8 = 750,000 bytes<br>
+        <strong>Step 4</strong> — KB: 750,000 ÷ 1000 = <strong>750 KB</strong> ✅</p>
+      </div>
+
+      <h3>What happens when things change?</h3>
+      <ul>
+        <li><strong>Higher resolution</strong> → more pixels → more bits → <strong>larger file</strong>.</li>
+        <li><strong>Higher colour depth</strong> → more bits per pixel → <strong>larger file</strong>.</li>
+        <li>Both increase the visual <strong>quality</strong> of the image.</li>
+        <li>You always have to <em>balance</em> quality against file size.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="metadata" class="section">
+    <div class="container">
+      <p class="section-tag">metadata</p>
+      <h2>Metadata — data about data</h2>
+      <p><strong>Metadata</strong> is extra information stored <em>alongside</em> an image file. It isn't needed to display the image, but it gives context and helps organise it.</p>
+
+      <table class="data">
+        <thead><tr><th>Metadata</th><th>What it stores</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Author</strong></td><td>Who created the image</td></tr>
+          <tr><td><strong>Date &amp; time</strong></td><td>When the image was taken/created</td></tr>
+          <tr><td><strong>Location</strong></td><td>Where the image was taken (GPS)</td></tr>
+          <tr><td><strong>Width &amp; height</strong></td><td>The image resolution</td></tr>
+          <tr><td><strong>Colour depth</strong></td><td>Bits per pixel</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example</div>
+        <p>A parent takes a photograph while on holiday. Identify <strong>three</strong> pieces of metadata that might be stored.</p>
+        <p><strong>Location, Author, Resolution</strong> (or Date/Time, Colour depth — any three).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice" class="section">
+    <div class="container">
+      <p class="section-tag">practice</p>
+      <h2>Exam-style practice</h2>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> Define the term <strong>pixel</strong>.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>The smallest element (a single square) of a bitmap image.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> If an image has a colour depth of <strong>2 bits</strong>, how many colours can it represent?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>2<sup>2</sup> = <strong>4 colours</strong></div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> Describe the impact of changing an image's resolution from 500 × 500 to 1000 × 1000.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>The image quality would be higher (more pixels), and the file size would be larger (4× the number of pixels).</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q4.</strong> An image is 200 × 100 pixels with a colour depth of 8 bits. Calculate the file size in KB.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>200 × 100 = 20,000 pixels. 20,000 × 8 = 160,000 bits. 160,000 ÷ 8 = 20,000 bytes = <strong>20 KB</strong>.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q5.</strong> A logo is being used on both a business card and a billboard. Should it be stored as a bitmap or a vector? Explain.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden><strong>Vector.</strong> Vector images are stored as mathematical equations, so they can be scaled to any size without losing quality. A bitmap would become pixelated on the billboard.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="end-note">// end of topic 5 — images</p>
+
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

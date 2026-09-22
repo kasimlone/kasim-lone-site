@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Binary — Data Representation</title>
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden></div>
+<div class="bg-tint" aria-hidden></div>
+
+<div class="chrome">
+  <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="file">kasim-lone.dev — data-representation / binary</div>
+  <a class="back" href="../index.html">← topics</a>
+</div>
+
+<div id="progress-bar"></div>
+
+<nav id="side-nav" aria-label="Topic sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#denary" data-label="Denary"><span></span></a>
+  <a href="#binary" data-label="Binary"><span></span></a>
+  <a href="#den-to-bin" data-label="Denary → Binary"><span></span></a>
+  <a href="#bin-to-den" data-label="Binary → Denary"><span></span></a>
+  <a href="#addition" data-label="Addition"><span></span></a>
+  <a href="#overflow" data-label="Overflow"><span></span></a>
+  <a href="#shifts" data-label="Shifts"><span></span></a>
+  <a href="#practice" data-label="Practice"><span></span></a>
+</nav>
+
+<main>
+
+  <section id="hero" class="section hero">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="eyebrow">GCSE · Data Representation</p>
+        <h1>Topic 2<br/><span class="accent">Binary</span></h1>
+        <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="objectives" class="section">
+    <div class="container">
+      <p class="section-tag">objectives</p>
+      <h2>By the end you'll be able to…</h2>
+      <ul class="objectives-list">
+        <li>Explain the difference between <strong>denary</strong> (base-10) and <strong>binary</strong> (base-2).</li>
+        <li>Convert an 8-bit number from <strong>denary → binary</strong> and back.</li>
+        <li>Add two 8-bit binary numbers together and spot an <strong>overflow error</strong>.</li>
+        <li>Perform a <strong>left</strong> or <strong>right binary shift</strong> and describe its effect.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="denary" class="section">
+    <div class="container">
+      <p class="section-tag">denary</p>
+      <h2>Denary (Base-10)</h2>
+      <p>Denary is the number system we use every day. It has <strong>10 digits</strong> (0–9). Each column has a <strong>place value</strong> that increases by a factor of 10 as you move left.</p>
+      <table class="data">
+        <thead><tr><th>1000s</th><th>100s</th><th>10s</th><th>1s</th></tr></thead>
+        <tbody><tr><td>10<sup>3</sup></td><td>10<sup>2</sup></td><td>10<sup>1</sup></td><td>10<sup>0</sup></td></tr>
+        <tr><td>3</td><td>2</td><td>6</td><td>8</td></tr></tbody>
+      </table>
+      <p>Reading left to right: (3 × 1000) + (2 × 100) + (6 × 10) + (8 × 1) = <strong>3268</strong>.</p>
+    </div>
+  </section>
+
+  <section id="binary" class="section">
+    <div class="container">
+      <p class="section-tag">binary</p>
+      <h2>Binary (Base-2)</h2>
+      <p>Binary has only <strong>2 digits</strong> (0 and 1). Each column has a place value that <strong>doubles</strong> as you move left.</p>
+      <table class="data">
+        <thead><tr><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead>
+        <tbody><tr><td>2<sup>7</sup></td><td>2<sup>6</sup></td><td>2<sup>5</sup></td><td>2<sup>4</sup></td><td>2<sup>3</sup></td><td>2<sup>2</sup></td><td>2<sup>1</sup></td><td>2<sup>0</sup></td></tr></tbody>
+      </table>
+
+      <div class="callout tip">
+        <div class="title">💡 Memorise these 8 numbers</div>
+        <p style="margin: 0;"><strong>128, 64, 32, 16, 8, 4, 2, 1</strong>. If you can write these out fast at the start of the exam, every conversion becomes easy.</p>
+      </div>
+
+      <h3>🖱️ Try it: click the bits</h3>
+      <p>Click any bit to flip it on/off. Watch the denary value update instantly.</p>
+      <div class="bit-row" data-target="bit-display-1">
+        <div class="bit" data-place="128"><span class="place">128</span><span class="val">0</span></div>
+        <div class="bit" data-place="64"><span class="place">64</span><span class="val">0</span></div>
+        <div class="bit" data-place="32"><span class="place">32</span><span class="val">0</span></div>
+        <div class="bit" data-place="16"><span class="place">16</span><span class="val">0</span></div>
+        <div class="bit" data-place="8"><span class="place">8</span><span class="val">0</span></div>
+        <div class="bit" data-place="4"><span class="place">4</span><span class="val">0</span></div>
+        <div class="bit" data-place="2"><span class="place">2</span><span class="val">0</span></div>
+        <div class="bit" data-place="1"><span class="place">1</span><span class="val">0</span></div>
+      </div>
+      <div class="bit-display" id="bit-display-1">
+        <span><span class="lbl">Binary:</span> <span class="val" data-out="binary">00000000</span></span>
+        <span><span class="lbl">Denary:</span> <span class="val" data-out="denary">0</span></span>
+      </div>
+
+      <div class="callout tip">
+        <div class="title">💡 Range for 8 bits</div>
+        <p style="margin: 0;">With 8 bits you can represent <strong>0 to 255</strong> (0000 0000 to 1111 1111). At GCSE you'll only ever be asked to work with 8 bits.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="den-to-bin" class="section">
+    <div class="container">
+      <p class="section-tag">denary → binary</p>
+      <h2>Converting denary to binary</h2>
+      <p>The reliable method: write out the place values, then walk left → right, deciding <em>"does this fit?"</em> at each column.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — convert denary 45</div>
+        <ol>
+          <li>Write the place values: 128, 64, 32, 16, 8, 4, 2, 1.</li>
+          <li>Does 128 fit into 45? No → 0. Does 64? No → 0. Does 32? Yes → 1. Subtract: 45 − 32 = 13.</li>
+          <li>Does 16 fit into 13? No → 0. Does 8? Yes → 1. 13 − 8 = 5.</li>
+          <li>Does 4 fit into 5? Yes → 1. 5 − 4 = 1.</li>
+          <li>Does 2 fit into 1? No → 0. Does 1? Yes → 1. 1 − 1 = 0. Done.</li>
+        </ol>
+        <table class="data">
+          <thead><tr><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead>
+          <tbody><tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr></tbody>
+        </table>
+        <p><strong>45 = 00101101</strong> in binary. Check: 32 + 8 + 4 + 1 = 45 ✅</p>
+      </div>
+
+      <h3>🖱️ Try it: build any number 0–255</h3>
+      <p>Type a denary number and see the binary. Then use the interactive bits above to check yourself.</p>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin: 10px 0;">
+        <label style="font-family:var(--font-mono);color:var(--zinc-300);">Denary:</label>
+        <input id="den-practice" type="number" min="0" max="255" value="45" style="width:120px;padding:8px 12px;background:rgba(0,0,0,0.4);border:1px solid rgba(63,63,70,0.7);border-radius:6px;color:var(--zinc-100);font-family:var(--font-mono);" />
+        <span id="den-practice-out" style="font-family:var(--font-mono);"></span>
+      </div>
+
+      <div class="callout warn">
+        <div class="title">⚠️ Show your working</div>
+        <p style="margin: 0;">Conversion questions are usually worth 2 marks: <strong>1 for the answer, 1 for the working</strong>. Always leave the place-value table on the page.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="bin-to-den" class="section">
+    <div class="container">
+      <p class="section-tag">binary → denary</p>
+      <h2>Converting binary to denary</h2>
+      <p>Even easier: write out place values above the bits, then <strong>add up the columns with a 1</strong>.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — convert 01100011</div>
+        <table class="data">
+          <thead><tr><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr></thead>
+          <tbody><tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr></tbody>
+        </table>
+        <p>Add the values where there's a 1: 64 + 32 + 2 + 1 = <strong>99</strong>.</p>
+      </div>
+
+      <h3>🖱️ Try it</h3>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin: 10px 0;">
+        <label style="font-family:var(--font-mono);color:var(--zinc-300);">Binary:</label>
+        <input id="bin-practice" type="text" maxlength="8" value="01100011" style="width:140px;padding:8px 12px;background:rgba(0,0,0,0.4);border:1px solid rgba(63,63,70,0.7);border-radius:6px;color:var(--zinc-100);font-family:var(--font-mono);letter-spacing:0.1em;" />
+        <span id="bin-practice-out" style="font-family:var(--font-mono);"></span>
+      </div>
+
+      <div class="callout tip">
+        <div class="title">💡 Odd number trick</div>
+        <p style="margin: 0;">If the binary number ends in <strong>1</strong>, the denary answer <strong>must be odd</strong>. If it ends in <strong>0</strong>, the answer must be even. Use this to sanity-check your conversion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="addition" class="section">
+    <div class="container">
+      <p class="section-tag">addition</p>
+      <h2>Binary addition</h2>
+      <p>Adding binary works just like column addition in denary — but with only <strong>5 golden rules</strong>:</p>
+
+      <table class="data">
+        <thead><tr><th>Sum</th><th>Answer</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>0 + 0</td><td>0</td><td>write 0</td></tr>
+          <tr><td>0 + 1</td><td>1</td><td>write 1</td></tr>
+          <tr><td>1 + 0</td><td>1</td><td>write 1</td></tr>
+          <tr><td>1 + 1</td><td>10</td><td>write 0, <strong>carry 1</strong></td></tr>
+          <tr><td>1 + 1 + 1</td><td>11</td><td>write 1, <strong>carry 1</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — 1001 + 0100</div>
+        <p>Start from the rightmost column, work left. Add each column, applying the rules.</p>
+        <div class="add-grid" style="--cols: 4;">
+          <div class="row header"><div class="lbl"></div><div class="cell">8</div><div class="cell">4</div><div class="cell">2</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">A</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">B</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div></div>
+          <div class="row"><div class="lbl">=</div><div class="cell result">1</div><div class="cell result">1</div><div class="cell result">0</div><div class="cell result">1</div></div>
+        </div>
+        <p><strong>1001 (9) + 0100 (4) = 1101 (13)</strong> ✅</p>
+      </div>
+
+      <div class="callout example">
+        <div class="title">✏️ Example with carries — 00011001 + 10001001</div>
+        <div class="add-grid" style="--cols: 8;">
+          <div class="row header"><div class="lbl"></div><div class="cell">128</div><div class="cell">64</div><div class="cell">32</div><div class="cell">16</div><div class="cell">8</div><div class="cell">4</div><div class="cell">2</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">A</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">B</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">C</div><div class="cell"></div><div class="cell"></div><div class="cell carry">1</div><div class="cell carry">1</div><div class="cell"></div><div class="cell"></div><div class="cell carry">1</div><div class="cell"></div></div>
+          <div class="row"><div class="lbl">=</div><div class="cell result">1</div><div class="cell result">0</div><div class="cell result">1</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">1</div><div class="cell result">0</div></div>
+        </div>
+        <p><strong>00011001 (25) + 10001001 (137) = 10100010 (162)</strong> ✅</p>
+      </div>
+
+      <div class="callout tip">
+        <div class="title">💡 Show carries</div>
+        <p style="margin: 0;">Always write carries clearly — either above or below the sum. There are marks for the working, and examiners want to see where the carries went.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="overflow" class="section">
+    <div class="container">
+      <p class="section-tag">overflow</p>
+      <h2>Overflow errors</h2>
+      <p>An <strong>overflow error</strong> happens when the result of a binary addition needs <strong>more bits than are available</strong> to store it.</p>
+      <p>At GCSE we work with 8 bits. The biggest 8-bit number is 11111111 (255). If an addition produces a result bigger than 255, a 9th bit would be needed — but it can't be stored. That's an overflow.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — 11111111 + 00000001</div>
+        <div class="add-grid" style="--cols: 9;">
+          <div class="row header"><div class="lbl"></div><div class="cell overflow" title="9th bit not storable">256</div><div class="cell">128</div><div class="cell">64</div><div class="cell">32</div><div class="cell">16</div><div class="cell">8</div><div class="cell">4</div><div class="cell">2</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">A</div><div class="cell"></div><div class="cell">1</div><div class="cell">1</div><div class="cell">1</div><div class="cell">1</div><div class="cell">1</div><div class="cell">1</div><div class="cell">1</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">B</div><div class="cell"></div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">0</div><div class="cell">1</div></div>
+          <div class="row"><div class="lbl">=</div><div class="cell overflow">1</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">0</div><div class="cell result">0</div></div>
+        </div>
+        <p>The correct answer would be 256, but 256 needs a <strong>9th bit</strong>. Only 8 bits are stored, so the result reads as <strong>0</strong>. That extra 1 (highlighted in red) is the <em>overflow</em>.</p>
+      </div>
+
+      <div class="callout warn">
+        <div class="title">⚠️ Exam clue</div>
+        <p style="margin: 0;">If an addition question is followed by "what problem has been caused?" — the answer is almost always <strong>overflow error</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="shifts" class="section">
+    <div class="container">
+      <p class="section-tag">shifts</p>
+      <h2>Binary shifts</h2>
+      <p>A binary shift <strong>moves every bit</strong> a set number of places to the left or right.</p>
+      <ul>
+        <li><strong>Left shift</strong> by 1 → multiplies by 2. Left shift by 2 → multiplies by 4. Left shift by <em>n</em> → multiplies by 2<sup>n</sup>.</li>
+        <li><strong>Right shift</strong> by 1 → divides by 2. Right shift by 2 → divides by 4. Right shift by <em>n</em> → divides by 2<sup>n</sup>.</li>
+        <li>Empty columns are filled with <strong>0</strong>.</li>
+        <li>Bits that fall off the end are <strong>lost</strong> — this can cause loss of precision or overflow/underflow.</li>
+      </ul>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — left shift of 1 on 00101000 (40)</div>
+        <p>Every bit moves 1 place left. The bit in the 128 column falls off. The 1 column is filled with 0.</p>
+        <p>Result: <strong>01010000</strong> = 64 + 16 = <strong>80</strong>. 40 × 2 = 80 ✅</p>
+      </div>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — right shift of 1 on 00101000 (40)</div>
+        <p>Every bit moves 1 place right. The bit in the 1 column falls off. The 128 column is filled with 0.</p>
+        <p>Result: <strong>00010100</strong> = 16 + 4 = <strong>20</strong>. 40 ÷ 2 = 20 ✅</p>
+      </div>
+
+      <h3>🖱️ Try it — click the bits, then shift</h3>
+      <p>Set a starting number by clicking bits, then press "shift left" or "shift right".</p>
+      <div class="bit-row" id="shift-bits" data-target="shift-display">
+        <div class="bit" data-place="128"><span class="place">128</span><span class="val">0</span></div>
+        <div class="bit on" data-place="64"><span class="place">64</span><span class="val">1</span></div>
+        <div class="bit" data-place="32"><span class="place">32</span><span class="val">0</span></div>
+        <div class="bit on" data-place="16"><span class="place">16</span><span class="val">1</span></div>
+        <div class="bit" data-place="8"><span class="place">8</span><span class="val">0</span></div>
+        <div class="bit" data-place="4"><span class="place">4</span><span class="val">0</span></div>
+        <div class="bit" data-place="2"><span class="place">2</span><span class="val">0</span></div>
+        <div class="bit" data-place="1"><span class="place">1</span><span class="val">0</span></div>
+      </div>
+      <div class="bit-display" id="shift-display">
+        <span><span class="lbl">Binary:</span> <span class="val" data-out="binary">00000000</span></span>
+        <span><span class="lbl">Denary:</span> <span class="val" data-out="denary">0</span></span>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:10px;">
+        <button class="btn" data-shift="L" data-target="shift-bits">◀ Shift Left ×2</button>
+        <button class="btn" data-shift="R" data-target="shift-bits">Shift Right ÷2 ▶</button>
+      </div>
+
+      <div class="callout warn">
+        <div class="title">⚠️ Loss of precision</div>
+        <p style="margin: 0;">Right shifts of odd numbers <strong>lose data</strong>. E.g. shifting 00000101 (5) right by 1 gives 00000010 (2), not 2.5. This is called <em>loss of precision</em>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice" class="section">
+    <div class="container">
+      <p class="section-tag">practice</p>
+      <h2>Exam-style practice</h2>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> Convert the denary number <strong>213</strong> to 8-bit binary.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>128 + 64 + 16 + 4 + 1 = 213 → <strong>11010101</strong></div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> Convert the binary number <strong>10110111</strong> to denary.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>128 + 32 + 16 + 4 + 2 + 1 = <strong>183</strong></div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> Add these binary numbers: <strong>01101100 + 00010101</strong>.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>01101100 (108) + 00010101 (21) = <strong>10000001</strong> (129)</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q4.</strong> Perform a left shift of 2 on <strong>00001110</strong>. What is the effect?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>Cross the first 2 digits off the left, add 2 zeros on the right → <strong>00111000</strong>. Effect: multiplies the number by 4 (14 → 56).</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q5.</strong> Adding 11111110 and 00000011 causes what error, and why?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden><strong>Overflow error</strong>. The correct answer is 257, but 257 needs a 9th bit, which cannot be stored in 8 bits.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="end-note">// end of topic 2 — binary</p>
+
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

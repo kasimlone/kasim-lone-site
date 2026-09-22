@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hexadecimal — Data Representation</title>
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden></div>
+<div class="bg-tint" aria-hidden></div>
+
+<div class="chrome">
+  <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="file">kasim-lone.dev — data-representation / hexadecimal</div>
+  <a class="back" href="../index.html">← topics</a>
+</div>
+
+<div id="progress-bar"></div>
+
+<nav id="side-nav" aria-label="Topic sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#what" data-label="What is hex?"><span></span></a>
+  <a href="#why" data-label="Why hex?"><span></span></a>
+  <a href="#den-hex" data-label="Denary → Hex"><span></span></a>
+  <a href="#hex-den" data-label="Hex → Denary"><span></span></a>
+  <a href="#bin-hex" data-label="Binary ↔ Hex"><span></span></a>
+  <a href="#colours" data-label="Colour picker"><span></span></a>
+  <a href="#practice" data-label="Practice"><span></span></a>
+</nav>
+
+<main>
+
+  <section id="hero" class="section hero">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="eyebrow">GCSE · Data Representation</p>
+        <h1>Topic 3<br/><span class="accent">Hexadecimal</span></h1>
+        <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="objectives" class="section">
+    <div class="container">
+      <p class="section-tag">objectives</p>
+      <h2>By the end you'll be able to…</h2>
+      <ul class="objectives-list">
+        <li>Explain what <strong>hexadecimal</strong> is and why it's used.</li>
+        <li>Convert between <strong>denary and hexadecimal</strong> (both directions).</li>
+        <li>Convert between <strong>binary and hexadecimal</strong> using nibbles.</li>
+        <li>Recognise hex in real life — <strong>MAC addresses</strong> and <strong>colour codes</strong>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="what" class="section">
+    <div class="container">
+      <p class="section-tag">what is hex?</p>
+      <h2>Hexadecimal — Base-16</h2>
+      <p>Hexadecimal is a number system with <strong>16 digits</strong>. Since we only have 10 numerical digits (0–9), the letters <strong>A–F</strong> are used to represent 10–15.</p>
+
+      <table class="data">
+        <thead>
+          <tr><th>Denary</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Hex</strong></td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td><strong>A</strong></td><td><strong>B</strong></td><td><strong>C</strong></td><td><strong>D</strong></td><td><strong>E</strong></td><td><strong>F</strong></td></tr>
+        </tbody>
+      </table>
+
+      <p>Each column's place value is a power of 16. At GCSE you'll work with up to <strong>2 hex digits</strong>:</p>
+      <table class="data">
+        <thead><tr><th>16s (16<sup>1</sup>)</th><th>1s (16<sup>0</sup>)</th><th>= Denary</th></tr></thead>
+        <tbody><tr><td>1</td><td>3</td><td>(1 × 16) + (3 × 1) = 19</td></tr></tbody>
+      </table>
+
+      <div class="callout tip">
+        <div class="title">💡 One hex digit = one nibble</div>
+        <p style="margin: 0;">A single hex digit represents exactly <strong>4 bits</strong> (one nibble). Two hex digits represent <strong>8 bits</strong> (one byte). This is the trick that makes binary ↔ hex conversion easy.</p>
+      </div>
+
+      <h3>Flip cards — quick recall</h3>
+      <div class="flip-grid">
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>A</h4><span class="hint">click for denary</span></div>
+          <div class="face back"><p><strong>10</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>B</h4><span class="hint">click for denary</span></div>
+          <div class="face back"><p><strong>11</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>C</h4><span class="hint">click for denary</span></div>
+          <div class="face back"><p><strong>12</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>D</h4><span class="hint">click for denary</span></div>
+          <div class="face back"><p><strong>13</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>E</h4><span class="hint">click for denary</span></div>
+          <div class="face back"><p><strong>14</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>F</h4><span class="hint">click for denary</span></div>
+          <div class="face back"><p><strong>15</strong></p></div>
+        </div></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" class="section">
+    <div class="container">
+      <p class="section-tag">why hex?</p>
+      <h2>Why do we use hexadecimal?</h2>
+      <p>Computers store and process everything in binary — but binary is <strong>painful for humans</strong> to read and copy.</p>
+      <p>Hex is a much more <strong>compact</strong> way to write down the same information:</p>
+      <ul>
+        <li>Binary numbers are long and hard to read — one wrong 1 or 0 among 32 of them is easy to miss.</li>
+        <li>Hex uses <strong>fewer digits</strong> to represent the same value. 8 bits become 2 hex digits.</li>
+        <li>Because one hex digit maps exactly to one nibble, converting binary ↔ hex is fast.</li>
+      </ul>
+
+      <h3>Where you'll see hex in real life</h3>
+      <ul>
+        <li><strong>MAC addresses</strong> — the unique address of a network device, e.g. <code style="color:var(--syntax-string);font-family:var(--font-mono);">2C-F0-7C-A7-98</code></li>
+        <li><strong>Colour codes</strong> — every colour on a web page is a hex code like <code style="color:var(--syntax-string);font-family:var(--font-mono);">#FF3366</code></li>
+        <li><strong>Memory addresses</strong> and <strong>error codes</strong> in operating systems.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="den-hex" class="section">
+    <div class="container">
+      <p class="section-tag">denary → hex</p>
+      <h2>Converting denary to hexadecimal</h2>
+
+      <h3>Method 1 — via binary (recommended)</h3>
+      <p>Because 1 hex digit = 4 bits, you can go <strong>denary → binary → hex</strong>:</p>
+      <ol>
+        <li>Convert the denary number to 8-bit binary.</li>
+        <li>Split into <strong>two nibbles</strong> (4 bits each).</li>
+        <li>Convert each nibble to its denary value (0–15).</li>
+        <li>Use the hex table to write A–F for values 10–15.</li>
+      </ol>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — convert denary 28</div>
+        <p>28 in binary = 00011100. Split into nibbles: <strong>0001 | 1100</strong>.</p>
+        <p>0001 = 1 → hex digit <strong>1</strong>. 1100 = 12 → hex digit <strong>C</strong>.</p>
+        <p><strong>28 = 1C</strong> in hex ✅</p>
+      </div>
+
+      <h3>Method 2 — divide by 16</h3>
+      <p>Divide the denary number by 16. The <strong>whole number</strong> is the first hex digit, the <strong>remainder</strong> is the second.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — convert denary 163</div>
+        <p>163 ÷ 16 = 10 remainder 3. So digit 1 = 10 (A), digit 2 = 3.</p>
+        <p><strong>163 = A3</strong> in hex ✅</p>
+      </div>
+
+      <div class="callout tip">
+        <div class="title">💡 Non-calculator paper</div>
+        <p style="margin: 0;">The exam is non-calculator. If dividing by 16 in your head is hard, use <strong>Method 1</strong> — most students find it more reliable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hex-den" class="section">
+    <div class="container">
+      <p class="section-tag">hex → denary</p>
+      <h2>Converting hexadecimal to denary</h2>
+
+      <h3>Method 1 — via binary</h3>
+      <p>Reverse of before: convert each hex digit to a 4-bit binary nibble, join them, then convert the 8-bit number to denary.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — convert B9 to denary</div>
+        <p>B = 11 = <strong>1011</strong>. 9 = <strong>1001</strong>. Joined: <strong>10111001</strong>.</p>
+        <p>Read the place values: 128 + 32 + 16 + 8 + 1 = <strong>185</strong> ✅</p>
+      </div>
+
+      <h3>Method 2 — multiply by 16</h3>
+      <p>Multiply the first digit by 16, then add the second digit.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — convert 79 to denary</div>
+        <p>7 × 16 = 112. Add 9: 112 + 9 = <strong>121</strong> ✅</p>
+      </div>
+
+      <h3>🖱️ Try it — hex → denary + binary</h3>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin: 10px 0;">
+        <label style="font-family:var(--font-mono);color:var(--zinc-300);">Hex:</label>
+        <input id="hex-practice" type="text" maxlength="2" value="B9" style="width:100px;padding:8px 12px;background:rgba(0,0,0,0.4);border:1px solid rgba(63,63,70,0.7);border-radius:6px;color:var(--zinc-100);font-family:var(--font-mono);letter-spacing:0.1em;text-transform:uppercase;" />
+        <span id="hex-practice-out" style="font-family:var(--font-mono);"></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="bin-hex" class="section">
+    <div class="container">
+      <p class="section-tag">binary ↔ hex</p>
+      <h2>Converting binary ↔ hexadecimal directly</h2>
+      <p>Because 1 hex digit = 4 bits, direct conversion is quick.</p>
+
+      <h3>Binary → Hex</h3>
+      <ol>
+        <li>Split the 8-bit binary into two nibbles.</li>
+        <li>Convert each nibble to its denary value (0–15).</li>
+        <li>Write the hex digit (A–F for 10–15).</li>
+      </ol>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — 10110111 → hex</div>
+        <p>Split: <strong>1011 | 0111</strong>.</p>
+        <p>1011 = 8 + 2 + 1 = 11 = <strong>B</strong>. 0111 = 4 + 2 + 1 = 7.</p>
+        <p><strong>10110111 = B7</strong> in hex ✅</p>
+      </div>
+
+      <h3>Hex → Binary</h3>
+      <ol>
+        <li>Split the two hex digits.</li>
+        <li>Convert each to a 4-bit binary nibble.</li>
+        <li>Join the nibbles to make an 8-bit binary number.</li>
+      </ol>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — 5F → binary</div>
+        <p>5 = <strong>0101</strong>. F = 15 = <strong>1111</strong>.</p>
+        <p><strong>5F = 01011111</strong> in binary ✅</p>
+      </div>
+
+      <table class="data">
+        <thead><tr><th>Denary</th><th>Binary</th><th>Hex</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>0000</td><td>0</td></tr>
+          <tr><td>1</td><td>0001</td><td>1</td></tr>
+          <tr><td>2</td><td>0010</td><td>2</td></tr>
+          <tr><td>3</td><td>0011</td><td>3</td></tr>
+          <tr><td>4</td><td>0100</td><td>4</td></tr>
+          <tr><td>5</td><td>0101</td><td>5</td></tr>
+          <tr><td>6</td><td>0110</td><td>6</td></tr>
+          <tr><td>7</td><td>0111</td><td>7</td></tr>
+          <tr><td>8</td><td>1000</td><td>8</td></tr>
+          <tr><td>9</td><td>1001</td><td>9</td></tr>
+          <tr><td>10</td><td>1010</td><td>A</td></tr>
+          <tr><td>11</td><td>1011</td><td>B</td></tr>
+          <tr><td>12</td><td>1100</td><td>C</td></tr>
+          <tr><td>13</td><td>1101</td><td>D</td></tr>
+          <tr><td>14</td><td>1110</td><td>E</td></tr>
+          <tr><td>15</td><td>1111</td><td>F</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <div class="title">💡 Exam start-up</div>
+        <p style="margin: 0;">The most common mistake is muddling A–F with 10–15. <strong>Write the 16-row table out first thing</strong> in the exam and you'll never mix them up.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="colours" class="section">
+    <div class="container">
+      <p class="section-tag">colours</p>
+      <h2>Hex in the wild — colour codes</h2>
+      <p>Every colour on a web page can be written as a <strong>6-digit hex code</strong>: two digits each for <strong>red</strong>, <strong>green</strong> and <strong>blue</strong> (0–255 per channel).</p>
+
+      <div class="hex-picker">
+        <div id="rgb-swatch" class="swatch" style="background:#82AAFF;"></div>
+        <div class="controls">
+          <label>Red (0–255)</label>
+          <input id="rgb-r" type="number" min="0" max="255" value="130">
+          <label>Green (0–255)</label>
+          <input id="rgb-g" type="number" min="0" max="255" value="170">
+          <label>Blue (0–255)</label>
+          <input id="rgb-b" type="number" min="0" max="255" value="255">
+          <div class="hex-out" id="rgb-hex">#82AAFF</div>
+        </div>
+      </div>
+
+      <p>Try changing the values above. Every colour on this page uses a hex code just like this one.</p>
+    </div>
+  </section>
+
+  <section id="practice" class="section">
+    <div class="container">
+      <p class="section-tag">practice</p>
+      <h2>Exam-style practice</h2>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> Convert denary <strong>90</strong> to hexadecimal.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>90 in binary = 01011010. Nibbles: 0101 (5) | 1010 (10 = A). <strong>90 = 5A</strong></div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> Convert hex <strong>2D</strong> to denary.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>(2 × 16) + 13 = 32 + 13 = <strong>45</strong></div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> Convert binary <strong>11101010</strong> to hex.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>1110 (14 = E) | 1010 (10 = A). <strong>EA</strong></div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q4.</strong> Give <strong>two reasons</strong> why programmers prefer hex over binary.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>1) Hex uses fewer digits so it's shorter and easier to read. 2) Long binary numbers are more prone to copying errors, hex reduces that risk.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="end-note">// end of topic 3 — hexadecimal</p>
+
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

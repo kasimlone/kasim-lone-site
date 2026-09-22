@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Characters — Data Representation</title>
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden></div>
+<div class="bg-tint" aria-hidden></div>
+
+<div class="chrome">
+  <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="file">kasim-lone.dev — data-representation / characters</div>
+  <a class="back" href="../index.html">← topics</a>
+</div>
+
+<div id="progress-bar"></div>
+
+<nav id="side-nav" aria-label="Topic sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#sets" data-label="Character sets"><span></span></a>
+  <a href="#ascii" data-label="ASCII"><span></span></a>
+  <a href="#explorer" data-label="ASCII explorer"><span></span></a>
+  <a href="#unicode" data-label="Unicode"><span></span></a>
+  <a href="#compare" data-label="Compare"><span></span></a>
+  <a href="#practice" data-label="Practice"><span></span></a>
+</nav>
+
+<main>
+
+  <section id="hero" class="section hero">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="eyebrow">GCSE · Data Representation</p>
+        <h1>Topic 4<br/><span class="accent">Characters</span></h1>
+        <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="objectives" class="section">
+    <div class="container">
+      <p class="section-tag">objectives</p>
+      <h2>By the end you'll be able to…</h2>
+      <ul class="objectives-list">
+        <li>Explain what a <strong>character set</strong> is and why we need one.</li>
+        <li>Describe <strong>ASCII</strong> and <strong>Extended ASCII</strong>: how many bits, how many characters, what it can/can't store.</li>
+        <li>Describe <strong>Unicode</strong> and why it was created.</li>
+        <li>Compare ASCII and Unicode on bits, characters, uses, benefits and drawbacks.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sets" class="section">
+    <div class="container">
+      <p class="section-tag">character sets</p>
+      <h2>What is a character set?</h2>
+      <p>Computers can only store <strong>binary</strong>. So every letter you type on a keyboard has to be converted into a unique binary number first.</p>
+      <p>A <strong>character set</strong> is a defined list of characters, where every character has been given a <strong>unique binary code</strong>. Without a character set, one computer might store 01000001 and another might read it as something completely different.</p>
+
+      <div class="callout">
+        <div class="title">🔑 Key facts</div>
+        <ul style="margin: 0;">
+          <li>Each character has a unique binary code.</li>
+          <li>Codes are <strong>ordered logically</strong> — the code for 'B' is one more than the code for 'A'.</li>
+          <li>A character set is a <strong>standard</strong> so systems can share text reliably.</li>
+          <li>The number of characters a set can store depends on the <strong>number of bits</strong> used: <em>n</em> bits → 2<sup>n</sup> characters.</li>
+        </ul>
+      </div>
+
+      <p>Two character sets you must know at GCSE:</p>
+      <ul>
+        <li><strong>ASCII</strong> — American Standard Code for Information Interchange</li>
+        <li><strong>Unicode</strong> — Universal Character Encoding</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="ascii" class="section">
+    <div class="container">
+      <p class="section-tag">ASCII</p>
+      <h2>ASCII</h2>
+      <p><strong>ASCII</strong> was one of the earliest character sets and is still widely used. It uses <strong>7 bits</strong> per character, giving 2<sup>7</sup> = <strong>128</strong> possible characters.</p>
+
+      <h3>What ASCII can store</h3>
+      <ul>
+        <li>A–Z (uppercase), a–z (lowercase)</li>
+        <li>0–9 (digits)</li>
+        <li>Common punctuation: <code>!, @, #, $, %, &amp;, ?, .</code></li>
+        <li>Non-printable control codes (e.g. tab, newline)</li>
+      </ul>
+
+      <h3>Extended ASCII</h3>
+      <p><strong>Extended ASCII</strong> uses <strong>8 bits</strong> per character (2<sup>8</sup> = <strong>256</strong> characters). This adds room for maths symbols and characters like <code>©</code>.</p>
+
+      <div class="callout tip">
+        <div class="title">💡 In the exam</div>
+        <p style="margin: 0;">The exam expects <strong>8-bit Extended ASCII</strong> for all binary representations of characters. So if you're asked to write 'A' in binary, use <strong>01000001</strong> (8 bits), not 1000001 (7 bits).</p>
+      </div>
+
+      <h3>The letters A–Z in ASCII</h3>
+      <table class="data">
+        <thead><tr><th>Letter</th><th>ASCII</th><th>Binary</th><th>Letter</th><th>ASCII</th><th>Binary</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>65</td><td>01000001</td><td>a</td><td>97</td><td>01100001</td></tr>
+          <tr><td>B</td><td>66</td><td>01000010</td><td>b</td><td>98</td><td>01100010</td></tr>
+          <tr><td>C</td><td>67</td><td>01000011</td><td>c</td><td>99</td><td>01100011</td></tr>
+          <tr><td>D</td><td>68</td><td>01000100</td><td>d</td><td>100</td><td>01100100</td></tr>
+          <tr><td>E</td><td>69</td><td>01000101</td><td>e</td><td>101</td><td>01100101</td></tr>
+          <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>Z</td><td>90</td><td>01011010</td><td>z</td><td>122</td><td>01111010</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <div class="title">💡 Anchor codes</div>
+        <p style="margin: 0;">Just remember <strong>A = 65</strong> and <strong>a = 97</strong>. Every other letter is one more (B = 66, C = 67…). The difference between an uppercase and lowercase letter is always <strong>32</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="explorer" class="section">
+    <div class="container">
+      <p class="section-tag">explorer</p>
+      <h2>🖱️ ASCII explorer</h2>
+      <p>Play with the two tools below to see how any character becomes binary — and how any binary number becomes a character.</p>
+
+      <div class="ascii-explorer">
+        <div class="side">
+          <h4 style="margin-top:0;">Character → ASCII</h4>
+          <label style="font-family:var(--font-mono);font-size:0.8rem;color:var(--zinc-400);display:block;margin-bottom:6px;">Type any letter, digit or symbol</label>
+          <input id="ascii-input" type="text" maxlength="1" value="A" />
+          <div id="ascii-out" class="result"></div>
+        </div>
+        <div class="side">
+          <h4 style="margin-top:0;">Denary → Character</h4>
+          <label style="font-family:var(--font-mono);font-size:0.8rem;color:var(--zinc-400);display:block;margin-bottom:6px;">Enter an ASCII code (0–255)</label>
+          <input id="ascii-den" type="number" min="0" max="255" value="76" />
+          <div id="ascii-den-out" class="result"></div>
+        </div>
+      </div>
+
+      <div class="callout example">
+        <div class="title">✏️ Worked example</div>
+        <p>The computer stores text using ASCII. Part of the set is: E=69, F=70, G=71, H=72. Identify the character represented by <strong>76</strong>.</p>
+        <p>Counting up: 72=H, 73=I, 74=J, 75=K, 76=<strong>L</strong> ✅ (must be capital — lowercase would be much higher).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="unicode" class="section">
+    <div class="container">
+      <p class="section-tag">Unicode</p>
+      <h2>Unicode</h2>
+      <p>ASCII was designed for English. It can't represent Greek, Arabic, Chinese, Japanese, emoji, or thousands of modern symbols. <strong>Unicode</strong> was created to fix that.</p>
+
+      <ul>
+        <li>Unicode uses a <strong>minimum of 16 bits</strong> per character.</li>
+        <li>2<sup>16</sup> = <strong>65,536</strong> unique codes.</li>
+        <li>Can represent characters from <strong>all major languages</strong> around the world.</li>
+        <li>Can store special symbols like <strong>emoji</strong> 😀.</li>
+      </ul>
+
+      <div class="callout tip">
+        <div class="title">💡 Compact fact</div>
+        <p style="margin: 0;">Unicode is a <em>superset</em> — the first 128 codes match ASCII exactly. So Unicode is backwards compatible with ASCII.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" class="section">
+    <div class="container">
+      <p class="section-tag">compare</p>
+      <h2>ASCII vs Unicode</h2>
+      <p>This exact comparison shows up in the exam almost every year.</p>
+
+      <table class="data">
+        <thead><tr><th></th><th>ASCII</th><th>Unicode</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Number of bits</strong></td><td>7 bits (Extended: 8)</td><td>16 bits (minimum)</td></tr>
+          <tr><td><strong>Number of characters</strong></td><td>128 (256 extended)</td><td>65,536</td></tr>
+          <tr><td><strong>Uses</strong></td><td>English text</td><td>All world languages + emoji</td></tr>
+          <tr><td><strong>Benefit</strong></td><td>Uses less storage</td><td>Represents all common characters</td></tr>
+          <tr><td><strong>Drawback</strong></td><td>Only 128 characters, no emoji</td><td>Uses more storage per character</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Flip cards</h3>
+      <div class="flip-grid">
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>How many bits does ASCII use?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>7 bits</strong> (or 8 for Extended)</p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>How many characters can Unicode store?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>65,536</strong> with 16 bits</p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>Which uses more storage per character?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>Unicode</strong> (16 bits vs 8 bits)</p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>Which can store emoji?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>Unicode</strong>. ASCII cannot.</p></div>
+        </div></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice" class="section">
+    <div class="container">
+      <p class="section-tag">practice</p>
+      <h2>Exam-style practice</h2>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> A computer stores text using ASCII. Part of the set: E=69, F=70, G=71, H=72. Identify the character with code <strong>75</strong>.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden><strong>K</strong> (72 = H, 73 = I, 74 = J, 75 = K)</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> Identify a character set other than ASCII.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden><strong>Unicode</strong></div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> Give <strong>one benefit</strong> and <strong>one drawback</strong> of Unicode compared to ASCII.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden><strong>Benefit:</strong> can store many more characters (65,536 vs 128), including emoji and other languages. <strong>Drawback:</strong> each character uses more storage (16 bits vs 8), so files are bigger.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q4.</strong> A text file contains 500 characters using Extended ASCII. What is the file size in bytes?</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>500 × 1 byte = <strong>500 bytes</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="end-note">// end of topic 4 — characters</p>
+
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

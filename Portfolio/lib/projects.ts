@@ -49,6 +49,13 @@ export const projects: Project[] = [
     preview: "/project-cards/examtotal-preview.webp",
   },
   {
+    title: "Data Representation",
+    description: "OCR GCSE Computer Science — seven interactive topics covering units, binary, hex, characters, images, sound and compression. Full worked examples and clickable demos.",
+    tags: ["comp sci", "gcse", "interactive"],
+    href: "/data-representation",
+    preview: "/project-cards/data-representation-preview.svg",
+  },
+  {
     title: "Bitmap Images",
     description: "A GCSE Computer Science lesson on data representation — explore how computers store pictures using pixels, resolution, colour depth and file size with hands-on demos.",
     tags: ["comp sci", "lessons", "gcse"],

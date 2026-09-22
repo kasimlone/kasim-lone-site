@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Compression — Data Representation</title>
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<div class="bg-layer" aria-hidden></div>
+<div class="bg-tint" aria-hidden></div>
+
+<div class="chrome">
+  <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+  <div class="file">kasim-lone.dev — data-representation / compression</div>
+  <a class="back" href="../index.html">← topics</a>
+</div>
+
+<div id="progress-bar"></div>
+
+<nav id="side-nav" aria-label="Topic sections">
+  <a href="#hero" data-label="Title"><span></span></a>
+  <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#why" data-label="Why compress?"><span></span></a>
+  <a href="#lossy" data-label="Lossy"><span></span></a>
+  <a href="#slider" data-label="Slider demo"><span></span></a>
+  <a href="#lossless" data-label="Lossless"><span></span></a>
+  <a href="#compare" data-label="Compare"><span></span></a>
+  <a href="#practice" data-label="Practice"><span></span></a>
+</nav>
+
+<main>
+
+  <section id="hero" class="section hero">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="eyebrow">GCSE · Data Representation</p>
+        <h1>Topic 7<br/><span class="accent">Compression</span></h1>
+        <a class="scroll-cue" href="#objectives">Scroll to begin ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="objectives" class="section">
+    <div class="container">
+      <p class="section-tag">objectives</p>
+      <h2>By the end you'll be able to…</h2>
+      <ul class="objectives-list">
+        <li>Explain <strong>why</strong> files are compressed.</li>
+        <li>Describe how <strong>lossy compression</strong> works and give examples.</li>
+        <li>Describe how <strong>lossless compression</strong> works and give examples.</li>
+        <li>Compare lossy and lossless, and choose the right one for a scenario.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="why" class="section">
+    <div class="container">
+      <p class="section-tag">why compress?</p>
+      <h2>Why do we compress files?</h2>
+      <p><strong>Compression</strong> means <strong>reducing the size of a file</strong> so it takes up less space on secondary storage.</p>
+      <p>Two big reasons:</p>
+      <ul>
+        <li><strong>Storage.</strong> Fit more files on the same device — phones, tablets, laptops, servers.</li>
+        <li><strong>Speed.</strong> Send data faster across a network — quicker uploads, downloads and streaming.</li>
+      </ul>
+
+      <p>There are <strong>two methods</strong> of compression:</p>
+      <ul>
+        <li><strong>Lossy</strong> — throws data away.</li>
+        <li><strong>Lossless</strong> — reorganises data so the original can be recovered.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="lossy" class="section">
+    <div class="container">
+      <p class="section-tag">lossy</p>
+      <h2>Lossy compression</h2>
+      <ul>
+        <li>Data is <strong>lost</strong> to reduce the file size.</li>
+        <li><strong>Irreversible</strong> — the original file <em>cannot</em> be recovered from the compressed version.</li>
+        <li>Can shrink files <strong>dramatically</strong>, but at the cost of quality.</li>
+        <li>Only suitable when a drop in quality is acceptable — <strong>images, video and sound</strong>.</li>
+      </ul>
+
+      <p>Example: in a photograph, lossy compression groups <strong>similar colours together</strong>, reducing the total number of colours without a big visible change.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Real example</div>
+        <p style="margin: 0;">
+          Original JPG: <strong>824 KB</strong><br>
+          50% lossy compression: <strong>76 KB</strong> (looks nearly identical)<br>
+          80% lossy compression: <strong>38 KB</strong> (quality noticeably drops)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="slider" class="section">
+    <div class="container">
+      <p class="section-tag">🖱️ demo</p>
+      <h2>Slide to compress</h2>
+      <p>Drag the slider to increase the level of lossy compression. Watch the file size drop — and the quality with it.</p>
+
+      <div class="comp-viewer">
+        <div class="layer orig" id="comp-layer">
+          <span style="opacity:0.5;font-family:var(--font-mono);">// photograph</span>
+        </div>
+        <div class="info" id="comp-info">0% lossy · 824 KB</div>
+      </div>
+
+      <div class="slider-row">
+        <label>Compression</label>
+        <input id="comp-slider" type="range" min="0" max="100" value="0">
+        <span class="val" id="comp-slider-val"></span>
+      </div>
+
+      <p style="color: var(--zinc-400); font-size: 0.9rem;">Notice how small changes at low levels don't hurt the picture much — but pushing compression too high loses detail you can't get back.</p>
+    </div>
+  </section>
+
+  <section id="lossless" class="section">
+    <div class="container">
+      <p class="section-tag">lossless</p>
+      <h2>Lossless compression</h2>
+      <ul>
+        <li>Data is <strong>encoded</strong>, not lost.</li>
+        <li><strong>Reversible</strong> — the original file <em>can</em> be recovered exactly.</li>
+        <li>Reduces file size, but <strong>not as much</strong> as lossy.</li>
+        <li>Used where any loss of quality is unacceptable — <strong>documents, code, spreadsheets, some images</strong>.</li>
+      </ul>
+
+      <p>A common technique: <strong>look for patterns and repetition</strong>. Repeating characters can be replaced with a single character + a count.</p>
+
+      <div class="callout example">
+        <div class="title">✏️ Example — run-length encoding</div>
+        <p style="margin: 0;">"EEEEE" → <strong>E5</strong>. Same information, fewer characters. When the file is opened, the algorithm reverses this to get "EEEEE" back.</p>
+      </div>
+
+      <p>When you open a compressed document, the software <strong>decompresses</strong> it automatically. Formats like <code style="color:var(--syntax-string);font-family:var(--font-mono);">.docx</code>, <code style="color:var(--syntax-string);font-family:var(--font-mono);">.pdf</code>, <code style="color:var(--syntax-string);font-family:var(--font-mono);">.zip</code> and <code style="color:var(--syntax-string);font-family:var(--font-mono);">.png</code> all use lossless compression.</p>
+    </div>
+  </section>
+
+  <section id="compare" class="section">
+    <div class="container">
+      <p class="section-tag">compare</p>
+      <h2>Lossy vs Lossless</h2>
+
+      <table class="data">
+        <thead><tr><th></th><th>Lossy</th><th>Lossless</th></tr></thead>
+        <tbody>
+          <tr><td><strong>What happens</strong></td><td>Data is thrown away</td><td>Data is re-encoded</td></tr>
+          <tr><td><strong>Reversible?</strong></td><td>No — original is lost</td><td>Yes — original recovered exactly</td></tr>
+          <tr><td><strong>Size reduction</strong></td><td>Large</td><td>Smaller</td></tr>
+          <tr><td><strong>Quality</strong></td><td>Reduced</td><td>Unchanged</td></tr>
+          <tr><td><strong>Best for</strong></td><td>Images, video, sound</td><td>Documents, code, some images</td></tr>
+          <tr><td><strong>Example formats</strong></td><td>JPG, MP3, MP4</td><td>PNG, ZIP, DOCX, PDF</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Flip cards</h3>
+      <div class="flip-grid">
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>Which type <em>loses</em> data?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>Lossy</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>Which is reversible?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>Lossless</strong></p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>Best for a photo you'll upload to social media?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>Lossy</strong> — smaller, faster to send</p></div>
+        </div></button>
+        <button class="flip-card"><div class="inner">
+          <div class="face"><h4>Best for a legal contract PDF?</h4><span class="hint">click</span></div>
+          <div class="face back"><p><strong>Lossless</strong> — cannot lose text</p></div>
+        </div></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice" class="section">
+    <div class="container">
+      <p class="section-tag">practice</p>
+      <h2>Exam-style practice</h2>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q1.</strong> Give <strong>two reasons</strong> why files are compressed.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>1) To save storage space so more files can be stored on a device. 2) To reduce transfer time when sending files over a network.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q2.</strong> Sarah records an audio file and emails it to a friend for proofing. Explain <strong>two</strong> reasons why using lossy compression is beneficial. [4]</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>
+          Lossy will decrease the file size [1] so it can be sent via email quicker [1].<br>
+          Lossy means data is lost [1] but the difference in sound quality is unlikely to be noticed by humans [1].
+        </div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q3.</strong> Explain why lossless compression is preferred for word-processed documents.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>Lossless is reversible so the document is returned exactly to its original state — no words or characters are lost, which would be unacceptable in a document.</div>
+      </div>
+
+      <div class="reveal-block">
+        <p class="q"><strong>Q4.</strong> Describe how lossless compression can reduce the size of a text file.</p>
+        <button class="reveal-btn" data-label="Reveal">Reveal</button>
+        <div class="answer" hidden>An algorithm looks for patterns and repetition. Repeating characters can be replaced with a single character followed by the number of occurrences. For example "EEEEE" becomes "E5". When opened, the algorithm reverses this to restore the original.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="end-note">// end of topic 7 — compression</p>
+
+</main>
+
+<script src="../script.js"></script>
+</body>
+</html>

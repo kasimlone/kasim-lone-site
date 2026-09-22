@@ -15,5 +15,9 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/who-shot-mr-burns/:path*", "/who-shot-mr-burns", "/revision11/:path*", "/revision11"],
+  matcher: [
+    "/who-shot-mr-burns/:path*", "/who-shot-mr-burns",
+    "/revision11/:path*", "/revision11",
+    "/data-representation/:path*", "/data-representation",
+  ],
 };
