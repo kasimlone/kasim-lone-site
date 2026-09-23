@@ -14,7 +14,7 @@
 <div class="chrome">
   <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
   <div class="file">kasim-lone.dev — data-representation / sound</div>
-  <a class="back" href="../index.html">← topics</a>
+  <a class="back" href="../index.html">← All topics</a>
 </div>
 
 <div id="progress-bar"></div>
@@ -24,9 +24,8 @@
   <a href="#objectives" data-label="Objectives"><span></span></a>
   <a href="#tone" data-label="What is sound?"><span></span></a>
   <a href="#sampling" data-label="A2D"><span></span></a>
-  <a href="#playground" data-label="Play &amp; sample"><span></span></a>
-  <a href="#rate" data-label="Sample rate"><span></span></a>
-  <a href="#depth" data-label="Bit depth"><span></span></a>
+  <a href="#rate-demo" data-label="Sample rate"><span></span></a>
+  <a href="#depth-demo" data-label="Bit depth"><span></span></a>
   <a href="#file-size" data-label="File size"><span></span></a>
   <a href="#quiz" data-label="Quiz"><span></span></a>
 </nav>
@@ -94,96 +93,112 @@
     </div>
   </section>
 
-  <section id="playground" class="section">
+  <section id="rate-demo" class="section">
     <div class="container">
-      <p class="section-tag">🎧 play &amp; sample</p>
-      <h2>Hear the sampling</h2>
-      <p>Drag the sliders. The grey wave (analogue) stays the same. The blue stepped wave and yellow sample dots show what a computer captures. Then <strong>play the original</strong> and the <strong>sampled version</strong> — you'll <em>hear</em> the crunch that low sample rate and low bit depth create.</p>
+      <p class="section-tag">🎧 sample rate</p>
+      <h2>Test 1 — change the sample rate</h2>
+      <p><strong>Sample rate</strong> is the number of samples taken <strong>per second</strong> of the analogue wave. It's measured in <strong>Hertz (Hz)</strong>. Here, <strong>bit depth is fixed at 16 bits (CD quality)</strong> so only the sample rate changes.</p>
 
-      <div class="wave-box">
-        <canvas id="snd-canvas"></canvas>
+      <table class="data" style="max-width: 480px;">
+        <thead><tr><th>Source</th><th>Typical sample rate</th></tr></thead>
+        <tbody>
+          <tr><td>Telephone</td><td>~8 kHz</td></tr>
+          <tr><td>Audio CD</td><td><strong>44.1 kHz</strong></td></tr>
+          <tr><td>DVD</td><td>48 kHz</td></tr>
+        </tbody>
+      </table>
+
+      <h3>1. Pick a sound to test</h3>
+      <div class="sound-picker" data-target="rate">
+        <button class="pick-btn active" data-src="arpeggio">🎵 Arpeggio</button>
+        <button class="pick-btn" data-src="sine">〰️ Pure tone (440 Hz)</button>
+        <button class="pick-btn" data-src="chord">🎹 Chord</button>
+        <button class="pick-btn" data-src="sweep">📈 Rising sweep</button>
       </div>
 
+      <h3>2. Adjust the sample rate</h3>
+      <div class="wave-box">
+        <canvas id="rate-canvas"></canvas>
+      </div>
       <div class="slider-row">
         <label>Sample rate</label>
-        <input id="snd-sr" type="range" min="500" max="48000" step="500" value="4000">
-        <span class="val" id="snd-sr-val">4,000 Hz</span>
+        <input id="rate-slider" type="range" min="1000" max="48000" step="500" value="8000">
+        <span class="val" id="rate-val">8,000 Hz</span>
       </div>
-      <div class="slider-row">
-        <label>Bit depth</label>
-        <input id="snd-bd" type="range" min="1" max="16" step="1" value="4">
-        <span class="val" id="snd-bd-val">4 bits</span>
-      </div>
-      <div class="slider-row">
-        <label>Duration</label>
-        <input id="snd-dur" type="range" min="1" max="120" step="1" value="30">
-        <span class="val" id="snd-dur-val">30 s</span>
-      </div>
+      <p class="hint" id="rate-hint">at 30 s, 16-bit → about — for the file</p>
 
+      <h3>3. Listen</h3>
       <div class="play-cluster">
-        <button class="play-btn good" id="playOrig">▶ Play original (CD quality)</button>
-        <button class="play-btn" id="playSampled">▶ Play sampled (your settings)</button>
-        <button class="play-btn warn" id="stopSound">⏹ Stop</button>
+        <button class="play-btn good" data-play="original" data-section="rate">▶ Play original (44.1 kHz)</button>
+        <button class="play-btn" data-play="sampled" data-section="rate">▶ Play at this rate</button>
+        <button class="play-btn warn" data-play="stop">⏹ Stop</button>
       </div>
-      <p class="play-status" id="sampleStatus">ready — try 44,100 Hz vs 2,000 Hz, or 16-bit vs 2-bit</p>
-
-      <div class="bit-display">
-        <span><span class="lbl">Estimated file size:</span> <span class="val" id="snd-size">—</span></span>
-        <span><span class="lbl">Formula:</span> <span class="val" style="font-size:0.85rem;color:var(--zinc-300);">rate × time × depth</span></span>
-      </div>
+      <p class="play-status" id="rate-status">ready — try dropping to 2,000 Hz and picking the rising sweep to hear it fall apart</p>
 
       <div class="callout tip">
-        <div class="title">💡 Watch (and listen) for</div>
+        <div class="title">💡 What you should hear</div>
         <ul style="margin: 0;">
-          <li>Push <strong>sample rate</strong> up — the digital wave hugs the analogue wave more closely, and the sound becomes smoother.</li>
-          <li>Drop <strong>bit depth</strong> to 2 or 3 — you'll hear a harsh "8-bit game" crunch as the amplitudes are forced into a few coarse levels.</li>
-          <li>Both increase quality <em>and</em> file size.</li>
+          <li>At <strong>44.1 kHz</strong> the sampled version sounds identical to the original.</li>
+          <li>Below about <strong>8 kHz</strong> the sound gets muffled — high frequencies vanish.</li>
+          <li>The <strong>rising sweep</strong> is the clearest test: at low sample rates the high notes go missing or turn into weird buzzes (aliasing).</li>
+          <li>This is exactly why <strong>telephone audio</strong> (~8 kHz sample rate) sounds hollow.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section id="rate" class="section">
+  <section id="depth-demo" class="section">
     <div class="container">
-      <p class="section-tag">sample rate</p>
-      <h2>Sample rate</h2>
-      <p><strong>Sample rate</strong> is the number of samples taken <strong>per second</strong> of the analogue wave. It's measured in <strong>Hertz (Hz)</strong>. 1 Hz = 1 sample per second.</p>
-
-      <table class="data">
-        <thead><tr><th>Source</th><th>Typical sample rate</th></tr></thead>
-        <tbody>
-          <tr><td>Telephone</td><td>~8 kHz</td></tr>
-          <tr><td>Audio CD</td><td><strong>44.1 kHz</strong> (44,100 samples/s)</td></tr>
-          <tr><td>DVD</td><td>48 kHz</td></tr>
-        </tbody>
-      </table>
-
-      <p><strong>Higher sample rate</strong> → digital wave closer to the original → <strong>better quality</strong>. But more <strong>data per second</strong> → larger file size.</p>
-
-      <div class="callout tip">
-        <div class="title">💡 Why phone hold music sounds bad</div>
-        <p style="margin: 0;">Telephone systems use a low sample rate to save bandwidth. The reconstructed wave loses everything above about 4 kHz — that's why hold music always sounds hollow and compressed.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="depth" class="section">
-    <div class="container">
-      <p class="section-tag">bit depth</p>
-      <h2>Bit depth</h2>
-      <p><strong>Bit depth</strong> is the number of <strong>bits stored per sample</strong>. It decides how accurately each sample's height can be measured.</p>
+      <p class="section-tag">🎧 bit depth</p>
+      <h2>Test 2 — change the bit depth</h2>
+      <p><strong>Bit depth</strong> is the number of <strong>bits stored per sample</strong>. It decides how accurately each sample's height can be measured. Here, <strong>sample rate is fixed at 44.1 kHz (CD quality)</strong> so only the bit depth changes.</p>
 
       <ul>
-        <li>1 bit → 2 possible amplitude levels (very inaccurate).</li>
+        <li>1 bit → 2 possible amplitude levels (very coarse).</li>
         <li>8 bits → 256 levels.</li>
         <li>16 bits → 65,536 levels (CD quality).</li>
       </ul>
 
-      <p>A <strong>higher bit depth</strong> → bigger range of amplitudes → <strong>better sound quality</strong> — but more data per sample → larger file size.</p>
+      <h3>1. Pick a sound to test</h3>
+      <div class="sound-picker" data-target="depth">
+        <button class="pick-btn active" data-src="arpeggio">🎵 Arpeggio</button>
+        <button class="pick-btn" data-src="sine">〰️ Pure tone (440 Hz)</button>
+        <button class="pick-btn" data-src="chord">🎹 Chord</button>
+        <button class="pick-btn" data-src="sweep">📈 Rising sweep</button>
+      </div>
+
+      <h3>2. Adjust the bit depth</h3>
+      <div class="wave-box">
+        <canvas id="depth-canvas"></canvas>
+      </div>
+      <div class="slider-row">
+        <label>Bit depth</label>
+        <input id="depth-slider" type="range" min="1" max="16" step="1" value="4">
+        <span class="val" id="depth-val">4 bits</span>
+      </div>
+      <p class="hint" id="depth-hint">at 30 s, 44.1 kHz → about — for the file</p>
+
+      <h3>3. Listen</h3>
+      <div class="play-cluster">
+        <button class="play-btn good" data-play="original" data-section="depth">▶ Play original (16-bit)</button>
+        <button class="play-btn" data-play="sampled" data-section="depth">▶ Play at this depth</button>
+        <button class="play-btn warn" data-play="stop">⏹ Stop</button>
+      </div>
+      <p class="play-status" id="depth-status">ready — try dropping to 2 bits with the pure tone to hear pure quantisation noise</p>
+
+      <div class="callout tip">
+        <div class="title">💡 What you should hear</div>
+        <ul style="margin: 0;">
+          <li>At <strong>16 bits</strong> the sampled version is indistinguishable from the original.</li>
+          <li>By <strong>4 bits</strong> the sound has a gritty, chip-tune texture (16 possible amplitudes).</li>
+          <li>At <strong>1 bit</strong> only <em>up</em> or <em>down</em> can be stored — the sound turns into square-wave buzz.</li>
+          <li>Pick the <strong>pure tone</strong> and drop the bit depth to hear quantisation noise most clearly.</li>
+        </ul>
+      </div>
 
       <div class="callout tip">
         <div class="title">💡 Bit depth vs colour depth</div>
-        <p style="margin: 0;">Bit depth in sound and colour depth in images measure the <em>same idea</em> — how many bits are stored per sample/pixel. The higher the number, the more precise each value.</p>
+        <p style="margin: 0;">Bit depth in sound and colour depth in images measure the <em>same idea</em> — how many bits per sample/pixel. Higher = more precise.</p>
       </div>
     </div>
   </section>
@@ -294,6 +309,12 @@
       </div>
     </div>
   </section>
+
+  <nav class="topic-nav" aria-label="Topic navigation">
+    <a class="prev" href="../Images/index.html">← Prev · Images</a>
+    <a class="hub" href="../index.html">☰ All topics</a>
+    <a class="next" href="../Compression/index.html">Next · Compression →</a>
+  </nav>
 
   <p class="end-note">// end of topic 6 — sound</p>
 

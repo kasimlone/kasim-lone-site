@@ -165,96 +165,8 @@
     update();
   }
 
-  // Sound sampling wave
-  const sampleSlider = document.querySelector("#snd-sr");
-  const depthSlider = document.querySelector("#snd-bd");
-  const durSlider = document.querySelector("#snd-dur");
-  if (sampleSlider && depthSlider && durSlider) {
-    const srVal = document.querySelector("#snd-sr-val");
-    const bdVal = document.querySelector("#snd-bd-val");
-    const durVal = document.querySelector("#snd-dur-val");
-    const sizeVal = document.querySelector("#snd-size");
-    const canvas = document.querySelector("#snd-canvas");
-    const ctx = canvas ? canvas.getContext("2d") : null;
-
-    function drawWave() {
-      if (!ctx) return;
-      const w = canvas.width = canvas.clientWidth * window.devicePixelRatio;
-      const h = canvas.height = canvas.clientHeight * window.devicePixelRatio;
-      ctx.clearRect(0, 0, w, h);
-      // analogue wave
-      ctx.strokeStyle = "#546E7A";
-      ctx.lineWidth = 2 * window.devicePixelRatio;
-      ctx.beginPath();
-      for (let x = 0; x < w; x++) {
-        const t = x / w;
-        const y = h / 2 + Math.sin(t * Math.PI * 4) * (h / 3);
-        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      const srReal = parseInt(sampleSlider.value, 10);
-      const bd = parseInt(depthSlider.value, 10);
-      const levels = Math.pow(2, bd);
-      // Map real sample rate (500..48000 Hz) to a display-friendly number of
-      // samples across the visible wave (roughly 4..80). Log-scaled so the
-      // low-rate end still shows chunky steps.
-      const srDisp = Math.max(4, Math.min(80, Math.round(4 + (Math.log(srReal) - Math.log(500)) / (Math.log(48000) - Math.log(500)) * 76)));
-      const step = w / srDisp;
-
-      // sampled steps
-      ctx.strokeStyle = "#82AAFF";
-      ctx.fillStyle = "rgba(130,170,255,0.15)";
-      ctx.lineWidth = 2 * window.devicePixelRatio;
-      ctx.beginPath();
-      let prevY = h / 2;
-      for (let i = 0; i <= srDisp; i++) {
-        const x = i * step;
-        const t = x / w;
-        const raw = Math.sin(t * Math.PI * 4);
-        const q = Math.round(((raw + 1) / 2) * (levels - 1)) / (levels - 1);
-        const y = h / 2 + (q * 2 - 1) * (h / 3);
-        if (i === 0) { ctx.moveTo(x, y); prevY = y; }
-        else { ctx.lineTo(x, prevY); ctx.lineTo(x, y); prevY = y; }
-      }
-      ctx.stroke();
-
-      // sample dots
-      ctx.fillStyle = "#FFCB6B";
-      for (let i = 0; i <= srDisp; i++) {
-        const x = i * step;
-        const t = x / w;
-        const raw = Math.sin(t * Math.PI * 4);
-        const q = Math.round(((raw + 1) / 2) * (levels - 1)) / (levels - 1);
-        const y = h / 2 + (q * 2 - 1) * (h / 3);
-        ctx.beginPath();
-        ctx.arc(x, y, 3 * window.devicePixelRatio, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function update() {
-      const sr = parseInt(sampleSlider.value, 10);
-      const bd = parseInt(depthSlider.value, 10);
-      const dur = parseInt(durSlider.value, 10);
-      srVal.textContent = sr.toLocaleString() + " Hz";
-      bdVal.textContent = bd + " bits";
-      durVal.textContent = dur + " s";
-      const bits = sr * dur * bd;
-      const bytes = bits / 8;
-      let disp;
-      if (bytes < 1000) disp = Math.round(bytes) + " B";
-      else if (bytes < 1e6) disp = (bytes / 1000).toFixed(2) + " KB";
-      else disp = (bytes / 1e6).toFixed(2) + " MB";
-      sizeVal.textContent = disp;
-      drawWave();
-    }
-    sampleSlider.addEventListener("input", update);
-    depthSlider.addEventListener("input", update);
-    durSlider.addEventListener("input", update);
-    window.addEventListener("resize", drawWave);
-    update();
-  }
+  // (The old combined sampling demo has been replaced by the two split
+  // sections at the bottom of this file.)
 
   // Compression slider
   const compSlider = document.querySelector("#comp-slider");
@@ -889,74 +801,228 @@ function _getAudio() {
 })();
 
 /* Sampling / bit depth playback demo */
-(function samplingDemo() {
-  const playOrig = document.getElementById('playOrig');
-  const playSampled = document.getElementById('playSampled');
-  const stopAll = document.getElementById('stopSound');
-  if (!playOrig || !playSampled) return;
-  const status = document.getElementById('sampleStatus');
-  const srRange = document.getElementById('snd-sr');
-  const bdRange = document.getElementById('snd-bd');
+/* ------------- Split sample-rate + bit-depth playgrounds -------------
+   Two dedicated sections: one changes only sample rate (16-bit fixed),
+   the other changes only bit depth (44.1 kHz fixed). Each section has
+   a sound-source picker (arpeggio, pure tone, chord, rising sweep). */
 
-  const NOTES = [329.63, 392.00, 493.88, 659.25]; // E4, G4, B4, E5
+(function soundPlaygrounds() {
+  const rateSlider = document.getElementById('rate-slider');
+  const depthSlider = document.getElementById('depth-slider');
+  if (!rateSlider && !depthSlider) return;
+
   const PHRASE_LEN = 3.0;
 
-  let currentSource = null;
-
-  function stop() {
-    if (currentSource) { try { currentSource.stop(); } catch (e) {} currentSource = null; }
-    if (status) status.textContent = 'stopped';
+  /* Waveform generators — return a sample in the range [-1, 1] */
+  const NOTES_ARP = [329.63, 392.00, 493.88, 659.25]; // E G B E
+  const NOTES_CHORD = [261.63, 329.63, 392.00];       // C E G
+  const SOUND_GENERATORS = {
+    sine: (t) => Math.sin(2 * Math.PI * 440 * t) * envSustain(t) * 0.35,
+    arpeggio: (t) => {
+      const each = PHRASE_LEN / NOTES_ARP.length;
+      const idx = Math.min(NOTES_ARP.length - 1, Math.floor(t / each));
+      const localT = t - idx * each;
+      const env = Math.min(1, localT * 10) * Math.min(1, (each - localT) * 6);
+      return Math.sin(2 * Math.PI * NOTES_ARP[idx] * t) * 0.35 * env;
+    },
+    chord: (t) => {
+      const env = envSustain(t);
+      return NOTES_CHORD.reduce((s, f) => s + Math.sin(2 * Math.PI * f * t), 0)
+        / NOTES_CHORD.length * 0.35 * env;
+    },
+    // linear frequency sweep 200 Hz → 4000 Hz — phase = ∫f dt
+    sweep: (t) => {
+      const f0 = 200, f1 = 4000;
+      const phase = 2 * Math.PI * (f0 * t + (f1 - f0) * t * t / (2 * PHRASE_LEN));
+      return Math.sin(phase) * 0.35 * envSustain(t);
+    },
+  };
+  function envSustain(t) {
+    return Math.min(1, t * 12) * Math.min(1, (PHRASE_LEN - t) * 6);
   }
 
-  function buildBuffer(ctx, rate, depth) {
-    const totalSamples = Math.floor(rate * PHRASE_LEN);
-    const noteSamples = Math.floor(totalSamples / NOTES.length);
-    const buf = ctx.createBuffer(1, totalSamples, rate);
+  /* Selected sound per section */
+  const state = { rate: 'arpeggio', depth: 'arpeggio' };
+
+  /* Sound-picker button wiring */
+  document.querySelectorAll('.sound-picker').forEach(picker => {
+    const target = picker.dataset.target; // 'rate' or 'depth'
+    picker.querySelectorAll('.pick-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        picker.querySelectorAll('.pick-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state[target] = btn.dataset.src;
+      });
+    });
+  });
+
+  /* Build an AudioBuffer that plays what the given target sample rate and
+     bit depth would sound like. The buffer itself always uses the audio
+     context's native rate (Chrome requires >= 3000 Hz), but we sample-and-hold
+     the source at the *target* rate — the ear hears the low-rate stair-step
+     just like real playback. */
+  function buildBuffer(ctx, targetRate, depth, sourceName) {
+    const gen = SOUND_GENERATORS[sourceName] || SOUND_GENERATORS.arpeggio;
+    const outRate = ctx.sampleRate;
+    const total = Math.floor(outRate * PHRASE_LEN);
+    const buf = ctx.createBuffer(1, total, outRate);
     const data = buf.getChannelData(0);
-    const levels = depth >= 16 ? 0 : Math.pow(2, depth); // 0 = no quantisation
-    for (let i = 0; i < totalSamples; i++) {
-      const noteIdx = Math.min(NOTES.length - 1, Math.floor(i / noteSamples));
-      const localI = i - noteIdx * noteSamples;
-      const t = i / rate;
-      const noteT = localI / noteSamples;
-      // gentle attack/release envelope
-      const env = Math.min(1, noteT * 12) * Math.min(1, (1 - noteT) * 6);
-      const freq = NOTES[noteIdx];
-      let sample = Math.sin(2 * Math.PI * freq * t) * 0.35 * env;
+    const levels = depth >= 16 ? 0 : Math.pow(2, depth);
+    for (let i = 0; i < total; i++) {
+      // Time of the current output sample
+      const outT = i / outRate;
+      // The target rate only "sees" a new sample every 1/targetRate seconds —
+      // quantise time down to that grid (sample-and-hold reconstruction)
+      const heldT = Math.floor(outT * targetRate) / targetRate;
+      let s = gen(heldT);
       if (levels > 0) {
-        const normalised = (sample + 1) / 2; // 0..1
-        const q = Math.round(normalised * (levels - 1)) / (levels - 1);
-        sample = q * 2 - 1;
+        const norm = (s + 1) / 2;
+        s = Math.round(norm * (levels - 1)) / (levels - 1) * 2 - 1;
       }
-      data[i] = sample;
+      data[i] = s;
     }
     return buf;
   }
 
-  function play(rate, depth, label) {
+  /* Central audio playback — one active source at a time */
+  let currentSource = null;
+  function stopAll() {
+    if (currentSource) { try { currentSource.stop(); } catch (e) {} currentSource = null; }
+    document.querySelectorAll('.play-status').forEach(s => {
+      if (s.id === 'rate-status' || s.id === 'depth-status') s.textContent = 'stopped';
+    });
+  }
+  function play(rate, depth, sourceName, statusEl, label) {
     const ctx = _getAudio();
-    if (!ctx) { if (status) status.textContent = 'Web Audio not supported.'; return; }
+    if (!ctx) { if (statusEl) statusEl.textContent = 'Web Audio not supported.'; return; }
     if (ctx.state === 'suspended') ctx.resume();
-    stop();
-    const buf = buildBuffer(ctx, rate, depth);
+    stopAll();
+    const buf = buildBuffer(ctx, rate, depth, sourceName);
     const src = ctx.createBufferSource();
     src.buffer = buf;
     src.connect(ctx.destination);
     src.start();
     currentSource = src;
     src.onended = () => { if (currentSource === src) currentSource = null; };
-    if (status) status.textContent = '♪ ' + label;
+    if (statusEl) statusEl.textContent = '♪ ' + label;
   }
 
-  playOrig.addEventListener('click', () => {
-    play(44100, 16, 'playing original — 44.1 kHz, 16-bit (CD quality)');
+  /* Wave visualiser (one canvas per section) */
+  function drawWave(canvas, srDisp, bd) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.clientWidth * window.devicePixelRatio;
+    const h = canvas.height = canvas.clientHeight * window.devicePixelRatio;
+    ctx.clearRect(0, 0, w, h);
+    // analogue reference
+    ctx.strokeStyle = '#546E7A';
+    ctx.lineWidth = 2 * window.devicePixelRatio;
+    ctx.beginPath();
+    for (let x = 0; x < w; x++) {
+      const t = x / w;
+      const y = h / 2 + Math.sin(t * Math.PI * 4) * (h / 3);
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    const levels = Math.pow(2, bd);
+    const step = w / srDisp;
+    // stepped digital wave
+    ctx.strokeStyle = '#82AAFF';
+    ctx.lineWidth = 2 * window.devicePixelRatio;
+    ctx.beginPath();
+    let prevY = h / 2;
+    for (let i = 0; i <= srDisp; i++) {
+      const x = i * step;
+      const t = x / w;
+      const raw = Math.sin(t * Math.PI * 4);
+      const q = Math.round(((raw + 1) / 2) * (levels - 1)) / (levels - 1);
+      const y = h / 2 + (q * 2 - 1) * (h / 3);
+      if (i === 0) { ctx.moveTo(x, y); prevY = y; }
+      else { ctx.lineTo(x, prevY); ctx.lineTo(x, y); prevY = y; }
+    }
+    ctx.stroke();
+    // sample dots
+    ctx.fillStyle = '#FFCB6B';
+    for (let i = 0; i <= srDisp; i++) {
+      const x = i * step;
+      const t = x / w;
+      const raw = Math.sin(t * Math.PI * 4);
+      const q = Math.round(((raw + 1) / 2) * (levels - 1)) / (levels - 1);
+      const y = h / 2 + (q * 2 - 1) * (h / 3);
+      ctx.beginPath();
+      ctx.arc(x, y, 3 * window.devicePixelRatio, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  function humanBytes(bytes) {
+    if (bytes < 1000) return Math.round(bytes) + ' B';
+    if (bytes < 1e6) return (bytes / 1000).toFixed(1) + ' KB';
+    if (bytes < 1e9) return (bytes / 1e6).toFixed(1) + ' MB';
+    return (bytes / 1e9).toFixed(2) + ' GB';
+  }
+  function mapSrDisp(srReal) {
+    // 1,000..48,000 Hz → 4..80 visual samples (log-scaled)
+    return Math.max(4, Math.min(80, Math.round(4 + (Math.log(srReal) - Math.log(1000)) / (Math.log(48000) - Math.log(1000)) * 76)));
+  }
+
+  /* --- Sample-rate section --- */
+  if (rateSlider) {
+    const canvas = document.getElementById('rate-canvas');
+    const valEl = document.getElementById('rate-val');
+    const hintEl = document.getElementById('rate-hint');
+    function update() {
+      const r = +rateSlider.value;
+      valEl.textContent = r.toLocaleString() + ' Hz';
+      drawWave(canvas, mapSrDisp(r), 8); // bit-depth fixed high for the visual
+      const bytes = (r * 30 * 16) / 8;
+      hintEl.textContent = 'at 30 s, 16-bit → about ' + humanBytes(bytes) + ' for the file';
+    }
+    rateSlider.addEventListener('input', update);
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* --- Bit-depth section --- */
+  if (depthSlider) {
+    const canvas = document.getElementById('depth-canvas');
+    const valEl = document.getElementById('depth-val');
+    const hintEl = document.getElementById('depth-hint');
+    function update() {
+      const d = +depthSlider.value;
+      valEl.textContent = d + ' bits';
+      drawWave(canvas, 32, d); // rate fixed for the visual — focus is quantisation
+      const bytes = (44100 * 30 * d) / 8;
+      hintEl.textContent = 'at 30 s, 44.1 kHz → about ' + humanBytes(bytes) + ' for the file';
+    }
+    depthSlider.addEventListener('input', update);
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  /* --- Play buttons --- */
+  document.querySelectorAll('[data-play]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.play;
+      if (action === 'stop') { stopAll(); return; }
+      const section = btn.dataset.section; // 'rate' or 'depth'
+      const statusEl = document.getElementById(section + '-status');
+      const sourceName = state[section] || 'arpeggio';
+      if (section === 'rate') {
+        if (action === 'original') play(44100, 16, sourceName, statusEl, 'original — 44.1 kHz · 16-bit · ' + sourceName);
+        else {
+          const r = +rateSlider.value;
+          play(r, 16, sourceName, statusEl, r.toLocaleString() + ' Hz · 16-bit · ' + sourceName);
+        }
+      } else if (section === 'depth') {
+        if (action === 'original') play(44100, 16, sourceName, statusEl, 'original — 44.1 kHz · 16-bit · ' + sourceName);
+        else {
+          const d = +depthSlider.value;
+          play(44100, d, sourceName, statusEl, '44.1 kHz · ' + d + '-bit · ' + sourceName);
+        }
+      }
+    });
   });
-  playSampled.addEventListener('click', () => {
-    const rate = Math.max(2000, +srRange.value);
-    const depth = Math.max(1, +bdRange.value);
-    play(rate, depth, 'playing sampled — ' + rate.toLocaleString() + ' Hz, ' + depth + '-bit');
-  });
-  if (stopAll) stopAll.addEventListener('click', stop);
 })();
 
 /* Sound file-size calculator */
