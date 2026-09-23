@@ -564,3 +564,287 @@ button.btn.warn:hover { background: rgba(248,113,113,0.28); }
   background: rgba(22,27,34,0.5);
 }
 .placeholder strong { color: var(--zinc-100); }
+
+/* ==================================================================
+   RICHER DEMOS — mosaic, zoom, pixel art, quiz, calculator, playback
+   ================================================================== */
+
+/* Two-column layout */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 720px) {
+  .two-col { grid-template-columns: 1fr; }
+}
+.two-col figure { margin: 0; }
+.two-col figcaption {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--zinc-400); text-align: center; margin-top: 6px;
+}
+
+/* Canvas shells */
+.mosaic-demo canvas,
+.pixel-art canvas {
+  display: block;
+  width: 100%; max-width: 360px;
+  height: auto;
+  background: #0b0f14;
+  border: 1px solid rgba(63,63,70,0.6);
+  border-radius: 10px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.zoom-stage canvas,
+.res-figure canvas,
+.depth-figure canvas {
+  display: block;
+  width: 100%; max-width: 480px;
+  height: auto;
+  background: #0b0f14;
+  border: 1px solid rgba(63,63,70,0.6);
+  border-radius: 10px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Colour → binary mini table */
+table.colour-binary-table {
+  width: 100%; border-collapse: collapse;
+  margin: 14px 0;
+  font-family: var(--font-mono); font-size: 0.85rem;
+  background: rgba(15,20,25,0.55);
+  border-radius: 8px; overflow: hidden;
+}
+table.colour-binary-table th,
+table.colour-binary-table td {
+  border: 1px solid rgba(63,63,70,0.5);
+  padding: 6px 10px; text-align: left; color: var(--zinc-200);
+}
+table.colour-binary-table th {
+  background: rgba(130,170,255,0.12);
+  color: var(--syntax-keyword); font-weight: 600;
+}
+table.colour-binary-table td code {
+  color: var(--syntax-string); background: rgba(0,0,0,0.35);
+  padding: 1px 6px; border-radius: 3px;
+}
+.swatch-box {
+  display: inline-block;
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  vertical-align: middle;
+  border: 1px solid rgba(63,63,70,0.6);
+}
+
+.hint {
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--zinc-400); margin-top: 10px;
+}
+
+/* Formula block */
+.formula {
+  background: rgba(74,222,128,0.06);
+  border: 1px solid rgba(74,222,128,0.35);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--syntax-string);
+  text-align: center;
+}
+
+/* Controls (slider row + label) */
+.controls {
+  background: rgba(15,20,25,0.55);
+  border: 1px solid rgba(63,63,70,0.6);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 12px 0;
+}
+.controls label {
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--zinc-300); display: block; margin-bottom: 8px;
+}
+.controls output {
+  color: var(--syntax-fn); font-weight: 700; margin-left: 6px;
+}
+.controls input[type="range"] {
+  width: 100%; accent-color: var(--syntax-keyword);
+}
+.controls.wide { margin-top: 16px; }
+
+/* Zoom stage */
+.zoom-demo { display: block; }
+.zoom-stage { display: flex; justify-content: center; margin-bottom: 12px; }
+
+/* Pixel art */
+.pixel-art {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.palette {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+}
+.palette .swatch {
+  width: 34px; height: 34px;
+  border-radius: 6px;
+  border: 2px solid rgba(63,63,70,0.6);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s, border-color 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(0,0,0,0.6); font-weight: 700;
+}
+.palette .swatch:hover { transform: translateY(-2px); }
+.palette .swatch.active {
+  border-color: var(--syntax-keyword);
+  box-shadow: 0 0 0 3px rgba(130,170,255,0.25);
+}
+#pixelArt { max-width: 360px; cursor: crosshair; background: #ffffff; }
+
+/* Colour depth / resolution figures */
+.depth-table {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--font-mono); font-size: 0.85rem;
+  margin: 10px 0;
+}
+.depth-table th, .depth-table td {
+  border: 1px solid rgba(63,63,70,0.5);
+  padding: 6px 10px; text-align: left; color: var(--zinc-200);
+}
+.depth-table th {
+  background: rgba(130,170,255,0.12);
+  color: var(--syntax-keyword); font-weight: 600;
+}
+
+/* File-size calculator */
+.calc {
+  background: rgba(15,20,25,0.55);
+  border: 1px solid rgba(63,63,70,0.6);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin: 14px 0;
+}
+.calc-inputs {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px 16px;
+}
+.calc-inputs label {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--zinc-300); display: block;
+}
+.calc-inputs input,
+.calc-inputs select {
+  width: 100%; margin-top: 4px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(63,63,70,0.7);
+  border-radius: 6px;
+  color: var(--zinc-100);
+  font-family: var(--font-mono); font-size: 0.9rem;
+}
+.calc-output {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.35);
+  border-left: 3px solid var(--syntax-fn);
+  border-radius: 6px;
+  font-family: var(--font-mono); font-size: 0.9rem;
+  color: var(--zinc-100);
+}
+.calc-output p { margin: 4px 0; }
+.calc-output strong { color: var(--syntax-fn); }
+
+/* Play buttons for sound */
+.play-cluster {
+  display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0;
+}
+.play-btn {
+  background: rgba(130,170,255,0.18);
+  color: var(--syntax-keyword);
+  border: 1px solid rgba(130,170,255,0.35);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.play-btn:hover { background: rgba(130,170,255,0.28); }
+.play-btn:active { transform: scale(0.96); }
+.play-btn:disabled { opacity: 0.5; cursor: default; }
+.play-btn.warn { background: rgba(248,113,113,0.18); color: var(--red); border-color: rgba(248,113,113,0.4); }
+.play-btn.good { background: rgba(74,222,128,0.15); color: var(--green); border-color: rgba(74,222,128,0.4); }
+
+.play-status {
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--zinc-400); margin: 6px 0 0;
+}
+
+/* Quiz */
+.quiz {
+  background: rgba(15,20,25,0.55);
+  border: 1px solid rgba(63,63,70,0.6);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin: 14px 0;
+}
+.quiz ol {
+  list-style: none; padding: 0; margin: 0;
+  counter-reset: quiz;
+}
+.quiz li {
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed rgba(63,63,70,0.5);
+}
+.quiz li:last-of-type { border-bottom: none; padding-bottom: 0; }
+.quiz li p { color: var(--zinc-100); margin: 0 0 8px; }
+.quiz label {
+  display: block;
+  padding: 8px 12px;
+  margin: 6px 0;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(63,63,70,0.6);
+  border-radius: 6px;
+  color: var(--zinc-200);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.quiz label:hover { border-color: var(--syntax-keyword); }
+.quiz label input[type="radio"] {
+  margin-right: 10px; accent-color: var(--syntax-keyword);
+}
+.quiz-result {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-family: var(--font-mono); font-size: 0.9rem;
+  color: var(--zinc-100);
+}
+.quiz-result.good {
+  background: rgba(74,222,128,0.12);
+  border-left: 3px solid var(--green);
+}
+.quiz-result.bad {
+  background: rgba(248,113,113,0.10);
+  border-left: 3px solid var(--red);
+}
+.quiz-result strong { color: var(--syntax-fn); }
+.quiz-summary {
+  margin-top: 22px;
+  background: rgba(74,222,128,0.06);
+  border: 1px solid rgba(74,222,128,0.35);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+.quiz-summary h3 { margin: 0 0 10px; color: var(--green); }
+.quiz-summary ul { margin: 6px 0 0 20px; }

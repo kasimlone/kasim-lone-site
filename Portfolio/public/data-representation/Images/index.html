@@ -22,13 +22,15 @@
 <nav id="side-nav" aria-label="Topic sections">
   <a href="#hero" data-label="Title"><span></span></a>
   <a href="#objectives" data-label="Objectives"><span></span></a>
+  <a href="#mosaic" data-label="Mosaic"><span></span></a>
   <a href="#bitmap-vector" data-label="Bitmap/Vector"><span></span></a>
+  <a href="#zoom" data-label="Zoom in"><span></span></a>
+  <a href="#pixel-art" data-label="Pixel art"><span></span></a>
   <a href="#resolution" data-label="Resolution"><span></span></a>
   <a href="#colour-depth" data-label="Colour depth"><span></span></a>
-  <a href="#playground" data-label="Playground"><span></span></a>
   <a href="#file-size" data-label="File size"><span></span></a>
   <a href="#metadata" data-label="Metadata"><span></span></a>
-  <a href="#practice" data-label="Practice"><span></span></a>
+  <a href="#quiz" data-label="Quiz"><span></span></a>
 </nav>
 
 <main>
@@ -48,12 +50,52 @@
       <p class="section-tag">objectives</p>
       <h2>By the end you'll be able to…</h2>
       <ul class="objectives-list">
+        <li>Explain how a bitmap is stored as a list of <strong>binary codes</strong>.</li>
         <li>Explain the difference between <strong>bitmap</strong> and <strong>vector</strong> images.</li>
         <li>Define <strong>pixel</strong>, <strong>resolution</strong> and <strong>colour depth</strong>.</li>
-        <li>Describe the impact of resolution and colour depth on <strong>file size</strong> and <strong>quality</strong>.</li>
+        <li>Describe the effect of resolution and colour depth on <strong>file size</strong> and <strong>quality</strong>.</li>
         <li>Calculate the size of a bitmap image using the formula.</li>
         <li>Describe what <strong>metadata</strong> is and give three examples.</li>
       </ul>
+    </div>
+  </section>
+
+  <section id="mosaic" class="section">
+    <div class="container">
+      <p class="section-tag">mosaic</p>
+      <h2>What is a bitmap image?</h2>
+      <div class="two-col">
+        <div>
+          <p>A <strong>bitmap</strong> image is made of a grid of tiny coloured squares called <strong>pixels</strong> (short for <em>picture elements</em>).</p>
+          <p>Every pixel stores a single colour as a <strong>binary number</strong>. When thousands of pixels sit next to each other, your eye blends them into a smooth picture — like a mosaic.</p>
+          <p>Common bitmap file types: <code>.bmp</code>, <code>.png</code>, <code>.jpg</code>, <code>.gif</code>.</p>
+          <div class="callout tip">
+            <div class="title">💡 Key idea</div>
+            <p style="margin: 0;">A bitmap is just a long list of binary numbers. The computer needs to know the <strong>width</strong>, <strong>height</strong> and <strong>colour depth</strong> to turn those numbers back into a picture.</p>
+          </div>
+        </div>
+        <figure class="mosaic-demo">
+          <canvas id="mosaicCanvas" width="320" height="240" aria-label="Smiley face built from pixels"></canvas>
+          <figcaption>A smiley face — every square is one pixel.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Each colour is stored as a binary number</h3>
+      <p>The computer doesn't "see" colour — it just stores a binary number for each pixel. With only <strong>3 bits</strong> per pixel we can store <strong>2³ = 8</strong> different colours. Here is one possible mapping:</p>
+      <table class="colour-binary-table">
+        <thead><tr><th>Colour</th><th>Name</th><th>Binary</th><th>Denary</th></tr></thead>
+        <tbody>
+          <tr><td><span class="swatch-box" style="background:#000"></span></td><td>Black</td><td><code>000</code></td><td>0</td></tr>
+          <tr><td><span class="swatch-box" style="background:#0000ff"></span></td><td>Blue</td><td><code>001</code></td><td>1</td></tr>
+          <tr><td><span class="swatch-box" style="background:#00ff00"></span></td><td>Green</td><td><code>010</code></td><td>2</td></tr>
+          <tr><td><span class="swatch-box" style="background:#00ffff"></span></td><td>Cyan</td><td><code>011</code></td><td>3</td></tr>
+          <tr><td><span class="swatch-box" style="background:#ff0000"></span></td><td>Red</td><td><code>100</code></td><td>4</td></tr>
+          <tr><td><span class="swatch-box" style="background:#ff00ff"></span></td><td>Magenta</td><td><code>101</code></td><td>5</td></tr>
+          <tr><td><span class="swatch-box" style="background:#ffff00"></span></td><td>Yellow</td><td><code>110</code></td><td>6</td></tr>
+          <tr><td><span class="swatch-box" style="background:#fff"></span></td><td>White</td><td><code>111</code></td><td>7</td></tr>
+        </tbody>
+      </table>
+      <p class="hint">If a tiny image's pixel data started <code>100 100 110 000</code>, that would mean: red, red, yellow, black. The whole picture is just a long string of bits!</p>
     </div>
   </section>
 
@@ -64,15 +106,14 @@
 
       <h3>Bitmap</h3>
       <ul>
-        <li>Made up of tiny squares called <strong>pixels</strong> ("picture elements").</li>
-        <li>Each pixel is stored as a <strong>unique binary code</strong> for its colour.</li>
+        <li>Made of <strong>pixels</strong>, each stored as a unique binary code for its colour.</li>
         <li>The more colours and detail, the more binary that has to be stored.</li>
         <li>A typical bitmap is a <strong>photograph</strong> (JPG, PNG).</li>
       </ul>
 
       <h3>Vector</h3>
       <ul>
-        <li>Made up of <strong>mathematical equations and points</strong>.</li>
+        <li>Made of <strong>mathematical equations and points</strong>.</li>
         <li>Only the maths is stored — no pixels.</li>
         <li>To store a circle you'd store the <em>centre point</em> and the <em>radius</em>.</li>
         <li>Vectors are <strong>infinitely scalable</strong> — perfect for logos used on both a pen and a billboard.</li>
@@ -85,86 +126,108 @@
     </div>
   </section>
 
+  <section id="zoom" class="section">
+    <div class="container">
+      <p class="section-tag">🖱️ zoom in</p>
+      <h2>Pixels — zoom in and see them</h2>
+      <p>Photographs look smooth from far away, but if you zoom in you can see the individual pixels. Drag the slider to zoom into the image below.</p>
+
+      <div class="zoom-stage">
+        <canvas id="zoomCanvas" width="480" height="360"></canvas>
+      </div>
+      <div class="controls">
+        <label for="zoomRange">Zoom: <output id="zoomVal">1×</output></label>
+        <input type="range" id="zoomRange" min="1" max="40" value="1" />
+        <p class="hint" id="zoomStatus">drag the picture to look around · at 10× and above, grid lines mark each pixel</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pixel-art" class="section">
+    <div class="container">
+      <p class="section-tag">🖱️ pixel art</p>
+      <h2>Build your own pixel art</h2>
+      <p>Click a colour, then click (or drag) squares on the grid to paint. This is exactly how a bitmap is stored — a grid of colour values.</p>
+
+      <div class="pixel-art">
+        <div class="palette" id="palette">
+          <button class="swatch active" style="background:#0f1419" data-color="#0f1419" aria-label="black"></button>
+          <button class="swatch" style="background:#ffffff" data-color="#ffffff" aria-label="white"></button>
+          <button class="swatch" style="background:#e74c3c" data-color="#e74c3c" aria-label="red"></button>
+          <button class="swatch" style="background:#f1c40f" data-color="#f1c40f" aria-label="yellow"></button>
+          <button class="swatch" style="background:#2ecc71" data-color="#2ecc71" aria-label="green"></button>
+          <button class="swatch" style="background:#3498db" data-color="#3498db" aria-label="blue"></button>
+          <button class="swatch" style="background:#9b59b6" data-color="#9b59b6" aria-label="purple"></button>
+          <button class="swatch" style="background:#ecf0f1" data-color="erase" aria-label="erase">×</button>
+        </div>
+        <canvas id="pixelArt" width="320" height="320"></canvas>
+        <button class="btn" id="clearArt">Clear grid</button>
+      </div>
+    </div>
+  </section>
+
   <section id="resolution" class="section">
     <div class="container">
-      <p class="section-tag">resolution</p>
+      <p class="section-tag">🖱️ resolution</p>
       <h2>Resolution</h2>
-      <p><strong>Resolution</strong> is the total number of pixels that make up a bitmap image. It's calculated by <strong>multiplying the width by the height</strong> (in pixels).</p>
-
-      <table class="data">
-        <thead><tr><th>Example</th><th>Resolution</th><th>Total pixels</th></tr></thead>
-        <tbody>
-          <tr><td>Small image</td><td>100 × 100</td><td>10,000</td></tr>
-          <tr><td>Medium image</td><td>500 × 500</td><td>250,000</td></tr>
-          <tr><td>HD monitor</td><td>1920 × 1080</td><td>2,073,600</td></tr>
-          <tr><td>4K TV</td><td>3840 × 2160</td><td>~8.3 million</td></tr>
-        </tbody>
-      </table>
-
-      <p>The <strong>higher the resolution, the more detail</strong> in the image — but also the <strong>bigger the file size</strong>.</p>
-
-      <div class="callout tip">
-        <div class="title">💡 Resolution in real life</div>
-        <p style="margin: 0;">"1080p" (HD), "1440p" and "4K" all describe resolution. Bigger numbers = more pixels = sharper image = larger file.</p>
+      <div class="two-col">
+        <div>
+          <p><strong>Resolution</strong> is the number of pixels in an image, written as <code>width × height</code>. For example, <code>1920 × 1080</code> means 1920 pixels across and 1080 down — that's <strong>2,073,600 pixels</strong> in total.</p>
+          <ul>
+            <li><strong>Higher</strong> resolution → more pixels → sharper image, larger file.</li>
+            <li><strong>Lower</strong> resolution → fewer pixels → blocky (pixelated) image, smaller file.</li>
+          </ul>
+          <div class="callout tip">
+            <div class="title">💡 Try it</div>
+            <p style="margin: 0;">Use the slider to reduce the resolution of the photo. Watch the picture become blocky as the number of pixels drops.</p>
+          </div>
+        </div>
+        <figure class="res-figure">
+          <canvas id="resCanvas" width="400" height="300"></canvas>
+          <figcaption><span id="resLabel">400 × 300 pixels</span></figcaption>
+        </figure>
+      </div>
+      <div class="controls wide">
+        <label for="resRange">Resolution (width): <output id="resVal">400 × 300</output></label>
+        <input type="range" id="resRange" min="4" max="400" step="1" value="400" />
+        <p class="hint">Slide left to drop the resolution. Notice how detail disappears the fewer pixels you have.</p>
       </div>
     </div>
   </section>
 
   <section id="colour-depth" class="section">
     <div class="container">
-      <p class="section-tag">colour depth</p>
+      <p class="section-tag">🖱️ colour depth</p>
       <h2>Colour depth</h2>
-      <p><strong>Colour depth</strong> is the number of <strong>bits stored per pixel</strong>. It decides how many different colours each pixel can be.</p>
-      <p>With <em>n</em> bits per pixel, there are 2<sup>n</sup> possible colours:</p>
-
-      <table class="data">
-        <thead><tr><th>Colour depth</th><th>Colours available</th><th>Example use</th></tr></thead>
-        <tbody>
-          <tr><td>1 bit</td><td>2 (black &amp; white)</td><td>Retro pixel art</td></tr>
-          <tr><td>2 bits</td><td>4</td><td>Very limited colour</td></tr>
-          <tr><td>4 bits</td><td>16</td><td>Old computer games</td></tr>
-          <tr><td>8 bits</td><td>256</td><td>Simple graphics</td></tr>
-          <tr><td>24 bits</td><td>16,777,216 ("true colour")</td><td>Photographs</td></tr>
-        </tbody>
-      </table>
-
-      <div class="depth-grid">
-        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,#000 50%,#fff 50%);"></div><strong>1 bit</strong>2 colours</div>
-        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,#000,#555,#aaa,#fff);"></div><strong>2 bits</strong>4 colours</div>
-        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,#000,#333,#666,#999,#ccc,#fff);"></div><strong>4 bits</strong>16 colours</div>
-        <div class="depth-swatch"><div class="sample" style="background:linear-gradient(90deg,red,orange,yellow,green,blue,indigo,violet);"></div><strong>8+ bits</strong>256+ colours</div>
+      <div class="two-col">
+        <div>
+          <p><strong>Colour depth</strong> (also called bit depth) is the number of <strong>bits stored per pixel</strong>. More bits = more possible colours.</p>
+          <table class="depth-table">
+            <thead><tr><th>Bits per pixel</th><th>Colours</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>1 bit</td><td>2</td><td>Black &amp; white</td></tr>
+              <tr><td>2 bits</td><td>4</td><td>Tiny palette</td></tr>
+              <tr><td>4 bits</td><td>16</td><td>Old computer games</td></tr>
+              <tr><td>8 bits</td><td>256</td><td>GIFs / simple graphics</td></tr>
+              <tr><td>24 bits</td><td>16,777,216</td><td>"True colour" photos</td></tr>
+            </tbody>
+          </table>
+          <p>Formula: <strong>Number of colours = 2<sup>n</sup></strong>, where <em>n</em> is the bit depth.</p>
+        </div>
+        <figure class="depth-figure">
+          <canvas id="depthCanvas" width="400" height="300"></canvas>
+          <figcaption><span id="depthLabel">24-bit · 16,777,216 colours</span></figcaption>
+        </figure>
       </div>
-
-      <div class="callout tip">
-        <div class="title">💡 Quality vs file size</div>
-        <p style="margin: 0;">A higher colour depth means more colour detail — but more bits per pixel means a <strong>bigger file</strong>. There's always a trade-off between quality and size.</p>
+      <div class="controls wide">
+        <label for="depthRange">Colour depth: <output id="depthVal">24-bit</output></label>
+        <input type="range" id="depthRange" min="1" max="24" step="1" value="24" list="depthTicks" />
+        <datalist id="depthTicks">
+          <option value="1"></option><option value="2"></option><option value="4"></option>
+          <option value="8"></option><option value="16"></option><option value="24"></option>
+        </datalist>
+        <p class="hint">Drop the bit depth and watch the image turn <em>posterised</em> — fewer colours can be used, so similar shades have to share.</p>
       </div>
-    </div>
-  </section>
-
-  <section id="playground" class="section">
-    <div class="container">
-      <p class="section-tag">🖱️ playground</p>
-      <h2>Change resolution &amp; colour depth</h2>
-      <p>Drag the sliders. Watch the number of colours and file size change together.</p>
-
-      <div class="slider-row">
-        <label>Resolution (W × H)</label>
-        <input id="img-res" type="range" min="10" max="1000" step="10" value="500">
-        <span class="val" id="img-res-val">500 × 500</span>
-      </div>
-      <div class="slider-row">
-        <label>Colour depth</label>
-        <input id="img-cd" type="range" min="1" max="24" step="1" value="24">
-        <span class="val" id="img-cd-val">24 bits</span>
-      </div>
-
-      <div class="bit-display">
-        <span><span class="lbl">Colours:</span> <span class="val" id="img-colours">16,777,216</span></span>
-        <span><span class="lbl">File size:</span> <span class="val" id="img-size">—</span></span>
-      </div>
-
-      <div class="depth-grid" id="img-swatches" style="grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));"></div>
     </div>
   </section>
 
@@ -173,12 +236,11 @@
       <p class="section-tag">file size</p>
       <h2>Calculating image file size</h2>
 
-      <div class="callout">
-        <div class="title">📐 Formula</div>
-        <p style="margin: 0; font-family: var(--font-mono); color: var(--syntax-fn); font-size: 1.05rem;">Size (bits) = <strong>Resolution</strong> (W × H) × <strong>Colour depth</strong> (bits per pixel)</p>
+      <div class="formula">
+        file size (bits) = <strong>width × height × colour depth</strong>
       </div>
 
-      <p>To get bytes, <strong>divide by 8</strong>. To get KB, divide by 1000. To get MB, divide by another 1000.</p>
+      <p>Then divide by 8 to get <strong>bytes</strong>, by 1024 to get <strong>kilobytes (KiB)</strong>, and by 1024 again for <strong>megabytes (MiB)</strong>.</p>
 
       <div class="callout example">
         <div class="title">✏️ Worked example</div>
@@ -189,13 +251,29 @@
         <strong>Step 4</strong> — KB: 750,000 ÷ 1000 = <strong>750 KB</strong> ✅</p>
       </div>
 
-      <h3>What happens when things change?</h3>
-      <ul>
-        <li><strong>Higher resolution</strong> → more pixels → more bits → <strong>larger file</strong>.</li>
-        <li><strong>Higher colour depth</strong> → more bits per pixel → <strong>larger file</strong>.</li>
-        <li>Both increase the visual <strong>quality</strong> of the image.</li>
-        <li>You always have to <em>balance</em> quality against file size.</li>
-      </ul>
+      <h3>🖱️ Try any values</h3>
+      <div class="calc">
+        <div class="calc-inputs">
+          <label>Width (pixels)
+            <input type="number" id="imgFsWidth" value="800" min="1" />
+          </label>
+          <label>Height (pixels)
+            <input type="number" id="imgFsHeight" value="600" min="1" />
+          </label>
+          <label>Colour depth (bits)
+            <select id="imgFsDepth">
+              <option value="1">1 bit (2 colours)</option>
+              <option value="2">2 bits (4 colours)</option>
+              <option value="4">4 bits (16 colours)</option>
+              <option value="8">8 bits (256 colours)</option>
+              <option value="16">16 bits (65,536 colours)</option>
+              <option value="24" selected>24 bits (16.7M colours)</option>
+              <option value="32">32 bits (with transparency)</option>
+            </select>
+          </label>
+        </div>
+        <div class="calc-output" id="imgFsOutput" aria-live="polite"></div>
+      </div>
     </div>
   </section>
 
@@ -224,39 +302,58 @@
     </div>
   </section>
 
-  <section id="practice" class="section">
+  <section id="quiz" class="section">
     <div class="container">
-      <p class="section-tag">practice</p>
-      <h2>Exam-style practice</h2>
+      <p class="section-tag">quiz</p>
+      <h2>Quick quiz</h2>
+      <p>Answer all five — your score appears at the bottom.</p>
 
-      <div class="reveal-block">
-        <p class="q"><strong>Q1.</strong> Define the term <strong>pixel</strong>.</p>
-        <button class="reveal-btn" data-label="Reveal">Reveal</button>
-        <div class="answer" hidden>The smallest element (a single square) of a bitmap image.</div>
-      </div>
+      <form id="imgQuizForm" class="quiz">
+        <ol>
+          <li>
+            <p><strong>1.</strong> What does the word "pixel" stand for?</p>
+            <label><input type="radio" name="q1" value="a"> Picture exchange link</label>
+            <label><input type="radio" name="q1" value="b"> Picture element</label>
+            <label><input type="radio" name="q1" value="c"> Pixelated image layer</label>
+          </li>
+          <li>
+            <p><strong>2.</strong> An image is 200 × 100 pixels with 8-bit colour. What is its size in bytes (no compression)?</p>
+            <label><input type="radio" name="q2" value="a"> 2,500 bytes</label>
+            <label><input type="radio" name="q2" value="b"> 20,000 bytes</label>
+            <label><input type="radio" name="q2" value="c"> 160,000 bytes</label>
+          </li>
+          <li>
+            <p><strong>3.</strong> How many different colours can a 4-bit image have?</p>
+            <label><input type="radio" name="q3" value="a"> 4</label>
+            <label><input type="radio" name="q3" value="b"> 16</label>
+            <label><input type="radio" name="q3" value="c"> 256</label>
+          </li>
+          <li>
+            <p><strong>4.</strong> Which change would most likely make a photo look <em>blocky</em>?</p>
+            <label><input type="radio" name="q4" value="a"> Reducing the resolution</label>
+            <label><input type="radio" name="q4" value="b"> Increasing the colour depth</label>
+            <label><input type="radio" name="q4" value="c"> Renaming the file</label>
+          </li>
+          <li>
+            <p><strong>5.</strong> Which change would most likely cause <em>posterisation</em> (bands of colour instead of smooth gradients)?</p>
+            <label><input type="radio" name="q5" value="a"> Increasing the resolution</label>
+            <label><input type="radio" name="q5" value="b"> Reducing the colour depth</label>
+            <label><input type="radio" name="q5" value="c"> Saving with a different filename</label>
+          </li>
+        </ol>
+        <button type="button" class="btn mark-quiz">Mark my quiz</button>
+        <p class="quiz-result" aria-live="polite"></p>
+      </form>
 
-      <div class="reveal-block">
-        <p class="q"><strong>Q2.</strong> If an image has a colour depth of <strong>2 bits</strong>, how many colours can it represent?</p>
-        <button class="reveal-btn" data-label="Reveal">Reveal</button>
-        <div class="answer" hidden>2<sup>2</sup> = <strong>4 colours</strong></div>
-      </div>
-
-      <div class="reveal-block">
-        <p class="q"><strong>Q3.</strong> Describe the impact of changing an image's resolution from 500 × 500 to 1000 × 1000.</p>
-        <button class="reveal-btn" data-label="Reveal">Reveal</button>
-        <div class="answer" hidden>The image quality would be higher (more pixels), and the file size would be larger (4× the number of pixels).</div>
-      </div>
-
-      <div class="reveal-block">
-        <p class="q"><strong>Q4.</strong> An image is 200 × 100 pixels with a colour depth of 8 bits. Calculate the file size in KB.</p>
-        <button class="reveal-btn" data-label="Reveal">Reveal</button>
-        <div class="answer" hidden>200 × 100 = 20,000 pixels. 20,000 × 8 = 160,000 bits. 160,000 ÷ 8 = 20,000 bytes = <strong>20 KB</strong>.</div>
-      </div>
-
-      <div class="reveal-block">
-        <p class="q"><strong>Q5.</strong> A logo is being used on both a business card and a billboard. Should it be stored as a bitmap or a vector? Explain.</p>
-        <button class="reveal-btn" data-label="Reveal">Reveal</button>
-        <div class="answer" hidden><strong>Vector.</strong> Vector images are stored as mathematical equations, so they can be scaled to any size without losing quality. A bitmap would become pixelated on the billboard.</div>
+      <div id="imgSummary" class="quiz-summary" hidden>
+        <h3>🎉 What you should remember</h3>
+        <ul>
+          <li>A <strong>bitmap</strong> is a grid of <strong>pixels</strong>, each stored as a binary number.</li>
+          <li><strong>Resolution</strong> = width × height. More pixels = sharper, bigger file.</li>
+          <li><strong>Colour depth</strong> = bits per pixel. Number of colours = 2<sup>n</sup>.</li>
+          <li><strong>File size (bits)</strong> = width × height × colour depth.</li>
+          <li>Reducing resolution → <em>blocky</em>. Reducing colour depth → <em>posterised</em>. Both shrink file size.</li>
+        </ul>
       </div>
     </div>
   </section>
