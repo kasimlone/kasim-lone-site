@@ -64,7 +64,7 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
     author: {
       "@type": "Person",
       name: post.author ?? "Kasim Lone",
-      url: `${siteUrl}/tutoring`,
+      url: siteUrl,
     },
     mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
     keywords: post.tags?.join(", "),
@@ -130,21 +130,6 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
               />
             </div>
           </article>
-
-          <div className="mt-10 rounded-2xl border border-zinc-700/60 bg-panel/70 backdrop-blur-md p-6 text-zinc-200">
-            <p className="text-sm text-zinc-400 font-mono uppercase tracking-widest">// need 1-to-1 help?</p>
-            <p className="mt-2">
-              I offer 1-to-1 Computer Science tutoring for GCSE and A Level
-              students — online across the UK and in person around London and
-              Croydon.
-            </p>
-            <Link
-              href="/tutoring"
-              className="mt-3 inline-flex items-center gap-2 rounded-lg bg-syntax-string text-black font-semibold px-4 py-2 hover:brightness-110 transition"
-            >
-              Book me as a tutor <span aria-hidden>→</span>
-            </Link>
-          </div>
 
           <footer className="mt-16 font-mono text-[10px] text-zinc-600">
             {"// © " + new Date().getFullYear() + " kasim lone"}

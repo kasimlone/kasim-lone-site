@@ -100,16 +100,9 @@ export function SiteSidebar({ currentPath }: { currentPath: string }) {
         ))}
 
         <SidebarLink
-          href="/tutoring"
-          active={currentPath === "/tutoring"}
-          className="pl-3 mt-3 text-syntax-string hover:text-syntax-keyword"
-        >
-          tutoring.md
-        </SidebarLink>
-        <SidebarLink
           href="/"
           active={currentPath === "/"}
-          className="pl-3"
+          className="pl-3 mt-3"
         >
           readme.md
         </SidebarLink>

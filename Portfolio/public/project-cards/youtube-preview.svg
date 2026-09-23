@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0f1419"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0%" stop-color="#ff0000" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ff0000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.15" cy="0.15" r="0.6">
+      <stop offset="0%" stop-color="#82AAFF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#82AAFF" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .mono { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
+      .kw { fill: #82AAFF; }
+      .str { fill: #C3E88D; }
+      .fn { fill: #FFCB6B; }
+      .comment { fill: #546E7A; }
+      .text { fill: #A6ACCD; }
+      .ink { fill: #f4f4f5; }
+      .dim { fill: #71717a; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <rect width="640" height="360" fill="url(#glow2)"/>
+  <rect width="640" height="360" fill="url(#glow)"/>
+
+  <!-- Top-left comment header -->
+  <text x="42" y="60" class="mono comment" font-size="12">// youtube · @MrLoneCS</text>
+
+  <!-- YouTube button (large red rounded rect with play triangle) -->
+  <g transform="translate(320, 180)">
+    <!-- Subtle back glow behind logo -->
+    <ellipse cx="0" cy="0" rx="180" ry="110" fill="#ff0000" fill-opacity="0.10"/>
+
+    <!-- Button -->
+    <rect x="-95" y="-65" width="190" height="130" rx="30" fill="#ff0000"/>
+    <!-- Highlight for depth -->
+    <rect x="-95" y="-65" width="190" height="55" rx="30" fill="white" fill-opacity="0.08"/>
+    <!-- Play triangle -->
+    <path d="M -25 -30 L -25 30 L 30 0 Z" fill="white"/>
+  </g>
+
+  <!-- Title below the button -->
+  <text x="320" y="290" class="mono ink" font-size="24" font-weight="700" text-anchor="middle">MrLoneCS</text>
+  <text x="320" y="315" class="mono str" font-size="12" text-anchor="middle">"computer science lessons &amp; revision"</text>
+
+  <!-- Left column tags -->
+  <g class="mono" font-size="11" transform="translate(42, 95)">
+    <g>
+      <rect x="0" y="0" width="88" height="22" rx="4" fill="#82AAFF" fill-opacity="0.15" stroke="#82AAFF" stroke-opacity="0.35"/>
+      <text x="44" y="15" class="kw" text-anchor="middle" font-weight="600">lessons</text>
+    </g>
+    <g transform="translate(0, 30)">
+      <rect x="0" y="0" width="88" height="22" rx="4" fill="#FFCB6B" fill-opacity="0.15" stroke="#FFCB6B" stroke-opacity="0.35"/>
+      <text x="44" y="15" class="fn" text-anchor="middle" font-weight="600">revision</text>
+    </g>
+    <g transform="translate(0, 60)">
+      <rect x="0" y="0" width="88" height="22" rx="4" fill="#C3E88D" fill-opacity="0.15" stroke="#C3E88D" stroke-opacity="0.35"/>
+      <text x="44" y="15" class="str" text-anchor="middle" font-weight="600">walkthroughs</text>
+    </g>
+  </g>
+
+  <!-- Right column code snippet -->
+  <g class="mono" font-size="12" transform="translate(505, 100)">
+    <text x="0" y="0" class="comment">// 01</text>
+    <text x="0" y="18" class="kw">export const</text>
+    <text x="0" y="36" class="fn">MrLoneCS</text>
+    <text x="70" y="36" class="text">= {</text>
+    <text x="14" y="54" class="text">name:</text>
+    <text x="14" y="72" class="str">"YouTube"</text>
+    <text x="0" y="90" class="text">}</text>
+  </g>
+
+  <!-- Corner tag -->
+  <g transform="translate(555, 320)">
+    <rect x="0" y="0" width="65" height="22" rx="4" fill="#ff0000" fill-opacity="0.18" stroke="#ff0000" stroke-opacity="0.5"/>
+    <text x="32" y="15" class="mono" fill="#ff5555" font-size="10" text-anchor="middle" font-weight="600">SUBSCRIBE</text>
+  </g>
+</svg>

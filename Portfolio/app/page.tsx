@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { ProjectTile } from "@/components/ProjectTile";
 import { SiteChrome } from "@/components/SiteChrome";
 import { SiteSidebar } from "@/components/SiteSidebar";
-import { BioCard } from "@/components/BioCard";
 import { projects } from "@/lib/projects";
 
 export const dynamic = "force-static";
@@ -35,8 +34,6 @@ export default function Home() {
             <div className="w-12 h-12 rounded-full bg-leaf blur-md" />
             <div className="w-10 h-10 rounded-full bg-leafDark blur-md -mt-6 ml-4" />
           </div>
-
-          <BioCard />
 
           <h2 className="font-mono text-xs uppercase tracking-widest text-white mb-3">// projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -14,6 +14,13 @@ export type Social = {
 
 export const projects: Project[] = [
   {
+    title: "YouTube — MrLoneCS",
+    description: "My YouTube channel — Computer Science lessons, walkthroughs, revision explainers and classroom demos for GCSE and A Level students.",
+    tags: ["youtube", "lessons", "revision"],
+    href: "https://www.youtube.com/@MrLoneCS",
+    preview: "/project-cards/youtube-preview.svg",
+  },
+  {
     title: "RunPy",
     description: "An online Python IDE — code, share, manage and teach Python in the browser. Run Python online with a user-friendly space for students to write code, and for teachers to view, run, share and give feedback.",
     tags: ["python", "IDE", "edtech"],
