@@ -4,19 +4,31 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Delete, Lock } from "lucide-react";
 
-const PIN = "7584";
+const GROUPS = [
+  { cookie: "site_pin_a_v2", pin: "4455", prefixes: ["/who-shot-mr-burns", "/revision11"] },
+  { cookie: "site_pin_b_v2", pin: "7584", prefixes: ["/data-representation"] },
+];
 const LENGTH = 4;
+
+function groupForNext(next: string) {
+  const path = next.split("?")[0];
+  return (
+    GROUPS.find((g) => g.prefixes.some((p) => path === p || path.startsWith(p + "/"))) ||
+    GROUPS[0]
+  );
+}
 
 export function PinGate() {
   const params = useSearchParams();
   const next = params.get("next") || "/";
+  const group = groupForNext(next);
   const [entered, setEntered] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (entered.length !== LENGTH) return;
-    if (entered === PIN) {
-      document.cookie = `site_pin=${PIN}; path=/; max-age=${60 * 60 * 24 * 7}; samesite=lax`;
+    if (entered === group.pin) {
+      document.cookie = `${group.cookie}=${group.pin}; path=/; max-age=${60 * 60 * 24 * 7}; samesite=lax`;
       window.location.href = next;
     } else {
       setError(true);

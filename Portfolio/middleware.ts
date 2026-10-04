@@ -1,11 +1,28 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const PIN_COOKIE = "site_pin";
-const PIN_VALUE = "7584";
+const GROUPS = [
+  {
+    cookie: "site_pin_a_v2",
+    pin: "4455",
+    paths: ["/who-shot-mr-burns", "/revision11"],
+  },
+  {
+    cookie: "site_pin_b_v2",
+    pin: "7584",
+    paths: ["/data-representation"],
+  },
+] as const;
+
+function groupForPath(pathname: string) {
+  return GROUPS.find((g) => g.paths.some((p) => pathname === p || pathname.startsWith(p + "/")));
+}
 
 export function middleware(req: NextRequest) {
-  const pin = req.cookies.get(PIN_COOKIE)?.value;
-  if (pin === PIN_VALUE) return NextResponse.next();
+  const group = groupForPath(req.nextUrl.pathname);
+  if (!group) return NextResponse.next();
+
+  const pin = req.cookies.get(group.cookie)?.value;
+  if (pin === group.pin) return NextResponse.next();
 
   const url = req.nextUrl.clone();
   const next = req.nextUrl.pathname + req.nextUrl.search;
