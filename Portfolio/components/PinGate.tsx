@@ -6,7 +6,6 @@ import { Delete, Lock } from "lucide-react";
 
 const GROUPS = [
   { cookie: "site_pin_a_v2", pin: "4455", prefixes: ["/who-shot-mr-burns", "/revision11"] },
-  { cookie: "site_pin_b_v2", pin: "7584", prefixes: ["/data-representation"] },
 ];
 const LENGTH = 4;
 

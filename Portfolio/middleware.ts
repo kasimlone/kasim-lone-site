@@ -6,11 +6,6 @@ const GROUPS = [
     pin: "4455",
     paths: ["/who-shot-mr-burns", "/revision11"],
   },
-  {
-    cookie: "site_pin_b_v2",
-    pin: "7584",
-    paths: ["/data-representation"],
-  },
 ] as const;
 
 function groupForPath(pathname: string) {
@@ -41,6 +36,5 @@ export const config = {
   matcher: [
     "/who-shot-mr-burns/:path*", "/who-shot-mr-burns",
     "/revision11/:path*", "/revision11",
-    "/data-representation/:path*", "/data-representation",
   ],
 };
