@@ -22,13 +22,19 @@ export function middleware(req: NextRequest) {
   if (!group) return NextResponse.next();
 
   const pin = req.cookies.get(group.cookie)?.value;
-  if (pin === group.pin) return NextResponse.next();
+  if (pin === group.pin) return noindex(NextResponse.next());
 
   const url = req.nextUrl.clone();
   const next = req.nextUrl.pathname + req.nextUrl.search;
   url.pathname = "/gate";
   url.search = `?next=${encodeURIComponent(next)}`;
-  return NextResponse.rewrite(url);
+  return noindex(NextResponse.rewrite(url));
+}
+
+// Keep PIN-protected pages (and the keypad shown in their place) out of search results.
+function noindex(res: NextResponse) {
+  res.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return res;
 }
 
 export const config = {

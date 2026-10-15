@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", priority: 1 },
     { path: "/blog", priority: 0.9 },
     { path: "/sixth-form-taster", priority: 0.8 },
-    { path: "/who-shot-mr-burns", priority: 0.8 },
     { path: "/bitmap-images", priority: 0.7 },
     { path: "/exam-total", priority: 0.6 },
   ];

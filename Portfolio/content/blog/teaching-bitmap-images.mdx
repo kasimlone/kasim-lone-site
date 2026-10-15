@@ -1,0 +1,228 @@
+---
+title: "Teaching bitmap images so the maths actually sticks"
+description: "Why GCSE students struggle with bitmap file size calculations, and a lesson sequence that builds from pixels to colour depth to bytes so the formula makes sense."
+date: "2026-10-15"
+tags: ["teaching", "curriculum", "gcse"]
+author: "Kasim Lone"
+---
+
+Ask a Year 10 class how to work out the file size of a bitmap image and
+most of them will chant it back at you: width times height times colour
+depth. Brilliant. Now give them a question that says "an image uses 16
+colours" instead of "an image has a colour depth of 4 bits" and watch
+half the room freeze.
+
+That&apos;s the problem with bitmap images at GCSE. The formula is easy to
+memorise and very easy to misapply, because students learn it as a
+recipe rather than as a description of something real. They know the
+words. They don&apos;t know what the words are pointing at.
+
+This post is the sequence I use to fix that. It starts with something
+students can see, builds up to the formula, and only names the formula
+once they&apos;ve more or less worked it out for themselves.
+
+## Where it goes wrong
+
+Before planning the lesson, it&apos;s worth being honest about the mistakes
+that actually cost marks. In my experience they come down to three.
+
+- **Bits and bytes.** Students multiply width by height by colour depth,
+  get a number in bits, and write it down as bytes. Or they divide by 8
+  twice. Or they divide by 8 when the question asked for bits. The
+  calculation is right and the answer is wrong.
+- **Resolution versus size.** Students think resolution means how big the
+  image looks on screen, so they assume a "larger" picture must have a
+  higher resolution. Resolution is a count of pixels. How big those
+  pixels are drawn is a separate question.
+- **Colour depth versus number of colours.** This is the big one.
+  Students hear "colour depth" and think it means how many colours there
+  are. So when a question says "256 colours", they put 256 into the
+  formula instead of 8. The answer comes out thirty-two times too big,
+  and they don&apos;t notice, because they have no feel for what a sensible
+  answer looks like.
+
+All three have the same root. Students are treating the formula as
+symbols to shuffle around rather than as a description of how an image
+is stored. If they could picture the image being stored, none of these
+mistakes would survive.
+
+## Start with pixels you can see
+
+So the first job is to make the pixels visible.
+
+I open with a photo on the board and zoom in. And in. And in, until the
+smooth picture falls apart into a grid of coloured squares. There is
+always an audible reaction to this. Most students have never actually
+looked at a pixel, even though they&apos;ve spent their whole lives staring
+at them.
+
+Then I hand out squared paper. Every student draws a small black and
+white image, say 8 squares by 8 squares, by shading some squares and
+leaving others blank. A smiley face, an arrow, their initial. Then the
+key question:
+
+> How would you describe your picture to someone over the phone, using
+> only the words "zero" and "one"?
+
+They get there quickly. Shaded is 1, blank is 0, read along each row.
+Sixty-four squares, sixty-four digits. Each pixel needs exactly one bit
+because it only has two possible states.
+
+That&apos;s the whole foundation. A bitmap is a grid, each square stores a
+number, and the number of bits depends on how many options each square
+has. Everything else in the topic is a variation on that idea.
+
+Before moving on, I ask one more question: if I sent you my sixty-four
+digits, how would you know whether to draw them as 8 by 8 or 4 by 16?
+You can&apos;t. You need the width and height as well. That&apos;s **metadata**,
+and introducing it here, as a problem they&apos;ve just bumped into, makes
+it far more memorable than a definition on a slide.
+
+## Colour depth is a choice
+
+Next, I take the black and white image and ask: what if I want four
+colours instead of two?
+
+One bit gives us two options, 0 and 1. Two bits give us four: 00, 01,
+10 and 11. So each pixel now needs two bits. Three bits give eight
+options, and so on. I build the table on the board with the class
+calling out the next row:
+
+| Bits per pixel | Colours |
+| --- | --- |
+| 1 | 2 |
+| 2 | 4 |
+| 3 | 8 |
+| 4 | 16 |
+| 8 | 256 |
+| 24 | 16,777,216 |
+
+By the third row, someone usually spots the pattern: each extra bit
+doubles the number of colours. That&apos;s 2ⁿ, and they found it themselves.
+
+The framing that matters here is that **colour depth is a design
+decision**. Someone chose how many bits each pixel gets. More bits means
+more colours and a better-looking image, but every pixel gets more
+expensive to store. Once students see it as a trade-off rather than a
+fact to learn, the reverse question ("how many bits do you need for 16
+colours?") stops being scary. They just run the table backwards.
+
+It also helps to show what happens when you get the trade-off wrong.
+Drop a photo from 24-bit down to 4-bit and smooth gradients collapse
+into bands of flat colour. That&apos;s posterisation, and seeing it once is
+worth more than any written explanation.
+
+## Building the formula together
+
+Now, and only now, we work out file size.
+
+Back to the squared-paper image. It&apos;s 8 by 8 pixels, and each pixel
+needs 1 bit. How many bits altogether? Students work it out without
+needing a formula: 64 pixels, 1 bit each, 64 bits.
+
+Now make it a 4-colour image. Same grid, but each pixel needs 2 bits. 128
+bits. Now make it 16 by 16 with 4 colours. 256 pixels, 2 bits each, 512
+bits.
+
+At this point I ask the class to write down a general rule in their own
+words. What they write is nearly always some version of "count the
+pixels, then multiply by how many bits each one needs." Then I put the
+formal version next to it:
+
+**file size in bits = width × height × colour depth**
+
+It&apos;s the same thing. They already understood it before they saw it.
+
+Then one worked example, done slowly:
+
+> An image is 100 × 200 pixels with a colour depth of 8 bits.
+>
+> 100 × 200 = 20,000 pixels.
+> 20,000 × 8 = 160,000 bits.
+> 160,000 ÷ 8 = 20,000 bytes.
+
+After that, I go straight to twist questions, because that&apos;s where real
+understanding shows:
+
+- What happens to the file size if you double the width and the height?
+  (It goes up four times, not two. This one catches almost everyone.)
+- What happens if you halve the colour depth?
+- An image uses 16 colours. What is its colour depth?
+- Two images have the same file size. One is 200 × 200 with 8-bit colour.
+  The other is 400 × 400. What is its colour depth?
+
+None of these need a new formula. They just need students to think
+about pixels and bits per pixel, which is exactly the point.
+
+## Units and where the marks go
+
+The final step is the one that quietly costs the most marks: converting
+the answer into the units the question asks for.
+
+The rules are short, so I give them as a checklist and make students
+use it every time:
+
+1. The formula gives you **bits**.
+2. Divide by 8 to get **bytes**.
+3. Divide by 1,000 (or 1,024) to get **kilobytes**, and again for
+   **megabytes**.
+4. Before writing the answer, check: does the unit you&apos;ve written match
+   the unit the question asked for?
+
+On step 3, check what your exam board expects. Specifications have
+moved towards using 1,000 for kilo, with 1,024 reserved for kibibytes
+(KiB), and some boards accept either in calculations. Whatever your board
+says, teach one method consistently and make students write the unit at
+every line of working. Most unit errors disappear once the unit is
+written down next to each number.
+
+It&apos;s also worth doing a quick sense check together. A small icon should
+be a few kilobytes. A phone photo, uncompressed, should be several
+megabytes. If a student&apos;s answer says a 100 × 100 icon is 2 gigabytes,
+they should feel that something has gone wrong before they move on.
+
+Finally, remind students that the formula ignores metadata and
+compression. Real files are a bit bigger because of the header, and
+usually much smaller because of compression. Exam questions will say if
+they want you to account for either.
+
+## Ready-to-use resources
+
+I built an interactive version of this whole sequence as a free lesson:
+[Bitmap Images](/bitmap-images). It runs in the browser with nothing to
+install, and it follows the same order as this post:
+
+- **Zoom in on pixels.** A slider zooms into a photo until the grid
+  appears.
+- **Build your own pixel art.** Students paint a grid with a fixed
+  palette, which is the squared-paper activity in digital form.
+- **Drop the resolution.** A slider reduces a photo&apos;s resolution so
+  students can watch it go blocky.
+- **Drop the colour depth.** The same photo, posterising as the bit depth
+  falls.
+- **File size calculator.** Enter a width, height and colour depth and see
+  the answer in bits, bytes and kilobytes.
+- **Five-question quiz.** A quick check at the end, including a colour
+  depth question that targets the "colours versus bits" mistake.
+
+It works well on the board as a demo, or with students working through
+it on their own machines while you circulate.
+
+## The bigger point
+
+Bitmap images are a small topic, but they show something that applies
+across most of GCSE Computer Science. Students don&apos;t struggle because
+the maths is hard. Multiplying three numbers and dividing by 8 is not
+hard. They struggle because the thing being described is invisible, so
+the formula feels arbitrary.
+
+Make the invisible thing visible first, let them build the rule from
+what they can see, and the formula becomes a summary of something they
+already understand rather than a spell to recite. That&apos;s worth doing
+for almost every topic in data representation.
+
+***
+
+If you teach GCSE Computer Science and try this sequence, or have a
+better way of tackling the colours versus bits mix-up, I&apos;d love to hear
+about it on [LinkedIn](https://www.linkedin.com/in/kasim-lone/).
